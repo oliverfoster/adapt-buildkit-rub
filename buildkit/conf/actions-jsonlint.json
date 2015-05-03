@@ -1,0 +1,28 @@
+{
+	"actions": [
+		{
+			"@name": "json-lint",
+			"@displayName": "Linting json...",
+			"@action": "jsonlint",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "preFinish",
+			"@types": [ "builds/courses/course", "src/courses" ],
+			"src": "builds/{{course}}/course",
+			"globs": "**/*.json"
+		},
+		{
+			"@name": "json-lint",
+			"@displayName": "Linting json...",
+			"@action": "jsonlint",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "preFinish",
+			"@types": [ "src/course" ],
+			"src": "build/course",
+			"globs": "**/*.json"
+		}
+	]
+}

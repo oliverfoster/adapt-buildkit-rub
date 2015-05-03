@@ -1,0 +1,86 @@
+{
+	"switches": [
+		{
+			"unspecifiedSet": {
+				"build": true
+			}
+		},
+		{
+			"on": {
+				"production": true
+			},
+			"alwaysSet": {
+				"build": true,
+				"force": true
+			}
+		},
+		{
+			"on": {
+				"zip": true
+			},
+			"alwaysSet": {
+				"build": true
+			}
+		},
+		{
+			"on": {
+				"watch": true
+			},
+			"alwaysSet": {
+				"build": true
+			}
+		},
+		{
+			"on": {
+				"server": true
+			},
+			"alwaysSet": {
+				"watch": true,
+				"build": true
+			},
+			"unspecifiedSet": {
+				"port": "3001"
+			}
+		},
+		{
+			"on": {
+				"force": true
+			},
+			"alwaysSet": {
+				"build": true
+			}
+		},
+		{
+			"on": {
+				"quick": true
+			},
+			"alwaysSet": {
+				"build": true
+			}
+		},
+		{
+			"on": {
+				"trackinginsert": true
+			},
+			"unspecifiedSet": {
+				"build": false
+			}
+		},
+		{
+			"on": {
+				"trackingdelete": true
+			},
+			"unspecifiedSet": {
+				"build": false
+			}
+		},
+		{
+			"on": {
+				"trackingreset": true
+			},
+			"unspecifiedSet": {
+				"build": false
+			}
+		}
+	]
+}

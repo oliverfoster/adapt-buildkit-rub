@@ -1,0 +1,111 @@
+{
+	"actions": [
+		{
+			"@name": "assetsize",
+			"@displayName": "Asset size checking...",
+			"@action": "assetsize",
+            "@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "preFinish",
+			"@types": [ "builds/courses/course", "src/courses" ],
+			"src": "builds/{{course}}/course",
+			"globs": [
+				"**/*.png",
+				"**/*.jpg",
+				"**/*.jpeg",
+				"**/*.gif",
+				"**/*.mp4",
+				"**/*.mp3",
+				"**/*.ogv",
+				"**/*.ogg"
+			],
+			"extensions": {
+                "png": {
+                    "size": 500,
+                    "width": 1440,
+                    "height": 1025
+                },
+                "jpg": {
+                    "size": 500,
+                    "width": 1440,
+                    "height": 1025
+                },
+                "jpeg": {
+                    "size": 500,
+                    "width": 1440,
+                    "height": 1025
+                },
+                "gif": {
+                    "size": 500,
+                    "width": 1440,
+                    "height": 1025
+                },
+                "mp4": {
+                    "size": 10240
+                },
+                "mp3": {
+                    "size": 10240
+                },
+                "ogv": {
+                    "size": 10240
+                },
+                "ogg": {
+                    "size": 10240
+                }
+            }
+		},
+		{
+			"@name": "assetsize",
+			"@displayName": "sset size checking...",
+			"@action": "assetsize",
+			"@types": [ "src/course" ],
+            "@when": "preFinish",
+			"src": "build/course",
+			"globs": [
+				"**/*.png",
+				"**/*.jpg",
+				"**/*.jpeg",
+				"**/*.gif",
+				"**/*.mp4",
+				"**/*.mp3",
+				"**/*.ogv",
+				"**/*.ogg"
+			],
+			"extensions": {
+                "png": {
+                    "size": 500,
+                    "width": 1440,
+                    "height": 1025
+                },
+                "jpg": {
+                    "size": 500,
+                    "width": 1440,
+                    "height": 1025
+                },
+                "jpeg": {
+                    "size": 500,
+                    "width": 1440,
+                    "height": 1025
+                },
+                "gif": {
+                    "size": 500,
+                    "width": 1440,
+                    "height": 1025
+                },
+                "mp4": {
+                    "size": 10240
+                },
+                "mp3": {
+                    "size": 10240
+                },
+                "ogv": {
+                    "size": 10240
+                },
+                "ogg": {
+                    "size": 10240
+                }
+            }
+		}
+	]
+}
