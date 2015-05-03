@@ -18,4 +18,4 @@ Native BuildKit (alternative to gulp and grunt)
     -s, --server          run server (assumes: -bw --port 3001)  
     --port [value]        set server port  
     -q, --quick           skip minification and sourcemapping (assumes: -b)  
-    -Z, --zip             create sco zips (assumes: -b  
+    -Z, --zip             create sco zips (assumes: -b)  
