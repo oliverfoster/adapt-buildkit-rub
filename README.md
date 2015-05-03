@@ -1,6 +1,7 @@
 # adapt-buildkit-native
 Native BuildKit (alternative to gulp and grunt)
 
+```
   Usage: ./make [options] [courses...]  
 
   Options:  
@@ -19,3 +20,4 @@ Native BuildKit (alternative to gulp and grunt)
     --port [value]        set server port  
     -q, --quick           skip minification and sourcemapping (assumes: -b)  
     -Z, --zip             create sco zips (assumes: -b)  
+```
