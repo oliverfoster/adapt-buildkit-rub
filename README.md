@@ -1,7 +1,7 @@
 # adapt-buildkit-native
 Native BuildKit (alternative to gulp and grunt)
 
-  Usage: ./make [options] [course..]  
+  Usage: ./make [options] [courses...]  
 
   Options:  
 
