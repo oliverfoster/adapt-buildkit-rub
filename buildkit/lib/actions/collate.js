@@ -7,6 +7,7 @@ var _ = require("underscore");
 var hbs = require("handlebars");
 
 module.exports = {
+
 	perform: function(options, done) {
 		if (options.root === undefined) options.root = "";
 
@@ -114,7 +115,9 @@ module.exports = {
 			}
 		}
 	},
+
 	reset: function() {
 		
 	}
+	
 };

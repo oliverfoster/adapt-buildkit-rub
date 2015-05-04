@@ -38,6 +38,6 @@ return!0}function Q(a,b,d,e){if(m.acceptData(a)){var f,g,h=m.expando,i=a.nodeTyp
 
 	}
 
-	var pollInterval = setInterval(poll, 500);
+	var pollInterval = setInterval(poll, 250);
 
 })();

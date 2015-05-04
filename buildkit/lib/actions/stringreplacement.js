@@ -7,6 +7,7 @@ var _ = require("underscore");
 var hbs = require("handlebars");
 
 module.exports = {
+
 	perform: function(options) {
 		if (options.root === undefined) options.root = "";
 
@@ -83,62 +84,64 @@ module.exports = {
 			
 		}
 	},
+
 	reset: function() {
 		
 	}
+	
 };
 
 var stringReplacement = function(options, config) {
-        console.log(chalk.white("" + options.courseOptions.course + " - String replacement..."));
-        var q = Q.defer();
-        var config = {
-            globs: config.buildGlobs,
-            gulp: { base: config.buildGlobs.srcPath, cwd: config.buildGlobs.srcPath}
-        };
-
-        var performStringReplacements = function(sconfig, options, config, done) {
-
-            var firstConfig;
-            var context = stringReplace(sconfig.context, options.courseOptions);
-            gulp.src(context, config.gulp)
-                .pipe(tap(function(file){
-                    if (firstConfig === undefined) firstConfig = file.contents.toString();
-                }))
-                .on("end", function() {
-                    if (firstConfig === undefined) return done();
-
-                    var JSONContext = JSON.parse(firstConfig);
-
-                    var src = stringReplace(sconfig.src, options.courseOptions);
-                    var dest  = stringReplace(sconfig.dest, options.courseOptions);
-                    gulp.src(src, config.gulp)
-                        .pipe(tap(function(file){
-                            var temp = file.contents.toString();
-                            file.contents = new Buffer(hbs.compile(temp)(JSONContext));
-                        }))
-                        .pipe(collate(sconfig.collateTo))
-                        .pipe(gulp.dest(dest))
-                        .on("end", function() {
-                            done();
-                        });
-
-                });
-        };
-
-        var stringreplacementconfig = options.stringreplacementconfig;
-
-        var doneCount = 0;
-        function done() {
-            doneCount++;
-            if (doneCount == stringreplacementconfig.length) {
-                q.resolve();
-            }
-        }
-
-        for (var i = 0, l = stringreplacementconfig.length; i < l; i++) {
-            performStringReplacements(stringreplacementconfig[i], options, config, done);
-        }
-
-        return q.promise;
-
+    console.log(chalk.white("" + options.courseOptions.course + " - String replacement..."));
+    var q = Q.defer();
+    var config = {
+        globs: config.buildGlobs,
+        gulp: { base: config.buildGlobs.srcPath, cwd: config.buildGlobs.srcPath}
     };
+
+    var performStringReplacements = function(sconfig, options, config, done) {
+
+        var firstConfig;
+        var context = stringReplace(sconfig.context, options.courseOptions);
+        gulp.src(context, config.gulp)
+            .pipe(tap(function(file){
+                if (firstConfig === undefined) firstConfig = file.contents.toString();
+            }))
+            .on("end", function() {
+                if (firstConfig === undefined) return done();
+
+                var JSONContext = JSON.parse(firstConfig);
+
+                var src = stringReplace(sconfig.src, options.courseOptions);
+                var dest  = stringReplace(sconfig.dest, options.courseOptions);
+                gulp.src(src, config.gulp)
+                    .pipe(tap(function(file){
+                        var temp = file.contents.toString();
+                        file.contents = new Buffer(hbs.compile(temp)(JSONContext));
+                    }))
+                    .pipe(collate(sconfig.collateTo))
+                    .pipe(gulp.dest(dest))
+                    .on("end", function() {
+                        done();
+                    });
+
+            });
+    };
+
+    var stringreplacementconfig = options.stringreplacementconfig;
+
+    var doneCount = 0;
+    function done() {
+        doneCount++;
+        if (doneCount == stringreplacementconfig.length) {
+            q.resolve();
+        }
+    }
+
+    for (var i = 0, l = stringreplacementconfig.length; i < l; i++) {
+        performStringReplacements(stringreplacementconfig[i], options, config, done);
+    }
+
+    return q.promise;
+
+};

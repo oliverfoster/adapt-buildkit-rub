@@ -10,6 +10,7 @@ var imagesize = require('image-size-big-max-buffer');
 
 
 module.exports = {
+
     perform: function(options, done) {
         if (options.root === undefined) options.root = "";
 
@@ -38,9 +39,11 @@ module.exports = {
         done(null, options);
 
     },
+
     reset: function() {
         
     }
+    
 };
 
 

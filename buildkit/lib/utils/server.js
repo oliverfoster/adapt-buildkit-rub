@@ -19,10 +19,13 @@ for (var mt in mimeTypes) {
 var reloadItems = [];
 
 var pub = module.exports = {
+
     _isStarted: false,
+
 	isStarted: function() {
 		return this._isStarted;
 	},
+
     start: function server(opts) {
     	this._isStarted = true;
         var serveIndex = require('serve-index');
@@ -40,6 +43,7 @@ var pub = module.exports = {
 
     	open('http://127.0.0.1:'+port);
     },
+
     reload: function(type) {
     	logger.log("Server sending client action '"+type+"'", 2)
     	reloadItems.push({
@@ -47,6 +51,7 @@ var pub = module.exports = {
     		lastEvent: (new Date()).getTime()
     	});
     }
+    
 };
 
 function urlStat(URL) {

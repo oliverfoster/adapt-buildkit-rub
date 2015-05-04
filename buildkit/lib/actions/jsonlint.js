@@ -8,6 +8,7 @@ var hbs = require("handlebars");
 var JSONLint = require("json-lint");
 
 module.exports = {
+
 	perform: function(options, done) {
 		if (options.root === undefined) options.root = "";
 
@@ -30,7 +31,9 @@ module.exports = {
 		done(errors, options);
 
 	},
+
 	reset: function() {
 		
 	}
+	
 };

@@ -410,6 +410,7 @@ var pub = {
 			process.exit(0);
 		}
 	}
+	
 };
 
 module.exports = function(config) {

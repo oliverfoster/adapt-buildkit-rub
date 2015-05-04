@@ -20,6 +20,7 @@ var outputCache = {};
 var waitingNonDynamics = {};
 
 module.exports = {
+
     perform: function(options, done) {
         options = _.extend({}, defaults, options);
 
@@ -157,10 +158,12 @@ module.exports = {
         });
         
     },
+
     reset: function() {
         outputCache = {};
         waitingNonDynamics = {};
     }
+    
 };
 
 

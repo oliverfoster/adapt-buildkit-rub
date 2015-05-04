@@ -2,6 +2,7 @@
 var chalk = require("chalk");
 
 var pub = {
+
 	runlog: function(options) {
 		if (options.dynamic === false) {
 			if (options["@displayName"]) console.log(options["@displayName"]);
@@ -13,9 +14,11 @@ var pub = {
 			}
 		}
 	},
+
 	error: function(text) {
 		pub.log(text, -1);
 	},
+
 	log: function(text, level) {
 		switch(level) {
 			case -1:
@@ -38,6 +41,7 @@ var pub = {
 			break;
 		}
 	}
+	
 };
 
 module.exports = pub;

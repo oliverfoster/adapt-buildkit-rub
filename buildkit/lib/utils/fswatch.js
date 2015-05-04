@@ -68,9 +68,11 @@ function watchEnd() {
 }
 
 var pub = {
+
 	watches: function() {
 		return _.value(watching);
 	},
+
 	watch: function(options) {
 		if (typeof options != "object") throw "No options specified for watch";
 		if (!options.path) throw "No path specified for watch";
@@ -85,6 +87,7 @@ var pub = {
 
 		watchStart();
 	},
+
 	unwatch: function(options) {
 		if (typeof options != "object") throw "No options specified for unwatch";
 		if (!options.path) throw "No path specified for unwatch";
@@ -94,12 +97,15 @@ var pub = {
 
 		delete watching[watchName];
 	},
+
 	pause: function() {
 		paused = true;
 	},
+
 	resume: function() {
 		paused = false;
 	}
+	
 };
 
 module.exports = pub;

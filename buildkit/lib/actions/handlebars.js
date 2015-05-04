@@ -19,6 +19,7 @@ var defaults = {
 
 
 module.exports = {
+
 	perform: function(options, done) {
 		options = _.extend({}, defaults, options);
 		
@@ -100,9 +101,11 @@ module.exports = {
 			done(null, options);
 		});
 	},
+
 	reset: function() {
 		
 	}
+	
 };
 
 

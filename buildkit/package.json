@@ -17,7 +17,6 @@
     "node-native-zip-compression": "^1.0.1",
     "open": "0.0.5",
     "osenv": "^0.1.0",
-    "progress": "^1.1.8",
     "requirejs": "^2.1.17",
     "serve-index": "^1.6.3",
     "underscore": "~1.6.0"

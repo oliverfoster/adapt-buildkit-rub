@@ -21,6 +21,7 @@ var defaults = {
 
 
 module.exports = {
+
 	perform: function(options, done) {
 		options = _.extend({}, defaults, options, { sourceMap: options });
 
@@ -110,9 +111,11 @@ module.exports = {
 			done(null, options);
 		}
 	},
+
 	reset: function() {
 
 	}
+	
 };
 
 

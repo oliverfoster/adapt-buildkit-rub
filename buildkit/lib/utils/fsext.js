@@ -9,6 +9,7 @@ var pathSplit = /(\/|\\){1}[^\/\\]+/g;
 var listCache = {};
 
 var pub = {
+
 	walkSync: function (dir, done, that) {
 		that = that || this;
 		var dirs = [];
@@ -46,6 +47,7 @@ var pub = {
 			if (red == pending) return done.call(that, dirs, files);
 		});
 	},
+
 	globMatch: function(list, globs, options) {
 		
 		if (globs === undefined) return list;
@@ -79,6 +81,7 @@ var pub = {
 		return finished;
 
 	},
+
 	relative: function(atPath) {
 		if (atPath.substr(0,1) == "~") {
 			var homerel = path.join(osenv.home(), atPath.substr(1));
@@ -88,9 +91,11 @@ var pub = {
 		if (atPath == "" || atPath === undefined) return process.cwd();
 		return path.join(process.cwd(), atPath+"");
 	},
+
 	reset: function() {
 		listCache = {};
 	},
+
 	list: function(atPath, options) {
 
 		options = options || {};
@@ -130,6 +135,7 @@ var pub = {
 
 		return paths;
 	},
+
 	glob: function(atPath, globs, options) {
 		options = _.extend({}, { files: true, dirs: true, matchBase: true }, options);
 
@@ -137,6 +143,7 @@ var pub = {
 
 		return pub.globMatch(list, globs, options);
 	},
+
 	mkdirp: function(options) {
 		options.dest = pub.relative(options.dest);
 		if (fs.existsSync(options.dest)) return true;
@@ -149,8 +156,6 @@ var pub = {
 			begin = parts.join("").replace(/\\/g, "/");
 			
 			begin = orig.substr(0, orig.indexOf(begin));
-			console.log(begin);
-			console.log(orig);
 
 		} else {
 			if (options.root === undefined) options.root = process.cwd();

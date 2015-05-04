@@ -2,6 +2,7 @@ var fs = require("fs");
 var path = require("path");
 
 module.exports = {
+
 	relocate: function(file, pathRelocation) {
 		var json = JSON.parse(fs.readFileSync(file));
 		for (var i = 0, l = json.sources.length; i < l; i++) {
@@ -10,4 +11,5 @@ module.exports = {
 		}
 		fs.writeFileSync(file, JSON.stringify(json));
 	}
+	
 };

@@ -13,6 +13,7 @@ var defaults = {
 
 
 module.exports = {
+
 	perform: function(options, done) {
 		options = _.extend({}, defaults, options);
 		options.dest = hbs.compile(options.dest)(options);
@@ -90,7 +91,9 @@ module.exports = {
 
 		done(null, options);
 	},
+
 	reset: function() {
 		
 	}
+	
 };
