@@ -5,7 +5,10 @@
 			"@displayName": "Asset size checking...",
 			"@action": "assetsize",
             "@onlyOnSwitches": [
-                "build"
+                "debug"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
             ],
             "@when": "preFinish",
 			"@types": [ "builds/courses/course", "src/courses" ],
@@ -59,6 +62,12 @@
 			"@name": "assetsize",
 			"@displayName": "sset size checking...",
 			"@action": "assetsize",
+            "@onlyOnSwitches": [
+                "build"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
 			"@types": [ "src/course" ],
             "@when": "preFinish",
 			"src": "build/course",

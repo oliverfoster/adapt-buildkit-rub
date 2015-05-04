@@ -4,7 +4,7 @@ var chalk = require("chalk");
 var pub = {
 
 	runlog: function(options) {
-		if (options.dynamic === false) {
+		if (options['@buildOnce'] === true) {
 			if (options["@displayName"]) console.log(options["@displayName"]);
 		} else {
 			if (options['course']) {

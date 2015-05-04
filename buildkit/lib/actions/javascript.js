@@ -107,13 +107,14 @@ module.exports = {
         }
 
 
-        switch (options.switches.production) {
+        switch (options.switches.debug) {
         case true:
-            options.generateSourceMaps = false;
-            options.optimize = !options.switches.quick ? "uglify2" : "none";
-        default:
             options.generateSourceMaps = !options.switches.quick;
             options.optimize = "none";
+            break;
+        default:
+            options.generateSourceMaps = false;
+            options.optimize = !options.switches.quick ? "uglify2" : "none";
             break;
         } 
 

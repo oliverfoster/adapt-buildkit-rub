@@ -7,11 +7,10 @@
 		},
 		{
 			"on": {
-				"production": true
+				"debug": true
 			},
 			"alwaysSet": {
-				"build": true,
-				"force": true
+				"build": true
 			}
 		},
 		{

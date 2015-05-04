@@ -7,6 +7,9 @@
 			"@onlyOnSwitches": [
                 "build"
             ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
             "@when": "preFinish",
 			"@types": [ "builds/courses/course", "src/courses" ],
 			"src": "builds/{{course}}/course",
@@ -18,6 +21,9 @@
 			"@action": "jsonlint",
 			"@onlyOnSwitches": [
                 "build"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
             ],
             "@when": "preFinish",
 			"@types": [ "src/course" ],

@@ -124,23 +124,25 @@ var pub = {
 
 		this._selectedActions = _.filter(this._selectedActions, function(item, item1) {
 			if (item['@onlyOnSwitches'] !== undefined) {
+				var found = false;
 				for (var key in terminalOptions.switches) {
 					var value = terminalOptions.switches[key];
 					if (!value) continue;
 					
 					if (item['@onlyOnSwitches'].indexOf(key) != -1) {
-						return true;
+						found = true;
+						break
 					}
-				};
-				return false;
+				}
+				if (!found) return false;
 			}
 
 			if (item['@excludeOnSwitches'] === undefined) return true;
 
-			for (var key in terminalOptions.switches.switches) {
-				var value = terminalOptions.switches.switches[key];
+			for (var key in terminalOptions.switches) {
+				var value = terminalOptions.switches[key];
 				if (!value) continue;
-				
+
 				if (item['@excludeOnSwitches'].indexOf(key) != -1) {
 					return false;
 				}
@@ -155,10 +157,10 @@ var pub = {
 	},
 
 	displayHeader: function(terminalOptions) {
-		logger.log("Building Mode: "+(terminalOptions.switches.production ? "Production": "Debug") ,0);
+		logger.log("Building Mode: "+(terminalOptions.switches.debug ? "Debug": "Production") , (terminalOptions.switches.debug ? 1:0));
 		logger.log("Structure Type: "+terminalOptions.switches.type,0);
 		logger.log("Forced Build: "+(terminalOptions.switches.force || false),0);
-		logger.log("Output Courses: "+(terminalOptions.items.join(",")||"All"),0);
+		logger.log("Output Courses: "+(terminalOptions.courses.join(",")||"All"),0);
 	},
 
 	startBuildOperations: function(terminalOptions, actions) {
@@ -182,8 +184,8 @@ var pub = {
 			for (var i = 0, l = dirs.length; i < l; i++) {
 				var dir = dirs[i];
 
-				if (terminalOptions.items.length > 0)
-					if (terminalOptions.items.indexOf(dir) == -1) continue;
+				if (terminalOptions.courses.length > 0)
+					if (terminalOptions.courses.indexOf(dir) == -1) continue;
 
 				var opts = _.extend({}, terminalOptions, { course: dir });
 				this.runActions(opts, actions);
@@ -199,8 +201,8 @@ var pub = {
 			for (var i = 0, l = dirs.length; i < l; i++) {
 				var dir = dirs[i];
 
-				if (terminalOptions.items.length > 0)
-					if (terminalOptions.items.indexOf(dir) == -1) continue;
+				if (terminalOptions.courses.length > 0)
+					if (terminalOptions.courses.indexOf(dir) == -1) continue;
 
 				var opts = _.extend({}, terminalOptions, { course: dir });
 				this.runActions(opts, actions);
@@ -293,21 +295,23 @@ var pub = {
 
 		this._selectedWatches = _.filter(this._selectedWatches, function(item, item1) {
 			if (item['@onlyOnSwitches'] !== undefined) {
+				var found = false;
 				for (var key in terminalOptions.switches) {
 					var value = terminalOptions.switches[key];
 					if (!value) continue;
 					
 					if (item['@onlyOnSwitches'].indexOf(key) != -1) {
-						return true;
+						found = true;
+						break
 					}
 				}
-				return false;
+				if (!found) return false;
 			}
 
 			if (item['@excludeOnSwitches'] === undefined) return true;
 
-			for (var key in terminalOptions.switches.switches) {
-				var value = terminalOptions.switches.switches[key];
+			for (var key in terminalOptions.switches) {
+				var value = terminalOptions.switches[key];
 				if (!value) continue;
 				
 				if (item['@excludeOnSwitches'].indexOf(key) != -1) {

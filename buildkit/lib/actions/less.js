@@ -74,14 +74,15 @@ module.exports = {
 
 		options = _.extend({}, options, { sourceMap: options });
 
-		switch (options.switches.production) {
+		switch (options.switches.debug) {
 		case true:
-        	delete options.sourceMap;
-        	options.compress = !options.switches.quick;
-        default:
-        	if (options.switches.quick) delete options.sourceMap;
+			if (options.switches.quick) delete options.sourceMap;
             options.compress = false;
             break;
+        default:
+        	delete options.sourceMap;
+        	options.compress = !options.switches.quick;
+        	break;
         } 
 
 
