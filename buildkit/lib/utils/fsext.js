@@ -178,7 +178,6 @@ var pub = {
 			var outputPath;
 			if (options.norel){
 				outputPath = path.join(begin, created);
-				console.log(outputPath);
 			} else {
 				outputPath = path.join(options.root, created);;
 			}
