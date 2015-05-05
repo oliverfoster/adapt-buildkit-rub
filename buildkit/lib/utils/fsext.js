@@ -156,6 +156,7 @@ var pub = {
 			begin = parts.join("").replace(/\\/g, "/");
 			
 			begin = orig.substr(0, orig.indexOf(begin));
+			if (orig.substr(0,1) == "/" && options.norel && begin == "") begin = "/";
 
 		} else {
 			if (options.root === undefined) options.root = process.cwd();
