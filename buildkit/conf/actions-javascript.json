@@ -23,28 +23,32 @@
             ],
             "@when": "postStart",
 			"@buildOnce": true,
-			"name": "libraries/libraries",
-			"src": "src/core/js",
+			"name": "core/js/libraries/libraries",
+			"src": "src",
 			"globs": [ "**/core/js/libraries/*.js" ],
-			"baseUrl": "src/core/js",
+			"baseUrl": "src",
 			"optimize": "uglify2",
     		"generateSourceMaps": true,
-			"sourceMapRelocate": "../../../src/core/js/",
+			"sourceMapRelocate": "../../../src/",
 			"includes": {
 				"*": {
-					"src/core/js/": [
-						"**/libraries/**",
+					"src/core/js": [
+						"**/core/js/libraries/**",
 						"!libraries.js",
 						"!modernizr.js",
 						"!json2.js",
 						"!swfObject.js",
 						"!consoles.js",
 						"!require.js",
-						"!jquery.v2.js"
+						"!jquery.js",
+						"!jquery.v2.js",
+						"!backbone-lib.js"
 					]
 				}
 			},
-			"paths": {},
+			"paths": {
+				"jquery": "empty:"
+			},
 			"shim": {
 				"backbone": {
 					"exports": "Backbone",

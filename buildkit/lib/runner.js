@@ -103,7 +103,7 @@ var pub = {
 			terminalOptions.outputDest = this._configuration.defaults.multipleDestPath;
 			break;
 		case "src/course":
-			terminalOptions.outputDest = tthis._configuration.defaults.singleDestPath;
+			terminalOptions.outputDest = this._configuration.defaults.singleDestPath;
 			break;
 		}
 

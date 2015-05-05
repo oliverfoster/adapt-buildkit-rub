@@ -1,10 +1,26 @@
-var hbs = require("handlebars");
 var fsext = require("../utils/fsext");
 var taskqueue = require("../utils/taskqueue.js");
 var logger = require("../utils/logger.js");
 var path = require("path");
 var fs = require("fs");
 var _ = require("underscore");
+
+function checkHandlebarsVersion() {
+	var data = fs.readFileSync("src/core/js/libraries/handlebars.js").toString();
+
+	var hbs;
+	if (data.match(/handlebars 1.0.0/gi)) {
+		hbs = require("../externals/handlebars.1.3.0.js");
+	} else if (data.match(/handlebars v2.0.0/gi)) {
+		hbs = require("../externals/handlebars.2.0.0.js");
+	} else {
+		logger.error("Handlebars version not found");
+		process.exit(0);
+	}
+
+	return hbs;
+}
+var hbs = checkHandlebarsVersion();
 
 var defaults = {
 		src: process.cwd(),
