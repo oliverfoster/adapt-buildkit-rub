@@ -13,6 +13,8 @@ function checkHandlebarsVersion() {
 		hbs = require("../externals/handlebars.1.3.0.js");
 	} else if (data.match(/handlebars v2.0.0/gi)) {
 		hbs = require("../externals/handlebars.2.0.0.js");
+	} else if (data.match(/handlebars v3/gi)) {
+		hbs = require("../externals/handlebars.3.0.3.js");
 	} else {
 		logger.error("Handlebars version not found");
 		process.exit(0);
