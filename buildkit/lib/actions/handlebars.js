@@ -4,7 +4,9 @@ var logger = require("../utils/logger.js");
 var path = require("path");
 var fs = require("fs");
 var _ = require("underscore");
+var hbs = require("handlebars");
 
+//FIX FOR HANDLEBARS CLIENT/COMPILER VERSION INCOMPATIBILITY > 
 function checkHandlebarsVersion() {
 	var data = fs.readFileSync("src/core/js/libraries/handlebars.js").toString();
 
@@ -22,7 +24,8 @@ function checkHandlebarsVersion() {
 
 	return hbs;
 }
-var hbs = checkHandlebarsVersion();
+var hbsCompiler = checkHandlebarsVersion();
+//< FIX FOR HANDLEBARS CLIENT/COMPILER VERSION INCOMPATIBILITY
 
 var defaults = {
 		src: process.cwd(),
@@ -88,7 +91,7 @@ module.exports = {
 				var file = files[i];
 
 				var contents = fs.readFileSync(file+"").toString();
-				var precompiled = hbs.precompile(contents);
+				var precompiled = hbsCompiler.precompile(contents);
 
 				var isPartial = fsext.globMatch([file], options.paritalGlobs);
 				if (isPartial.length > 0) {
