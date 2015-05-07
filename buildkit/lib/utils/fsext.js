@@ -52,7 +52,7 @@ var pub = {
 		
 		if (globs === undefined) return list;
 
-		options = _.extend({}, { matchBase: true }, options);
+		options = _.extend({}, { matchBase: true, dot: true }, options);
 
 		var finished;
 
@@ -137,7 +137,7 @@ var pub = {
 	},
 
 	glob: function(atPath, globs, options) {
-		options = _.extend({}, { files: true, dirs: true, matchBase: true }, options);
+		options = _.extend({}, { files: true, dirs: true, matchBase: true, dot: true }, options);
 
 		var list = pub.list(atPath, options);
 
