@@ -10,16 +10,16 @@ program
 	.arguments('[courses...]')
 	.option('-b, --build', "build courses (default)")
 	.option('-W, --wait', "wait for keypress at end")
-	.option('-i, --trackinginsert', "inserts tracking ids (assumes: not -b)")
-	.option('-d, --trackingdelete', "delete tracking ids (assumes: not -b)")
-	.option('-r, --trackingreset', "resets tracking ids (assumes: not -b)")
+	.option('--trackinginsert', "inserts tracking ids (assumes: not -b)")
+	.option('--trackingdelete', "delete tracking ids (assumes: not -b)")
+	.option('--trackingreset', "resets tracking ids (assumes: not -b)")
 	.option('-w, --watch', "watch for changes (assumes: -b)")
-	.option('-D, --debug', "no minification, produce sourcemaps (assumes: -b)")
+	.option('-d, --debug', "no minification, produce sourcemaps (assumes: -b)")
 	.option('-f, --force', "force rebuild (assumes: -b)")
 	.option('-s, --server', "run server (assumes: -bw --port 3001)")
 	.option('--port [value]', "set server port")
 	.option('-q, --quick', "skip minification and sourcemapping (assumes: -b)")
-	.option('-Z, --zip', "create sco zips (assumes: -b")
+	.option('-z, --zip', "create sco zips (assumes: -b")
 	.action(function (c) {
 		courses = c;
 	});
