@@ -1,8 +1,8 @@
-# adapt-buildkit-native
+# adapt-buildkit-rub
 Native BuildKit (alternative to gulp and grunt)
 
 ```
-  Usage: make [options] [courses...]
+  Usage: rub [options] [courses...]
 
   Options:
 
