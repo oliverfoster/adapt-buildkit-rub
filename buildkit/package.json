@@ -1,5 +1,5 @@
 {
-  "name": "adapt-buildkit-native",
+  "name": "adapt-buildkit-rub",
   "version": "0.0.8",
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},

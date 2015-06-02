@@ -1,0 +1,49 @@
+{
+	"actions": [
+		{
+			"@name": "themejson",
+			"@displayName": "Adding theme.json...",
+			"@action": "combinejson",
+            "@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "postStart",
+			"@types": [ "builds/courses/course" ],
+			"src": "src",
+			"globs": [
+                "**/theme/**/theme.json"
+            ],
+            "dest": "builds/{{course}}/course/en/course.json"
+		},
+		{
+			"@name": "themejson",
+			"@displayName": "Adding theme.json...",
+			"@action": "combinejson",
+            "@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "postStart",
+			"@types": [ "src/courses" ],
+			"src": "src",
+			"globs": [
+                "**/theme/**/theme.json"
+            ],
+            "dest": "builds/{{course}}/course/en/course.json"
+		},
+		{
+			"@name": "themejson",
+			"@displayName": "Adding theme.json...",
+			"@action": "combinejson",
+            "@onlyOnSwitches": [
+                "build"
+            ],
+			"@types": [ "src/course" ],
+            "@when": "postStart",
+			"src": "src",
+			"globs": [
+				"**/theme/**/theme.json"
+			],
+            "dest": "build/course/en/course.json"
+		}
+	]
+}

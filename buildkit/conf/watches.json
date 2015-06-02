@@ -10,7 +10,11 @@
 				"**/templates/**/*.htm" 
 			],
 			"actions": [
-				"bundles-handlebars"
+				"bundles-handlebars",
+				"bundles-fonts-folder",
+				"bundles-required-folder",
+				"bundles-assets-folder-folder",
+				"stringreplacement"
 			]
 		},
 		{
@@ -24,7 +28,11 @@
 			],
 			"actions": [
 				"bundles-bundle",
-				"bundles-javascript"
+				"bundles-javascript",
+				"bundles-fonts-folder",
+				"bundles-required-folder",
+				"bundles-assets-folder-folder",
+				"stringreplacement"
 			]
 		},
 		{
@@ -49,7 +57,8 @@
 				"!**/core/**/js/scriptLoader.js"
 			],
 			"actions": [
-				"core-javascript"
+				"core-javascript",
+				"stringreplacement"
 			]
 		},
 		{
@@ -105,7 +114,8 @@
 				"**/menu/**/required/**"	
 			],
 			"actions": [
-				"bundles-required-folder"
+				"bundles-required-folder",
+				"stringreplacement"
 			]
 		},
 		{
@@ -150,6 +160,18 @@
 			],
 			"actions": [
 				"course-folder"
+			]
+		},
+		{
+			"@name": "bundles-assets-folder",
+			"path": "src",
+			"globs": [
+				"**/extensions/**/assets/**",
+				"**/components/**/assets/**",
+				"**/menu/**/assets/**"
+			],
+			"actions": [
+				"themejson"
 			]
 		}
 	]

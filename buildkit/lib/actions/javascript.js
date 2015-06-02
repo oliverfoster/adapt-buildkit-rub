@@ -37,6 +37,14 @@ module.exports = {
                     break;
                 }
             }
+
+            var mapExists = false;
+            if (fs.existsSync(options.dest + ".map")  ) {
+                mapExists = true;
+            } 
+            changed = (mapExists == (!options.switches.debug)) || changed;
+
+            
             if (!changed) {
                 return done(null, options);
             }

@@ -60,7 +60,7 @@
 		},
 		{
 			"@name": "assetsize",
-			"@displayName": "sset size checking...",
+			"@displayName": "Asset size checking...",
 			"@action": "assetsize",
             "@onlyOnSwitches": [
                 "build"

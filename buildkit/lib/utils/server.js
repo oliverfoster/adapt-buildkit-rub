@@ -45,6 +45,7 @@ var pub = module.exports = {
     },
 
     reload: function(type) {
+    	if (!this._isStarted) return;
     	logger.log("Server sending client action '"+type+"'", 2)
     	reloadItems.push({
     		type: type,

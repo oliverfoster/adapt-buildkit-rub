@@ -1,0 +1,36 @@
+{
+	"actions": [
+		{
+			"@name": "stringreplacement",
+			"@displayName": "String replacement...",
+			"@action": "stringreplacement",
+            "@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "preFinish",
+			"@types": [ "builds/courses/course", "src/courses" ],
+			"src": "src",
+			"globs": [
+                "**/adapt-contrib-spoor/required/imsmanifest.xml"
+            ],
+            "dest": "builds/{{course}}/imsmanifest.xml",
+            "context": "build/{{course}}/course/en/course.json"
+		},
+		{
+			"@name": "stringreplacement",
+			"@displayName": "String replacement...",
+			"@action": "stringreplacement",
+            "@onlyOnSwitches": [
+                "build"
+            ],
+			"@types": [ "src/course" ],
+            "@when": "preFinish",
+			"src": "src",
+			"globs": [
+				"**/adapt-contrib-spoor/required/imsmanifest.xml"
+			],
+            "dest": "build/imsmanifest.xml",
+            "context": "build/course/en/course.json"
+		}
+	]
+}

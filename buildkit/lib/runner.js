@@ -19,6 +19,27 @@ var pub = {
 
  	entryPoint: function(terminalOptions) {
 
+ 		switch (this.legacyCommands(terminalOptions)) {
+ 		case "watch":
+ 			console.log("watching");
+ 			this.loadConfigs();
+
+			this.setDefaultConfigSwitches(terminalOptions);
+
+			this.setDefaults(terminalOptions);
+
+			tOptions = terminalOptions;
+			
+			this.selectActions(terminalOptions);
+
+			this.displayHeader(terminalOptions);
+
+			taskqueue.on("error", pub.taskqueueError);
+
+			this.watchForChanges(terminalOptions);
+			return;
+ 		}
+
  		taskqueue.on("error", pub.taskqueueError);
 
 		this.loadConfigs();
@@ -37,6 +58,36 @@ var pub = {
 
 		this.watchOrEnd(terminalOptions);
 
+	},
+
+	legacyCommands: function(terminalOptions) {
+
+		if (terminalOptions.switches.watch == "named") {
+			terminalOptions.courses.shift();
+			terminalOptions.switches.debug = true;
+			terminalOptions.switches.watch = true;
+			return "watch";
+		}
+
+		if (terminalOptions.courses.length === 0) return;
+
+ 		var firstArgument = terminalOptions.courses[0];
+ 		if (typeof firstArgument != "string") return;
+		
+		var command = firstArgument.toLowerCase();
+		switch(command) {
+		case "dev":
+			terminalOptions.courses.shift();
+			terminalOptions.switches.debug = true;
+			terminalOptions.switches.watch = true;
+			break;
+		case "build":
+			terminalOptions.courses.shift();
+			terminalOptions.switches.debug = false;
+			break;
+		}
+
+		return command;
 	},
 
 	loadConfigs: function() {
@@ -332,6 +383,8 @@ var pub = {
 
 		var watches = this._selectedWatches;
 
+		fswatch.finalCallback = _.bind(this.onFilesChanged, this);
+
 		for (var i = 0, l = watches.length; i < l; i++) {
 			var data = watches[i];
 			data.terminalOptions = terminalOptions;
@@ -345,7 +398,9 @@ var pub = {
 		}, this);
 	},
 
+	fileChangeActionQueue: [],
 	onFileChange: function(changeType, changeFileStat, data) {
+
 		var terminalOptions = data.terminalOptions;
 
 		terminalOptions.switches.force = true;
@@ -362,16 +417,29 @@ var pub = {
 			break;
 		}
 		
-		var selectedActions = [];
 		for (var a = 0, al = data.actions.length; a < al; a++) {
 			var actionName = data.actions[a];
 			if (!this._indexedActions[actionName]) return;
 			var actionConfig = this._indexedActions[actionName];
-			selectedActions.push(actionConfig);
-			this.resetAction(actionConfig);
+
+			var isActionInList = _.where(this.fileChangeActionQueue, { "@name": actionConfig["@name"] });
+			if (isActionInList.length === 0) {
+				this.fileChangeActionQueue.push(actionConfig);
+			} else {
+				this.resetAction(actionConfig);
+			}
 		}
 
-		this.startBuildOperations(terminalOptions, selectedActions);
+	},
+
+	onFilesChanged: function() {
+		if (this.fileChangeActionQueue.length > 0) {
+
+			this.startBuildOperations(tOptions, this.fileChangeActionQueue);
+
+			this.fileChangeActionQueue = [];
+
+		}
 
 		fswatch.pause();
 

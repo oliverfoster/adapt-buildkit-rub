@@ -3,7 +3,7 @@ var _ = require("underscore");
 var fs = require("fs");
 var path = require("path");
  
-var courses;
+var courses = [];
 
 program
 	.version(JSON.parse(fs.readFileSync( path.join(__dirname, "../package.json"))).version)
@@ -23,22 +23,31 @@ program
 	.action(function (c) {
 		courses = c;
 	});
- 
-program.parse(process.argv);
 
+program.parse(process.argv);
 
 var switches = {};
 _.each(program.options, function(opt) {
 	var k = opt.long.slice(2);
 	if (k == "version") return;
-	switches[k] = program[k];
+	if (program[k] instanceof Array) {
+		//turn arguments that would normally have the '--watch' style, specified instead as 'watch' back into the --watch style
+		//enabled the switch and add its sub values back into the courses array
+		switches[k] = "named";
+		courses = courses.concat(program[k]);
+	} else {
+		//assume switch is a boolean
+		switches[k] = program[k];
+	}
 });
 
 module.exports = function(forceSwitches) {
 
 	switches = _.extend(switches, forceSwitches);
-	return {
+	var values =  {
 		switches: switches,
 		courses: courses || []
 	};
+
+	return values;
 };

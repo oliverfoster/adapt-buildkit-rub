@@ -6,6 +6,8 @@ var watching = {};
 var watchingInterval = null;
 var paused = false;
 
+var finalCallbackInterval = null
+
 function watchStart() {
 	if (watchingInterval !== null) return;
 	watchingInterval = setInterval(watchLoop, 250);
@@ -29,7 +31,7 @@ function watchChanges(cur, prev, options) {
 
 	if (cur.length === 0 && prev.length > 0) {
 		for (var p = 0, pl = prev.length; p < pl; p++) {
-			options.callback("deleted", prev[p]);
+			options.callback.call(options.that || this, "deleted", prev[p], options);
 		}
 		return;
 	}
@@ -41,13 +43,16 @@ function watchChanges(cur, prev, options) {
 	var added = _.difference(curPaths, prevPaths);
 	var check = _.intersection(curPaths, prevPaths);
 
+	var changeCount = 0;
+
 	for (var d = 0, dl = deleted.length; d < dl; d++) {
-		//logger.log("Deleted: "+deleted[d], 1);
+		changeCount++;
 		options.callback.call(options.that || this, "deleted", prevIndex[ deleted[d] ], options);
 	}
 
 	for (var d = 0, dl = added.length; d < dl; d++) {
 		//logger.log("Added: "+added[d], 1);
+		changeCount++;
 		options.callback.call(options.that || this, "added", curIndex [ added[d] ], options);
 	}
 
@@ -55,8 +60,22 @@ function watchChanges(cur, prev, options) {
 		var item = check[d];
 		if (curIndex[item].mtime.getTime() != prevIndex[item].mtime.getTime()) {
 			//logger.log("Changed: "+item,1);
+			changeCount++;
 			options.callback.call(options.that || this, "changed", curIndex[ item ], options);
 		}
+	}
+
+	if (changeCount > 0) {
+		if (finalCallbackInterval) {
+			clearTimeout(finalCallbackInterval);
+			finalCallbackInterval = null;
+		}
+		var opts = options;
+		finalCallbackInterval = setTimeout(function() {
+			pub.finalCallback();
+			clearTimeout(finalCallbackInterval);
+			finalCallbackInterval = null;
+		}, 250);
 	}
 	
 }
@@ -68,6 +87,8 @@ function watchEnd() {
 }
 
 var pub = {
+
+	finalCallback: null,
 
 	watches: function() {
 		return _.value(watching);
