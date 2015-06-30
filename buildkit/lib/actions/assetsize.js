@@ -1,15 +1,20 @@
-var fsext = require("../utils/fsext.js");
-var taskqueue = require("../utils/taskqueue.js");
-var logger = require("../utils/logger.js");
-var fs = require("fs");
-var path = require("path");
-var _ = require("underscore");
-var hbs = require("handlebars");
-var imagesize = require('image-size-big-max-buffer');
+var Action = require("../utils/Action.js");
 
+var assetsize = new Action({
 
+    initialize: function() {
 
-module.exports = {
+        Action.deps(GLOBAL, {
+            "fsext": "../utils/fsext.js",
+            "logger": "../utils/logger.js",
+            "fs": "fs",
+            "path": "path",
+            "_": "underscore",
+            "hbs": "handlebars",
+            "imagesize": "image-size-big-max-buffer"
+        });
+
+    },
 
     perform: function(options, done) {
         if (options.root === undefined) options.root = "";
@@ -17,7 +22,7 @@ module.exports = {
         logger.runlog(options);
 
         options.src = hbs.compile(options.src)(options);
-        options.src = fsext.relative(options.src);
+        options.src = fsext.expand(options.src);
 
         var cwd = process.cwd();
 
@@ -36,15 +41,13 @@ module.exports = {
             }
         }
         
-        done(null, options);
+        done(options);
 
-    },
-
-    reset: function() {
-        
     }
-    
-};
+
+});
+
+module.exports = assetsize;
 
 
 function checkFile(file, options) {

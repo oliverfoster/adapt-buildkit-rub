@@ -1,12 +1,4 @@
-var less = require("less");
-var fsext = require("../utils/fsext");
-var taskqueue = require("../utils/taskqueue.js");
-var logger = require("../utils/logger.js");
-var path = require("path");
-var fs = require("fs");
-var sourcemapext = require("../utils/sourcemapext.js");
-var _ = require("underscore");
-var hbs = require("handlebars");
+var Action = require("../utils/Action.js");
 
 var defaults = {
 		src: process.cwd(),
@@ -20,7 +12,22 @@ var defaults = {
 	};
 
 
-module.exports = {
+var less = new Action({
+
+	initialize: function() {
+
+        Action.deps(GLOBAL, {
+            "fsext": "../utils/fsext.js",
+            "logger": "../utils/logger.js",
+            "fs": "fs",
+            "path": "path",
+            "_": "underscore",
+            "hbs": "handlebars",
+            "lessCompiler": "less",
+            "sourcemaps": "../utils/sourcemaps.js"
+        });
+
+    },
 
 	perform: function(options, done) {
 		options = _.extend({}, defaults, options, { sourceMap: options });
@@ -46,7 +53,7 @@ module.exports = {
 			    if (changed) break;
 		    }
 		    if (!changed) {
-		    	return done(null, options);
+		    	return done(options);
 		    }
 		}
 		
@@ -86,7 +93,7 @@ module.exports = {
         } 
 
 
-		less.render(options.includeFile, options, complete);
+		lessCompiler.render(options.includeFile, options, complete);
 
 		function complete(error, output) {
 			if (error) {
@@ -99,24 +106,22 @@ module.exports = {
 						output += k +": " + JSON.stringify(error[k]) + "\n";
 					}
 				}
-				done(output, options);
+				done(options, output);
 				return;
 			}
-			fsext.mkdirp({dest:path.dirname(options.dest)});
+			fsext.mkdir(path.dirname(options.dest));
 
 			fs.writeFileSync(options.dest, output.css);
 			if (output.map) {
 				fs.writeFileSync(options.dest + ".map", output.map);
-				if (options.sourceMapRelocate) sourcemapext.relocate(options.dest + ".map", options.sourceMapRelocate);
+				if (options.sourceMapRelocate) sourcemaps.relocate(options.dest + ".map", options.sourceMapRelocate);
 			}
-			done(null, options);
+			done(options);
 		}
-	},
-
-	reset: function() {
-
 	}
 	
-};
+});
+
+module.exports = less;
 
 

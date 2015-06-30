@@ -2,6 +2,21 @@
 	"defaults": {
 		"multipleDestPath":  "./builds",
 		"singleDestPath": "./build",
-		"srcCoursesPath": "./src/courses"
+		"srcCoursesPath": "./src/courses",
+		"exclusionGlobs": [
+			"**",
+			"!**/.git",
+			"!**/LICENSE",
+			"!**/.travis.yml",
+			"!**/.gitignore",
+			"!**/.gitattributes",
+			"!**/.bower.json",
+			"!**/.bowerrc",
+			"!**/bower.json",
+			"!**/karma.conf.js",
+			"!**/package.json",
+			"!**/properties.schema",
+			"!**/README.md"
+		]
 	}
 }

@@ -1,12 +1,4 @@
-var requirejs = require('requirejs');
-var fsext = require("../utils/fsext");
-var taskqueue = require("../utils/taskqueue.js");
-var logger = require("../utils/logger.js");
-var path = require("path");
-var fs = require("fs");
-var hbs = require("handlebars");
-var sourcemapext = require("../utils/sourcemapext.js");
-var _ = require("underscore");
+var Action = require("../utils/Action.js");
 
 var defaults = {
     optimize: "uglify2",
@@ -19,7 +11,22 @@ var defaults = {
 var outputCache = {};
 var waitingNonDynamics = {};
 
-module.exports = {
+var javascript = new Action({
+
+    initialize: function() {
+
+        Action.deps(GLOBAL, {
+            "fsext": "../utils/fsext.js",
+            "logger": "../utils/logger.js",
+            "fs": "fs",
+            "path": "path",
+            "_": "underscore",
+            "hbs": "handlebars",
+            "requirejs": "requirejs",
+            "sourcemaps": "../utils/sourcemaps.js"
+        });
+
+    },
 
     perform: function(options, done) {
         options = _.extend({}, defaults, options);
@@ -46,7 +53,7 @@ module.exports = {
 
             
             if (!changed) {
-                return done(null, options);
+                return done(options);
             }
         }
 
@@ -56,14 +63,14 @@ module.exports = {
         if (options['@buildOnce'] === true) {
             if (outputCache[options["@name"]]) {
                 
-                fsext.mkdirp({dest:path.dirname(options.dest)});
-                fs.writeFileSync(fsext.relative(options.dest), outputCache[options["@name"]]);
-                return done(null, options);
+                fsext.mkdir(path.dirname(options.dest));
+                fs.writeFileSync(fsext.expand(options.dest), outputCache[options["@name"]]);
+                return done(options);
             } else {
                 if (waitingNonDynamics[options["@name"]]) {
                     
                     waitingNonDynamics[options["@name"]].push(options);
-                    return done(null, options);
+                    return done(options);
                 } else {
                     waitingNonDynamics[options["@name"]] = [];
                 }
@@ -128,7 +135,7 @@ module.exports = {
 
         requirejs.optimize(options, function (buildResponse) {
             try {
-                if (options.sourceMapRelocate && options.generateSourceMaps) sourcemapext.relocate(options.dest + ".map", options.sourceMapRelocate);
+                if (options.sourceMapRelocate && options.generateSourceMaps) sourcemaps.relocate(options.dest + ".map", options.sourceMapRelocate);
 
                 if (options['@buildOnce']) {
                     if (options.generateSourceMaps) {
@@ -147,11 +154,11 @@ module.exports = {
                         for (var i = 0, l = queue.length; i < l; i++) {
                             var item = queue[i];
 
-                            fsext.mkdirp({dest:path.dirname(item.dest)});
+                            fsext.mkdir(path.dirname(item.dest));
                             if (options.generateSourceMaps) {
-                                 fs.writeFileSync(fsext.relative(item.dest) + ".map", outputCache[options["@name"]].sourcemap );
+                                 fs.writeFileSync(fsext.expand(item.dest) + ".map", outputCache[options["@name"]].sourcemap );
                             }
-                            fs.writeFileSync(fsext.relative(item.dest), outputCache[options["@name"]].javascript );
+                            fs.writeFileSync(fsext.expand(item.dest), outputCache[options["@name"]].javascript );
                         }
                     }
                     
@@ -160,10 +167,10 @@ module.exports = {
                 console.log(e);
             }
 
-            done(null, options);
+            done(options);
 
         }, function(error) {
-            done(error, options);
+            done(options, error);
         });
         
     },
@@ -173,6 +180,8 @@ module.exports = {
         waitingNonDynamics = {};
     }
     
-};
+});
+
+module.exports = javascript;
 
 

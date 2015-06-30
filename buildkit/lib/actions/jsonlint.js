@@ -1,13 +1,20 @@
-var fsext = require("../utils/fsext.js");
-var taskqueue = require("../utils/taskqueue.js");
-var logger = require("../utils/logger.js");
-var fs = require("fs");
-var path = require("path");
-var _ = require("underscore");
-var hbs = require("handlebars");
-var JSONLint = require("json-lint");
+var Action = require("../utils/Action.js");
 
-module.exports = {
+var jsonlint = new Action({
+
+	initialize: function() {
+
+        Action.deps(GLOBAL, {
+            "fsext": "../utils/fsext.js",
+            "logger": "../utils/logger.js",
+            "fs": "fs",
+            "path": "path",
+            "_": "underscore",
+            "hbs": "handlebars",
+            "JSONLint": "json-lint"
+        });
+
+    },
 
 	perform: function(options, done) {
 		if (options.root === undefined) options.root = "";
@@ -15,7 +22,7 @@ module.exports = {
 		logger.runlog(options);
 
 		options.src = hbs.compile(options.src)(options);
-		options.src = fsext.relative(options.src);
+		options.src = fsext.expand(options.src);
 
 		var list = fsext.glob(options.src, options.globs, { dirs: false });
 
@@ -28,12 +35,10 @@ module.exports = {
 			}
 		}
 		
-		done(errors, options);
+		done(options, errors);
 
-	},
-
-	reset: function() {
-		
 	}
-	
-};
+
+});
+
+module.exports = jsonlint;

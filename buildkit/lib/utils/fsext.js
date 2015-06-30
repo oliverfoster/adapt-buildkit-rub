@@ -4,19 +4,33 @@ var fs = require("fs");
 var path = require("path");
 var osenv = require("osenv");
 
-var pathSplit = /(\/|\\){1}[^\/\\]+/g;
-
-var listCache = {};
-
 var pub = {
+	exclusionGlobs: null,
 
-	walkSync: function (dir, done, that) {
-		that = that || this;
+	list: function (dir) {
+		//return two arrays of all files and dirs in the given directory
+		/*	
+			each file is a String(path) object with the attributes
+				.basename string
+				.extname string
+				.filename string 
+				.dirname string
+				.path string
+				.dir  true/false
+				.file  true/false
+
+			returns: {
+				dirs: [],
+				files: []
+			}
+		*/
 		var dirs = [];
 		var files = [];
 		var list = fs.readdirSync(dir);
 		var pending = list.length;
-		if (!pending) return done.call(that, dirs, files);
+		if (!pending) {
+			return { dirs: dirs, files: files };
+		}
 		var red = 0;
 		list.forEach(function(file) {
 			var osbp;
@@ -44,24 +58,34 @@ var pub = {
 				subdirpath = _.extend(subdirpath, stat);
 				dirs.push( subdirpath );
 			}
-			if (red == pending) return done.call(that, dirs, files);
+			if (red == pending) {
+				return;
+			}
 		});
+
+		return { dirs: dirs, files: files };
 	},
 
-	globMatch: function(list, globs, options) {
-		
+	filter: function(list, globs) {
+		//filter an array of paths according to the globs supplied
+
 		if (globs === undefined) return list;
 
-		options = _.extend({}, { matchBase: true, dot: true }, options);
+		var options = { matchBase: true, dot: true };
 
 		var finished;
 
+		var excluded = false;
+
 		if (globs instanceof Array) {
+
 			finished = [];
 			for (var i = 0, l = globs.length; i < l; i++) {
 				var glob = globs[i];
+
 				if (glob.substr(0,1) == "!") {
-					
+					excluded = true;
+					//if the globs list has an exludion parameter, change tactics.
 					list = minimatch.match(list, glob, options);
 					if (finished.length > 0) {
 						finished = minimatch.match(finished, glob, options);
@@ -75,15 +99,23 @@ var pub = {
 			}
 			finished = _.uniq(finished);
 		} else if (typeof globs == "string") {
+
 			finished = minimatch.match(list, globs, options);
+
+		}
+
+		if (excluded) {
+			//console.log("hmm");//_.pluck(finished, "path"));
 		}
 
 		return finished;
 
 	},
 
-	relative: function(atPath) {
+	expand: function(atPath) {
+		//translate relative paths to absolute paths
 		if (atPath.substr(0,1) == "~") {
+			//take into consideration the ~ home variable
 			var homerel = path.join(osenv.home(), atPath.substr(1));
 			return homerel;
 		}
@@ -91,68 +123,82 @@ var pub = {
 		if (atPath == "" || atPath === undefined) return process.cwd();
 		return path.join(process.cwd(), atPath+"");
 	},
+	
 
-	reset: function() {
-		listCache = {};
-	},
-
-	list: function(atPath, options) {
-
-		options = options || {};
-
-		atPath = pub.relative(atPath);
-
-		if (!fs.existsSync(atPath+"")) return [];
-		var stat = fs.statSync(atPath+"");
-		if (stat && !stat.isDirectory()) throw "Path is not a directory: " + atPath;
-
-		var now = (new Date()).getTime();
-
-		if (listCache[atPath+":"+options.files+","+options.dirs]) {
-			return listCache[atPath+":"+options.files+","+options.dirs].paths;
-		}
-
-		options = _.extend({}, { files: true, dirs: true }, options);
-
-		var paths = [];
-
-		pub.walkSync(atPath+"", function(dirs, files) {
-			
-			if (options.files) paths = paths.concat(files);
-
-			for (var d = 0, l = dirs.length; d < l; d++) {
-				var dir = dirs[d];
-				if (options.dirs) paths.push(dir);
-				paths = paths.concat(pub.list(dir, options));
-			}
-			
-		});
-
-		listCache[atPath+":"+options.files+","+options.dirs] = {
-			timestamp: now,
-			paths: paths
-		};
-
-		return paths;
-	},
-
+	_globListCache: {},
 	glob: function(atPath, globs, options) {
+		//get all nodes at path, from cache if available, filter by globs
+		//distinguish between requests for files and directorys or both
+
 		options = _.extend({}, { files: true, dirs: true, matchBase: true, dot: true }, options);
 
-		var list = pub.list(atPath, options);
+		var list = listFromCache(atPath, options);
 
-		return pub.globMatch(list, globs, options);
+		return pub.filter(list, globs, options, globs);
+
+
+		function listFromCache(atPath, options) {
+
+			options = options || {};
+
+			atPath = pub.expand(atPath);
+
+			if (!fs.existsSync(atPath+"")) return [];
+			var stat = fs.statSync(atPath+"");
+			if (stat && !stat.isDirectory()) throw "Path is not a directory: " + atPath;
+
+			var now = (new Date()).getTime();
+
+			var cacheName = atPath+":"+options.files+","+options.dirs;
+
+			if (pub.exclusionGlobs) {
+				cacheName += "," + pub.exclusionGlobs.join(",");
+			}
+
+			if (pub._globListCache[cacheName] && !options.refresh) {
+				return pub._globListCache[cacheName].paths;
+			}
+
+			options = _.extend({}, { files: true, dirs: true }, options);
+
+			var paths = [];
+			var pathsList = pub.list(atPath+"");
+
+			if (pub.exclusionGlobs) {
+				pathsList.dirs = pub.filter(pathsList.dirs, pub.exclusionGlobs);
+			}
+				
+			if (options.files) paths = paths.concat(pathsList.files);
+
+			for (var d = 0, l = pathsList.dirs.length; d < l; d++) {
+				var dir = pathsList.dirs[d];
+				if (options.dirs) paths.push(dir);
+				paths = paths.concat(listFromCache(dir, options));
+			}
+
+
+			pub._globListCache[cacheName] = {
+				timestamp: now,
+				paths: paths
+			};
+
+			return paths;
+		}
 	},
 
-	mkdirp: function(options) {
-		options.dest = pub.relative(options.dest);
-		if (fs.existsSync(options.dest)) return true;
+	mkdir: function(dest, options) {
+		//make a directory recursively if need be
+
+		var pathSplit = /(\/|\\){1}[^\/\\]+/g;
+
+		dest = pub.expand(dest);
+		if (fs.existsSync(dest)) return true;
 
 		var parts;
 		var begin;
 		if (options.norel) {
-			parts = options.dest.match(pathSplit);
-			var orig = options.dest.replace(/\\/g, "/");
+			parts = dest.match(pathSplit);
+			var orig = dest.replace(/\\/g, "/");
 			begin = parts.join("").replace(/\\/g, "/");
 			
 			begin = orig.substr(0, orig.indexOf(begin));
@@ -160,10 +206,10 @@ var pub = {
 
 		} else {
 			if (options.root === undefined) options.root = process.cwd();
-			options.root = pub.relative(options.root);
-			options.dest = options.dest+"";
+			options.root = pub.expand(options.root);
+			dest = dest+"";
 
-			shortenedPath = (options.dest).substr(options.root.length);
+			shortenedPath = (dest).substr(options.root.length);
 
 			parts = shortenedPath.match(pathSplit);
 		}

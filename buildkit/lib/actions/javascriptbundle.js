@@ -1,10 +1,4 @@
-var fsext = require("../utils/fsext");
-var logger = require("../utils/logger.js");
-var path = require("path");
-var fs = require("fs");
-var _ = require("underscore");
-var chalk = require("chalk");
-var hbs = require("handlebars");
+var Action = require("../utils/Action.js");
 
 var defaults = {
 		src: process.cwd(),
@@ -12,7 +6,20 @@ var defaults = {
 	};
 
 
-module.exports = {
+var javascriptbundle = new Action({
+
+	initialize: function() {
+
+        Action.deps(GLOBAL, {
+            "fsext": "../utils/fsext.js",
+            "logger": "../utils/logger.js",
+            "fs": "fs",
+            "path": "path",
+            "_": "underscore",
+            "hbs": "handlebars"
+        });
+
+    },
 
 	perform: function(options, done) {
 		options = _.extend({}, defaults, options);
@@ -31,7 +38,7 @@ module.exports = {
 	            }
 	        }
 	        if (!changed) {
-	        	return done(null, options);
+	        	return done(options);
 	        }
 	    }
 
@@ -39,43 +46,41 @@ module.exports = {
 
 		var base = options.src;
 
-		fsext.walkSync(base, function(groupDirs, files) {
+		var listGroups = fsext.list(base);
+		var groupDirs = fsext.filter(listGroups.dirs, options.globs);
 
-			groupDirs = fsext.globMatch(groupDirs, options.globs, options);
+		for (var g = 0, lg = groupDirs.length; g < lg; g++) {
+			var groupDir = groupDirs[g];
+			var listPluginPath = fsext.list(groupDir.path);
+			var pluginDirs = listPluginPath.dirs
 
-			for (var g = 0, lg = groupDirs.length; g < lg; g++) {
-				var groupDir = groupDirs[g];
-				fsext.walkSync(groupDir.path, function(pluginDirs) {
+			pluginDirs = fsext.filter(pluginDirs, options.globs);
 
-					pluginDirs = fsext.globMatch(pluginDirs, options.globs, options);
+			for (var p = 0, lp = pluginDirs.length; p < lp; p++) {
+				var pluginDir = pluginDirs[p];
+				
 
-					for (var p = 0, lp = pluginDirs.length; p < lp; p++) {
-						var pluginDir = pluginDirs[p];
-						
+				var bowerJSONPath = path.join( pluginDir.path, "bower.json");
+				if (!fs.existsSync( bowerJSONPath )) continue;
 
-						var bowerJSONPath = path.join( pluginDir.path, "bower.json");
-						if (!fs.existsSync( bowerJSONPath )) continue;
+				var bowerJSON;
+				try {
+					bowerJSON = JSON.parse(fs.readFileSync(bowerJSONPath));
+				} catch(e) {
+					console.log(e);
+				}
+				if (bowerJSON.main == undefined) continue;
 
-						var bowerJSON;
-						try {
-							bowerJSON = JSON.parse(fs.readFileSync(bowerJSONPath));
-						} catch(e) {
-							console.log(e);
-						}
-						if (bowerJSON.main == undefined) continue;
+				var pluginMainPath = path.join(pluginDir.path, bowerJSON.main);
+				var req = pluginMainPath.substr(base.length);
+				req = req.replace(/\\/g, "/");
+				if (req.substr(0,1) == "/") req = req.substr(1);
 
-						var pluginMainPath = path.join(pluginDir.path, bowerJSON.main);
-						var req = pluginMainPath.substr(base.length);
-						req = req.replace(/\\/g, "/");
-						if (req.substr(0,1) == "/") req = req.substr(1);
+				req = req.slice(0, -path.extname(req).length);
 
-						req = req.slice(0, -path.extname(req).length);
-
-						options.requires[req] = req;
-					}
-				});
+				options.requires[req] = req;
 			}
-		});
+		}
 
 		output+="require(";
 		if (options.requires) {
@@ -86,14 +91,12 @@ module.exports = {
 		if (fs.existsSync(options.dest)) fs.unlinkSync(options.dest);
 		if (fs.existsSync(options.dest+".map")) fs.unlinkSync(options.dest+".map");
 
-		fsext.mkdirp({dest:path.dirname(options.dest)});
+		fsext.mkdir(path.dirname(options.dest));
 		fs.writeFileSync(options.dest, output);
 
-		done(null, options);
-	},
-
-	reset: function() {
-		
+		done(options);
 	}
-	
-};
+
+});
+
+module.exports = javascriptbundle;

@@ -1,5 +1,5 @@
-
 var chalk = require("chalk");
+var _ = require("underscore");
 
 var pub = {
 

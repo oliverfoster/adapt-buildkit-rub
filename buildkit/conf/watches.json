@@ -7,7 +7,7 @@
 				"**/templates/**/*.hbs", 
 				"**/templates/**/*.html", 
 				"**/templates/**/*.handlebars", 
-				"**/templates/**/*.htm" 
+				"**/templates/**/*.htm"
 			],
 			"actions": [
 				"bundles-handlebars",
@@ -111,7 +111,7 @@
 				"**/extensions/**/required/**",
 				"**/components/**/required/**",
 				"**/theme/**/required/**",
-				"**/menu/**/required/**"	
+				"**/menu/**/required/**"
 			],
 			"actions": [
 				"bundles-required-folder",
@@ -134,7 +134,7 @@
 			"globs": [
 				"**/extensions/**/assets/**",
 				"**/components/**/assets/**",
-				"**/menu/**/assets/**"	
+				"**/menu/**/assets/**"
 			],
 			"actions": [
 				"bundles-assets-folder"
@@ -145,7 +145,7 @@
 			"@types": [ "src/course" ],
 			"path": "src",
 			"globs": [
-				"**/course/**"	
+				"**/course/**"
 			],
 			"actions": [
 				"course-folder"

@@ -1,10 +1,4 @@
-var fsext = require("../utils/fsext");
-var taskqueue = require("../utils/taskqueue.js");
-var logger = require("../utils/logger.js");
-var path = require("path");
-var fs = require("fs");
-var _ = require("underscore");
-var hbs = require("handlebars");
+var Action = require("../utils/Action.js");
 
 //FIX FOR HANDLEBARS CLIENT/COMPILER VERSION INCOMPATIBILITY > 
 function checkHandlebarsVersion() {
@@ -39,7 +33,20 @@ var defaults = {
 	};
 
 
-module.exports = {
+var handlebars = new Action({
+
+	initialize: function() {
+
+        Action.deps(GLOBAL, {
+            "fsext": "../utils/fsext.js",
+            "logger": "../utils/logger.js",
+            "fs": "fs",
+            "path": "path",
+            "_": "underscore",
+            "hbs": "handlebars"
+        });
+
+    },
 
 	perform: function(options, done) {
 		options = _.extend({}, defaults, options);
@@ -64,7 +71,7 @@ module.exports = {
 			    if (changed) break;
 		    }
 		    if (!changed) {
-	        	return done(null, options);;
+	        	return done(options);;
 	        }
 		}
 
@@ -93,7 +100,7 @@ module.exports = {
 				var contents = fs.readFileSync(file+"").toString();
 				var precompiled = hbsCompiler.precompile(contents);
 
-				var isPartial = fsext.globMatch([file], options.paritalGlobs);
+				var isPartial = fsext.filter([file], options.paritalGlobs);
 				if (isPartial.length > 0) {
 					output+= "Handlebars.registerPartial('"+file.filename+"',Handlebars.template("+precompiled+"));\n";
 				} else {
@@ -117,16 +124,14 @@ module.exports = {
 		if (fs.existsSync(options.dest)) fs.unlinkSync(options.dest);
 		if (fs.existsSync(options.dest+".map")) fs.unlinkSync(options.dest+".map");
 
-		fsext.mkdirp({dest:path.dirname(options.dest)});
+		fsext.mkdir(path.dirname(options.dest));
 		fs.writeFile(options.dest, output, function() {
-			done(null, options);
+			done(options);
 		});
-	},
-
-	reset: function() {
-		
 	}
-	
-};
+
+});
+
+module.exports = handlebars;
 
 

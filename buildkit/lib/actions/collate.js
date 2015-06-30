@@ -1,12 +1,19 @@
-var fsext = require("../utils/fsext.js");
-var taskqueue = require("../utils/taskqueue.js");
-var logger = require("../utils/logger.js");
-var fs = require("fs");
-var path = require("path");
-var _ = require("underscore");
-var hbs = require("handlebars");
+var Action = require("../utils/Action.js");
 
-module.exports = {
+var collate = new Action({
+
+	initialize: function() {
+
+        Action.deps(GLOBAL, {
+            "fsext": "../utils/fsext.js",
+            "logger": "../utils/logger.js",
+            "fs": "fs",
+            "path": "path",
+            "_": "underscore",
+            "hbs": "handlebars"
+        });
+
+    },
 
 	perform: function(options, done) {
 		if (options.root === undefined) options.root = "";
@@ -14,15 +21,15 @@ module.exports = {
 		logger.runlog(options);
 
 		options.root = hbs.compile(options.root)(options);
-		options.root = fsext.relative(options.root);
+		options.root = fsext.expand(options.root);
 		options.dest = hbs.compile(options.dest)(options);
-		options.dest = fsext.relative(options.dest);
+		options.dest = fsext.expand(options.dest);
 
 		var srcPath = path.join(options.root, options.src);
 
 		var list = fsext.glob(srcPath, options.globs);
 
-		var destList = fsext.glob(fsext.relative(options.dest), options.diffGlobs);
+		var destList = fsext.glob(fsext.expand(options.dest), options.diffGlobs);
 
 		for (var d = destList.length -1, dl = -1; d > dl; d--) {
 			var destItem = destList[d];
@@ -58,10 +65,10 @@ module.exports = {
 			var outputPath = path.join(options.dest, shortenedPath);
 
 			if (item.dir) {
-				fsext.mkdirp({ dest: outputPath });
+				fsext.mkdir(outputPath);
 			} else {
 				var dirname = path.dirname(outputPath);
-				fsext.mkdirp({ dest: dirname });
+				fsext.mkdir(dirname);
 
 				var ifExists = fs.existsSync(outputPath);
 
@@ -111,13 +118,11 @@ module.exports = {
 			if (copyTasksRunning === 0 && copyTasks.length === 0) {
 				clearInterval(copyInterval);
 				copyInterval = null;
-				done(null, options);
+				done(options);
 			}
 		}
-	},
-
-	reset: function() {
-		
 	}
 	
-};
+});
+
+module.exports = collate;

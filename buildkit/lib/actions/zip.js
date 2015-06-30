@@ -1,17 +1,20 @@
-var fsext = require("../utils/fsext.js");
-var taskqueue = require("../utils/taskqueue.js");
-var logger = require("../utils/logger.js");
-var fs = require("fs");
-var path = require("path");
-var _ = require("underscore");
-var hbs = require("handlebars");
+var Action = require("../utils/Action.js");
 
-function twoDigit(num) {
-	var snum = ""+num;
-	return (snum.length < 2 ? "0" : "") + snum;
-}
+var zip = new Action({
 
-module.exports = {
+	initialize: function() {
+
+		Action.deps(GLOBAL, {
+			"fsext": "../utils/fsext.js",
+			"logger": "../utils/logger.js",
+			"fs": "fs",
+			"path": "path",
+			"_": "underscore",
+			"hbs": "handlebars",
+			"zipLibrary": "node-native-zip-compression"
+		});
+
+	},
 
 	perform: function(options, done) {
 		if (options.root === undefined) options.root = "";
@@ -22,7 +25,7 @@ module.exports = {
 		options.scoDate = now.getYear() + twoDigit(now.getMonth()) + twoDigit(now.getDate()) + "_" + twoDigit(now.getHours()) + twoDigit(now.getMinutes()) + twoDigit(now.getSeconds());
 		
 		options.root = hbs.compile(options.root)(options);
-		options.root = fsext.relative(options.root);
+		options.root = fsext.expand(options.root);
 		
 		var srcPath = path.join(options.root, options.src);
 
@@ -33,15 +36,14 @@ module.exports = {
 		}
 		
 		options.dest = hbs.compile(options.dest)(options);
-		options.dest = fsext.relative(options.dest);
+		options.dest = fsext.expand(options.dest);
 
 		var list = fsext.glob(srcPath, options.globs, { dirs: false });
-		var zip = require("node-native-zip-compression");
 
 		var scodest = path.dirname(options.dest);
-		fsext.mkdirp({dest:scodest, norel:true});
+		fsext.mkdir(scodest, {norel:true});
 
-		var archive = new zip();
+		var archive = new zipLibrary();
 		var zipFiles = [];
 		for (var i = 0, l = list.length; i < l; i ++) {
 			var item = list[i];
@@ -55,19 +57,23 @@ module.exports = {
 
 		archive.addFiles(zipFiles, function (err) {
 		    if (err) {
-		    	return done("Err while adding files", options);
+		    	return done(options, "Err while adding files");
 		    }
 		    
 		    archive.toBuffer(function(buff){;
 			    fs.writeFile(options.dest, buff, function () {
-			        done(null, options);
+			        done(options);
 			    });
 			});
 		});
 
-	},
-	
-	reset: function() {
-		
+		function twoDigit(num) {
+			var snum = ""+num;
+			return (snum.length < 2 ? "0" : "") + snum;
+		}
+
 	}
-};
+
+});
+
+module.exports = zip;
