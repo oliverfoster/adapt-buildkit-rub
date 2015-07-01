@@ -189,6 +189,8 @@ var pub = {
 	mkdir: function(dest, options) {
 		//make a directory recursively if need be
 
+		options = options || {};
+
 		var pathSplit = /(\/|\\){1}[^\/\\]+/g;
 
 		dest = pub.expand(dest);
