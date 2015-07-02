@@ -208,7 +208,7 @@
             ],
             "@types": [ "builds/courses/course", "src/courses/course" ],
             "@when": "finish",
-			"root": "builds/{{course}}/adapt/js",
+			"root": "{{outputDest}}/{{course}}/adapt/js",
 			"globs": [
 				"adapt.min.js",
 				"templates.js",
@@ -227,7 +227,7 @@
             ],
             "@types": [ "src/course" ],
             "@when": "finish",
-			"root": "build/adapt/js",
+			"root": "{{outputDest}}/adapt/js",
 			"globs": [
 				"adapt.min.js",
 				"templates.js",

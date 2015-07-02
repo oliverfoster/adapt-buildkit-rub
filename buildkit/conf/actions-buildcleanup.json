@@ -9,7 +9,7 @@
             ],
             "@types": [ "builds/courses/course" ],
             "@when": "start",
-			"root": "builds/{{course}}",
+			"root": "{{outputDest}}/{{course}}",
 			"deleteRoot": false,
 			"globs": [
 				"!**/course/**",
@@ -27,7 +27,7 @@
             "@types": [ "src/courses/course" ],
             "@when": "start",
             "deleteRoot": true,
-			"root": "builds/{{course}}",
+			"root": "{{outputDest}}/{{course}}",
 			"globs": [
 				"**"
 			]
@@ -42,7 +42,7 @@
             "@types": [ "src/course" ],
             "@when": "start",
             "deleteRoot": true,
-			"root": "build/",
+			"root": "{{outputDest}}/",
 			"globs": [
 				"**"
 			]

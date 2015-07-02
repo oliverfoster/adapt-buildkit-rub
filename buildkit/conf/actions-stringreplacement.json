@@ -13,8 +13,8 @@
 			"globs": [
                 "**/adapt-contrib-spoor/required/imsmanifest.xml"
             ],
-            "dest": "builds/{{course}}/imsmanifest.xml",
-            "context": "build/{{course}}/course/en/course.json"
+            "dest": "{{outputDest}}/{{course}}/imsmanifest.xml",
+            "context": "{{outputDest}}/{{course}}/course/en/course.json"
 		},
 		{
 			"@name": "stringreplacement",
@@ -29,8 +29,8 @@
 			"globs": [
 				"**/adapt-contrib-spoor/required/imsmanifest.xml"
 			],
-            "dest": "build/imsmanifest.xml",
-            "context": "build/course/en/course.json"
+            "dest": "{{outputDest}}/imsmanifest.xml",
+            "context": "{{outputDest}}/course/en/course.json"
 		}
 	]
 }

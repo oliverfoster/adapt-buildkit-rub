@@ -9,7 +9,7 @@
 			],
 			"@when": "finish",
 			"@types": [ "builds/courses/course", "src/courses/course" ],
-			"root": "builds/{{course}}",
+			"root": "{{outputDest}}/{{course}}",
 			"src": "",
 			"globs": [
 				"!*.zip",
@@ -27,7 +27,7 @@
 			],
 			"@when": "finish",
 			"@types": [ "src/course" ],
-			"root": "build",
+			"root": "{{outputDest}}",
 			"src": "",
 			"globs": [
 				"!*.zip",

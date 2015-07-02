@@ -100,11 +100,11 @@
 			"@when": "start",
 			"@types": [ "builds/courses/course" ],
 			"blocksPath": {
-				"src": "builds/{{course}}/course",
+				"src": "{{outputDest}}/{{course}}/course",
 				"glob": "**/blocks.json"
 			},
 			"coursePath": {
-				"src": "builds/{{course}}/course",
+				"src": "{{outputDest}}/{{course}}/course",
 				"glob": "**/course.json"
 			}
 		},
@@ -140,7 +140,7 @@
 				"glob": "**/blocks.json"
 			},
 			"coursePath": {
-				"src": "builds/{{course}}/course",
+				"src": "{{outputDest}}/{{course}}/course",
 				"glob": "**/course.json"
 			}
 		},
@@ -154,11 +154,11 @@
 			"@when": "start",
 			"@types": [ "builds/courses/course" ],
 			"blocksPath": {
-				"src": "builds/{{course}}/course",
+				"src": "{{outputDest}}/{{course}}/course",
 				"glob": "**/blocks.json"
 			},
 			"coursePath": {
-				"src": "builds/{{course}}/course",
+				"src": "{{outputDest}}/{{course}}/course",
 				"glob": "**/course.json"
 			}
 		}

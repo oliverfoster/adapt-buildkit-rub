@@ -12,7 +12,7 @@
             ],
             "@when": "preFinish",
 			"@types": [ "builds/courses/course", "src/courses/course" ],
-			"src": "builds/{{course}}/course",
+			"src": "{{outputDest}}/{{course}}/course",
 			"globs": [
 				"**/*.png",
 				"**/*.jpg",
@@ -70,7 +70,7 @@
             ],
 			"@types": [ "src/course" ],
             "@when": "preFinish",
-			"src": "build/course",
+			"src": "{{outputDest}}/course",
 			"globs": [
 				"**/*.png",
 				"**/*.jpg",

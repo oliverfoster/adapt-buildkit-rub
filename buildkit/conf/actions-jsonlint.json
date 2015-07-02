@@ -12,7 +12,7 @@
             ],
             "@when": "preFinish",
 			"@types": [ "builds/courses/course", "src/courses/course" ],
-			"src": "builds/{{course}}/course",
+			"src": "{{outputDest}}/{{course}}/course",
 			"globs": "**/*.json"
 		},
 		{
@@ -27,7 +27,7 @@
             ],
             "@when": "preFinish",
 			"@types": [ "src/course" ],
-			"src": "build/course",
+			"src": "{{outputDest}}/course",
 			"globs": "**/*.json"
 		}
 	]
