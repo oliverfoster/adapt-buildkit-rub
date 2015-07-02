@@ -9,19 +9,19 @@ var combinejson = new Action({
             "logger": "../utils/logger.js",
             "fs": "fs",
             "path": "path",
-            "_": "underscore",
-            "hbs": "handlebars"
+            "_": "underscore"
         });
 
     },
 
-    perform: function(options, done) {
+    perform: function(options, done, started) {
+        started();
+        
         if (options.root === undefined) options.root = "";
 
-        logger.runlog(options);
-        options.root = hbs.compile(options.root)(options);
+        options.root = fsext.replace(options.root, options);
         options.root = fsext.expand(options.root);
-        options.dest = hbs.compile(options.dest)(options);
+        options.dest = fsext.replace(options.dest, options);
         options.dest = fsext.expand(options.dest);
 
         var srcPath = path.join(options.root, options.src);

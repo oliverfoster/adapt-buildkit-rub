@@ -31,13 +31,13 @@ return!0}function Q(a,b,d,e){if(m.acceptData(a)){var f,g,h=m.expando,i=a.nodeTyp
 
 	function poll() {
 
-		$.get("/_server/_poll/?"+lastEvent, function(data) {
+		$.get("/__server__/poll/?"+lastEvent, function(data) {
 			window.serverSyncData(data);
 			if (data.lastEvent) lastEvent = data.lastEvent;
 		});
 
 	}
 
-	var pollInterval = setInterval(poll, 250);
+	var pollInterval = setInterval(poll, 1000);
 
 })();

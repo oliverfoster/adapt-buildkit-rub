@@ -17,6 +17,7 @@
 			"!**/package.json",
 			"!**/properties.schema",
 			"!**/README.md"
-		]
+		],
+		"taskLimit": 20
 	}
 }

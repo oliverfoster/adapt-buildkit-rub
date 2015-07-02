@@ -12,10 +12,14 @@ var pub = {
 
         var terminalOptions =  {
             switches: switches,
-            courses: prog.courses || []
+            courses: prog.courses || [],
+            command: "default"
         };
 
-        /*switches: {
+        pub.processLegacyCommands(terminalOptions);
+
+        /*
+        switches: {
                 build: 'named'/true/undefined,
                 wait: 'named'/true/undefined,
                 trackinginsert: 'named'true/undefined,
@@ -23,13 +27,13 @@ var pub = {
                 trackingreset: 'named'true/undefined,
                 watch: 'named'/true/undefined,
                 debug: 'named'/true/undefined,
-                force: 'named'true/undefined,
-                server: 'named'true/undefined,
+                force: 'named'/true/undefined,
+                server: 'named'/true/undefined,
                 port: '8080'/undefined,
-                quick: 'named'true/undefined,
-                zip: 'named'true/undefined,
+                quick: 'named'/true/undefined,
+                zip: 'named'/true/undefined,
             }
-
+        commands: "default"/"watch"/"dev"/"build"
         */
 
         return terminalOptions;
@@ -52,7 +56,8 @@ var pub = {
             .option('-s, --server', "run server (assumes: -bw --port 3001)")
             .option('--port [value]', "set server port")
             .option('-q, --quick', "skip minification and sourcemapping (assumes: -b)")
-            .option('-z, --zip', "create sco zips (assumes: -b")
+            .option('-c, --clean', "clean build folder (assumes: not -b)")
+            .option('-z, --zip', "create sco zips (assumes: -b)")
             .action(function (c) {
                 program.courses = c;
             });
@@ -77,6 +82,42 @@ var pub = {
             }
         });
         return switches;
+    },
+
+    processLegacyCommands: function(terminalOptions) {
+        //translate legacy commands into rub commands
+
+        if (terminalOptions.switches.watch == "named") {
+            // rub watch
+            terminalOptions.courses.shift();
+            terminalOptions.switches.debug = true;
+            terminalOptions.switches.watch = true;
+            terminalOptions.command = "watch";
+        }
+
+        if (terminalOptions.courses.length === 0) return;
+
+        var firstArgument = terminalOptions.courses[0];
+        if (typeof firstArgument != "string") return;
+        
+        var command = firstArgument.toLowerCase();
+        switch(command) {
+        case "dev":
+            // rub dev
+            terminalOptions.courses.shift();
+            terminalOptions.switches.debug = true;
+            terminalOptions.switches.watch = true;
+            terminalOptions.command = command;
+            break;
+        case "build":
+            // rub build
+            terminalOptions.courses.shift();
+            terminalOptions.switches.debug = false;
+            terminalOptions.command = command;
+            break;
+        }
+
+        
     }
 
 };

@@ -1,17 +1,8 @@
 var Action = require("../utils/Action.js");
 
-var defaults = {
-    optimize: "uglify2",
-    generateSourceMaps: true,
-    preserveLicenseComments: false,
-    useSourceUrl: false
-};
-
-
-var outputCache = {};
-var waitingNonDynamics = {};
-
 var javascript = new Action({
+    _outputCache: {},
+    _waitingForBuildOnce: {},
 
     initialize: function() {
 
@@ -21,17 +12,18 @@ var javascript = new Action({
             "fs": "fs",
             "path": "path",
             "_": "underscore",
-            "hbs": "handlebars",
             "requirejs": "requirejs",
             "sourcemaps": "../utils/sourcemaps.js"
         });
 
     },
 
-    perform: function(options, done) {
-        options = _.extend({}, defaults, options);
+    perform: function(options, done, started) {
+        
+        options = options || {};
 
-        options.dest = hbs.compile(options.dest)(options);
+        options.dest = fsext.replace(options.dest, options);
+
         if (options.dest) options.out = options.dest;
 
         if (fs.existsSync(options.dest) && options.switches.force !== true) {
@@ -61,22 +53,26 @@ var javascript = new Action({
         if (fs.existsSync(options.dest+".map")) fs.unlinkSync(options.dest+".map");
 
         if (options['@buildOnce'] === true) {
-            if (outputCache[options["@name"]]) {
+            if (this._outputCache[options["@name"]]) {
                 
                 fsext.mkdir(path.dirname(options.dest));
-                fs.writeFileSync(fsext.expand(options.dest), outputCache[options["@name"]]);
+                fs.writeFileSync(fsext.expand(options.dest), this._outputCache[options["@name"]].javascript);
+                if (this._outputCache[options['@name']].sourcemap) {
+                    fs.writeFileSync(fsext.expand(options.dest)+".map", this._outputCache[options["@name"]].sourcemap);
+                }
                 return done(options);
             } else {
-                if (waitingNonDynamics[options["@name"]]) {
+                if (this._waitingForBuildOnce[options["@name"]]) {
                     
-                    waitingNonDynamics[options["@name"]].push(options);
+                    this._waitingForBuildOnce[options["@name"]].push(options);
                     return done(options);
                 } else {
-                    waitingNonDynamics[options["@name"]] = [];
+                    this._waitingForBuildOnce[options["@name"]] = [];
                 }
             }
         }
-        logger.runlog(options);
+
+        started();
 
         if (!options.paths) options.paths = {};
 
@@ -139,26 +135,26 @@ var javascript = new Action({
 
                 if (options['@buildOnce']) {
                     if (options.generateSourceMaps) {
-                        outputCache[ options['@name'] ] = {
+                        this._outputCache[ options['@name'] ] = {
                             javascript: fs.readFileSync(options.dest),
                             sourcemap: fs.readFileSync(options.dest + ".map")
                         };
                     } else {
-                        outputCache[ options['@name'] ] = {
+                        this._outputCache[ options['@name'] ] = {
                             javascript: fs.readFileSync(options.dest)
                         };
                     }
 
-                    if ( waitingNonDynamics[options["@name"]] ) {
-                        var queue =  waitingNonDynamics[options["@name"]];
+                    if ( this._waitingForBuildOnce[options["@name"]] ) {
+                        var queue =  this._waitingForBuildOnce[options["@name"]];
                         for (var i = 0, l = queue.length; i < l; i++) {
                             var item = queue[i];
 
                             fsext.mkdir(path.dirname(item.dest));
                             if (options.generateSourceMaps) {
-                                 fs.writeFileSync(fsext.expand(item.dest) + ".map", outputCache[options["@name"]].sourcemap );
+                                 fs.writeFileSync(fsext.expand(item.dest) + ".map", this._outputCache[options["@name"]].sourcemap );
                             }
-                            fs.writeFileSync(fsext.expand(item.dest), outputCache[options["@name"]].javascript );
+                            fs.writeFileSync(fsext.expand(item.dest), this._outputCache[options["@name"]].javascript );
                         }
                     }
                     
@@ -176,8 +172,8 @@ var javascript = new Action({
     },
 
     reset: function() {
-        outputCache = {};
-        waitingNonDynamics = {};
+        this._outputCache = {};
+        this._waitingForBuildOnce = {};
     }
     
 });

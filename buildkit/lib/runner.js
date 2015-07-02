@@ -1,7 +1,6 @@
 var fs = require("fs");
 var fsext = require("./utils/fsext");
 var fswatch = require("./utils/fswatch");
-var chalk = require("chalk");
 var path = require("path");
 var hbs = require("handlebars");
 var taskqueue = require("./utils/taskqueue.js");
@@ -19,16 +18,15 @@ var pub = {
 
  	entryPoint: function(terminalOptions) {
 
- 		var legacyCommand = pub.processLegacyCommands(terminalOptions);
-
  		pub.setupConfig(terminalOptions);
 
- 		fsext.exclusionGlobs = pub._configuration.defaults.exclusionGlobs;
- 		fswatch.exclusionGlobs = pub._configuration.defaults.exclusionGlobs;
+ 		fsext.exclusionGlobs = pub._configuration.defaults.exclusionGlobs || [];
+ 		fswatch.exclusionGlobs = pub._configuration.defaults.exclusionGlobs || [];
+ 		taskqueue.taskLimit = pub._configuration.defaults.taskLimit || 20;
 
  		pub.setupActions();
 
- 		switch (legacyCommand) {
+ 		switch (terminalOptions.command) {
  		case "watch":
  			runWatchOnly();
  			return;
@@ -83,7 +81,7 @@ var pub = {
 
 		function consoleExitHandler() {
 			console.log();
-			if (pub._server.isStarted()) {
+			if (pub._server && pub._server.isStarted()) {
 				pub._serverReloadType = "close";
 				pub._server.reload(pub._serverReloadType);
 
@@ -99,40 +97,6 @@ var pub = {
 
 		process.on('SIGINT', consoleExitHandler);
 
-	},
-
-	processLegacyCommands: function(terminalOptions) {
-		//translate legacy commands into rub commands
-
-		if (terminalOptions.switches.watch == "named") {
-			// rub watch
-			terminalOptions.courses.shift();
-			terminalOptions.switches.debug = true;
-			terminalOptions.switches.watch = true;
-			return "watch";
-		}
-
-		if (terminalOptions.courses.length === 0) return;
-
- 		var firstArgument = terminalOptions.courses[0];
- 		if (typeof firstArgument != "string") return;
-		
-		var command = firstArgument.toLowerCase();
-		switch(command) {
-		case "dev":
-			// rub dev
-			terminalOptions.courses.shift();
-			terminalOptions.switches.debug = true;
-			terminalOptions.switches.watch = true;
-			break;
-		case "build":
-			// rub build
-			terminalOptions.courses.shift();
-			terminalOptions.switches.debug = false;
-			break;
-		}
-
-		return command;
 	},
 
 	setupConfig: function(terminalOptions) {
@@ -170,10 +134,13 @@ var pub = {
 			//select directory layout
 			if (fs.existsSync("./src/course")) {
 				terminalOptions.switches.type = "src/course";
+				terminalOptions.switches.typeName = "Adapt Learning";
 			} else if (fs.existsSync("./src/courses")) {
-				terminalOptions.switches.type = "src/courses"
+				terminalOptions.switches.type = "src/courses/course"
+				terminalOptions.switches.typeName = "Kineo src/courses";
 			} else {
 				terminalOptions.switches.type = "builds/courses/course";
+				terminalOptions.switches.typeName = "Kineo src/builds";
 			}
 		}
 
@@ -194,6 +161,7 @@ var pub = {
 					}
 				}
 			}
+
 			_.extend(terminalOptions.switches, newSwitches);
 
 		}
@@ -204,7 +172,7 @@ var pub = {
 			case "builds/courses/course":
 				terminalOptions.outputDest = pub._configuration.defaults.multipleDestPath;
 				break;
-			case "src/courses":
+			case "src/courses/course":
 				terminalOptions.outputDest = pub._configuration.defaults.multipleDestPath;
 				break;
 			case "src/course":
@@ -277,24 +245,30 @@ var pub = {
 
 		function displayHeader(terminalOptions) {
 			logger.log("Building Mode: "+(terminalOptions.switches.debug ? "Debug": "Production") , (terminalOptions.switches.debug ? 1:0));
-			logger.log("Structure Type: "+terminalOptions.switches.type,0);
-			logger.log("Forced Build: "+(terminalOptions.switches.force || false),0);
+			var forceBuild = (terminalOptions.switches.force || false);
+			if (forceBuild) logger.log("Forced Rebuild", 1);
+			else logger.log("Quick Rebuild", 0);
+			logger.log("Structure Type: "+terminalOptions.switches.typeName,0);
 			logger.log("Output Courses: "+(terminalOptions.courses.join(",")||"All"),0);
 		}
 	},
 
 	startBuildOperations: function(actions) {
+		taskqueue.reset();
+
 		switch(pub._terminalOptions.switches.type) {
 		case "builds/courses/course":
 			buildBuildCoursesFolders(pub._terminalOptions, actions);
 			break;
-		case "src/courses":
+		case "src/courses/course":
 			buildSrcCoursesFolders(pub._terminalOptions, actions);
 			break;
 		case "src/course":
 			buildSrcCourseFolder(pub._terminalOptions, actions);
 			break;
 		}
+
+		taskqueue.start();
 
 		function buildBuildCoursesFolders(terminalOptions, actions) {
 			var courseFolderList = fsext.list(fsext.expand(terminalOptions.outputDest));
@@ -314,14 +288,14 @@ var pub = {
 		function buildSrcCoursesFolders(terminalOptions, actions) {
 			var courseFolderList = fsext.list(fsext.expand(terminalOptions.srcCoursesPath));
 			var dirs = _.pluck(courseFolderList.dirs, "filename");
-			
+
 			for (var i = 0, l = dirs.length; i < l; i++) {
 				var dir = dirs[i];
-
 				if (terminalOptions.courses.length > 0)
 					if (terminalOptions.courses.indexOf(dir) == -1) continue;
 
 				var opts = _.extend({}, terminalOptions, { course: dir });
+
 				runActions(opts, actions);
 			}
 
@@ -334,8 +308,6 @@ var pub = {
 
 		function runActions(terminalOptions, actions) {
 
-			taskqueue.reset();
-
 			for (var i = 0, l = actions.length; i < l; i++) {
 
 				var actionConfig = actions[i];
@@ -343,8 +315,6 @@ var pub = {
 
 				runAction(terminalOptionsAndActionConfig);
 			}
-
-			taskqueue.start();
 
 			function runAction(terminalOptionsAndActionConfig) {
 				pub._serverReloadType = "window";
@@ -357,8 +327,15 @@ var pub = {
 				taskqueue.add(terminalOptionsAndActionConfig, function(terminalOptionsAndActionConfig, done) {
 					var actionName = terminalOptionsAndActionConfig['@action'];
 					var action = require("./actions/"+actionName+".js");
-					action.initialize();
-					action.perform(terminalOptionsAndActionConfig, done);
+
+					if (!actions._isInitialized) {
+						action.initialize();
+						action._isInitialized = true;
+					}
+	
+					action.perform(terminalOptionsAndActionConfig, done, function() {
+						logger.runlog(terminalOptionsAndActionConfig);
+					});
 				});
 				
 			}

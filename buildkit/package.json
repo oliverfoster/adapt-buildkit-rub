@@ -19,6 +19,7 @@
     "osenv": "^0.1.0",
     "requirejs": "^2.1.17",
     "serve-index": "^1.6.3",
+    "uglify-js": "^2.4.23",
     "underscore": "~1.6.0"
   }
 }

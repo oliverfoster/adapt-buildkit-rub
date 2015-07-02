@@ -3,6 +3,7 @@ var _ = require("underscore");
 var fs = require("fs");
 var path = require("path");
 var osenv = require("osenv");
+var hbs = require("handlebars");
 
 var pub = {
 	exclusionGlobs: null,
@@ -11,10 +12,10 @@ var pub = {
 		//return two arrays of all files and dirs in the given directory
 		/*	
 			each file is a String(path) object with the attributes
-				.basename string
-				.extname string
-				.filename string 
-				.dirname string
+				.basename string   filename with extname
+				.extname string    no filename
+				.filename string   no extname
+				.dirname string    
 				.path string
 				.dir  true/false
 				.file  true/false
@@ -122,6 +123,10 @@ var pub = {
 		if (atPath.substr(0,1) == "/" || atPath.substr(1,1) == ":") return atPath;
 		if (atPath == "" || atPath === undefined) return process.cwd();
 		return path.join(process.cwd(), atPath+"");
+	},
+
+	replace: function(path, context) {
+		return hbs.compile(path)(context);
 	},
 	
 
@@ -232,6 +237,18 @@ var pub = {
 			}
 			if (fs.existsSync(outputPath)) continue;
 			fs.mkdirSync(outputPath, 0777);
+		}
+	},
+
+	remove: function(dest, globs) {
+		var list =  pub.glob(dest, globs);
+		var dirs = _.where(list, { dir: true });
+		var files = _.where(list, { dir: false });
+		for (var i = 0, l = files.length; i < l; i++) {
+			fs.unlinkSync(files[i].path);
+		}
+		for (var i = dirs.length - 1, l = -1; i > l; i--) {
+			fs.rmdirSync(dirs[i].path);
 		}
 	}
 

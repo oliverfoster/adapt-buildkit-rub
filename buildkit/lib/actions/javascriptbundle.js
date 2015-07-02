@@ -1,12 +1,7 @@
 var Action = require("../utils/Action.js");
 
-var defaults = {
-		src: process.cwd(),
-		dest: path.join(process.cwd(), "bundles.js")
-	};
-
-
 var javascriptbundle = new Action({
+	_outputCache: {},
 
 	initialize: function() {
 
@@ -15,15 +10,15 @@ var javascriptbundle = new Action({
             "logger": "../utils/logger.js",
             "fs": "fs",
             "path": "path",
-            "_": "underscore",
-            "hbs": "handlebars"
+            "_": "underscore"
         });
 
     },
 
-	perform: function(options, done) {
-		options = _.extend({}, defaults, options);
-		options.dest = hbs.compile(options.dest)(options);
+	perform: function(options, done, started) {
+		
+		options = options || {};
+		options.dest = fsext.replace(options.dest, options);
 
 		var output = "";
 
@@ -41,6 +36,12 @@ var javascriptbundle = new Action({
 	        	return done(options);
 	        }
 	    }
+
+	    if (options['@buildOnce'] && this._outputCache[options['@name']]) {
+            return done(options);
+        }
+
+	    started();
 
 		options.requires = {};
 
@@ -92,6 +93,11 @@ var javascriptbundle = new Action({
 		if (fs.existsSync(options.dest+".map")) fs.unlinkSync(options.dest+".map");
 
 		fsext.mkdir(path.dirname(options.dest));
+
+		 if (options['@buildOnce']) {
+		 	this._outputCache[options['@name']] = true;
+		 }
+
 		fs.writeFileSync(options.dest, output);
 
 		done(options);

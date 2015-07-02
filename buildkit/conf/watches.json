@@ -153,7 +153,7 @@
 		},
 		{
 			"@name": "course-folder",
-			"@types": [ "src/courses" ],
+			"@types": [ "src/courses/course" ],
 			"path": "src",
 			"globs": [
 				"**/courses/**"

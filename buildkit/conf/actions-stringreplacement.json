@@ -8,7 +8,7 @@
                 "build"
             ],
             "@when": "preFinish",
-			"@types": [ "builds/courses/course", "src/courses" ],
+			"@types": [ "builds/courses/course", "src/courses/course" ],
 			"src": "src",
 			"globs": [
                 "**/adapt-contrib-spoor/required/imsmanifest.xml"

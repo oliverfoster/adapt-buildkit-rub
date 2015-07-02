@@ -9,20 +9,18 @@ var copy = new Action({
             "logger": "../utils/logger.js",
             "fs": "fs",
             "path": "path",
-            "_": "underscore",
-            "hbs": "handlebars"
+            "_": "underscore"
         });
 
     },
 
-	perform: function(options, done) {
+	perform: function(options, done, started) {
+		started();
 		if (options.root === undefined) options.root = "";
-
-		logger.runlog(options);
-
-		options.root = hbs.compile(options.root)(options);
+		
+		options.root = fsext.replace(options.root, options);
 		options.root = fsext.expand(options.root);
-		options.dest = hbs.compile(options.dest)(options);
+		options.dest = fsext.replace(options.dest, options);
 		options.dest = fsext.expand(options.dest);
 
 		var srcPath = path.join(options.root, options.src);
@@ -31,7 +29,7 @@ var copy = new Action({
 		var copyTasks = [];
 		var copyInterval = null;
 		var copyTasksRunning = 0;
-
+		
 		for (var i = 0, l = list.length; i < l; i ++) {
 			var item = list[i];
 			var shortenedPath = (item.path).substr(options.root.length);
@@ -43,7 +41,7 @@ var copy = new Action({
 				var dirname = path.dirname(outputPath);
 				fsext.mkdir(dirname);
 
-				if (fs.existsSync(outputPath) && options.force !== true) {
+				if (fs.existsSync(outputPath) && options.force !== true && options.always !== true) {
 					var outputStat = fs.statSync(outputPath);
 					if (outputStat.mtime >= item.mtime ) continue;
 				} 
@@ -65,10 +63,10 @@ var copy = new Action({
 		}
 		function startCopyTasks() {
 			if (copyInterval !== null) return;
-			copyInterval = setInterval(copyLoop, 0);
+			copyInterval = setInterval(copyLoop, 250);
 		}
 		function copyLoop() {
-			for (var i = 0, l = copyTasks.length; i < l && copyTasksRunning < 10; i++) {
+			for (var i = 0, l = copyTasks.length; i < l && copyTasksRunning < 20; i++) {
 				var task = copyTasks.shift();
 				copyTasksRunning++;
 				var rs = fs.createReadStream(task.from);

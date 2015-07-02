@@ -11,7 +11,7 @@
                 "quick"
             ],
             "@when": "preFinish",
-			"@types": [ "builds/courses/course", "src/courses" ],
+			"@types": [ "builds/courses/course", "src/courses/course" ],
 			"src": "builds/{{course}}/course",
 			"globs": "**/*.json"
 		},

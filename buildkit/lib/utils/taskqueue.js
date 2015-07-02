@@ -1,4 +1,3 @@
-var chalk = require("chalk");
 var _ = require("underscore");
 
 var events = require('events');
@@ -6,14 +5,16 @@ var eventEmitter = new events.EventEmitter();
 
 var pub =  _.extend(eventEmitter, {
 
+	taskLimit: 20,
 	_tasks: {},
-
 	_phaseIndex: 0,
 	_running: 0,
 	_phases: [ "start", "postStart", "preFinish", "finish" ],
+	_phaseDisplayNames: [ "> Preparation <", "> Construction <", "> Alterations <", "> Finishing <"],
 	_queueLoopInterval: null,
 	_loopOverRun: 0,
 	_inLoop: false,
+	_hasDisplayedPhaseName: false,
 
 	isRunning:function() {
 		return (pub._phaseIndex < pub._phases.length);
@@ -35,26 +36,29 @@ var pub =  _.extend(eventEmitter, {
 	},
 
 	start: function() {
+
 		if (pub._queueLoopInterval) return;
+		nextPhase(true);
 		pub._queueLoopInterval = setInterval(queueLoop, 1);
 
 		function queueLoop() {
-			if (pub._phaseIndex > pub._phases.length) return endLoop();
+
 			var phaseName = pub._phases[pub._phaseIndex];
 			var tasks =  pub._tasks[phaseName];
-			if (tasks === undefined) return nextPhase();
-			if (tasks.length === 0) {
-				pub._loopOverRun++;
-				return;
+
+			if (tasks && tasks.length > 0) {
+				pub._inLoop = true;
+				pub._hasLoopRun = false;
+				for (var i = 0, l = tasks.length; i < l && pub._running < pub.taskLimit; i++) {
+					pub._hasLoopRun = true;
+					var task = tasks.shift();
+					pub._running++;
+					task.executor(task.options, taskDone);	
+				}
+				pub._inLoop = false;
 			}
-			pub._inLoop = true;
-			for (var i = 0, l = tasks.length; i < l && pub._running < 10; i++) {
-				var task = tasks.shift();
-				pub._running++;
-				task.executor(task.options, taskDone);	
-			}
-			pub._inLoop = false
-			if (pub._running <= 0) nextPhase();
+
+			checkNext();
 		}
 
 		function taskDone(options, err) {
@@ -62,16 +66,32 @@ var pub =  _.extend(eventEmitter, {
 				pub.emit("error", options, err);
 			}
 			pub._running--;
-			if (pub._running <= 0 && !pub._inLoop) nextPhase();
+			checkNext()
 		}
 
-		function nextPhase() {
-			pub._running = 0;
-			pub._phaseIndex++;
+		function checkNext() {
+			if (pub._phaseIndex >= pub._phases.length) return;
+
 			var phaseName = pub._phases[pub._phaseIndex];
-			if (pub._phaseIndex > pub._phases.length) return endLoop();
-			if (pub._tasks[phaseName] === undefined) return nextPhase();
-			if (pub._tasks[phaseName].length === 0) return nextPhase();
+			var tasks =  pub._tasks[phaseName];
+
+			if (tasks === undefined) return nextPhase();
+			if (pub._running <= 0 && tasks.length === 0) return nextPhase();
+		}
+
+		function nextPhase(isStart) {
+			pub._hasDisplayedPhaseName = true;
+			pub._running = 0;
+			if (!isStart) pub._phaseIndex++;
+
+			if (pub._phaseIndex >= pub._phases.length) return endLoop();
+
+			var phaseName = pub._phases[pub._phaseIndex];
+			var tasks =  pub._tasks[phaseName];
+			if (!tasks || tasks.length === 0) return nextPhase();
+
+			var phaseName = pub._phases[pub._phaseIndex];
+			console.log(pub._phaseDisplayNames[pub._phaseIndex]);
 		}
 
 		function endLoop() {

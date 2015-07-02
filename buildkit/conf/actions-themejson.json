@@ -7,7 +7,7 @@
             "@onlyOnSwitches": [
                 "build"
             ],
-            "@when": "postStart",
+            "@when": "preFinish",
 			"@types": [ "builds/courses/course" ],
 			"src": "src",
 			"globs": [
@@ -22,8 +22,8 @@
             "@onlyOnSwitches": [
                 "build"
             ],
-            "@when": "postStart",
-			"@types": [ "src/courses" ],
+            "@when": "preFinish",
+			"@types": [ "src/courses/course" ],
 			"src": "src",
 			"globs": [
                 "**/theme/**/theme.json"
@@ -38,7 +38,7 @@
                 "build"
             ],
 			"@types": [ "src/course" ],
-            "@when": "postStart",
+            "@when": "preFinish",
 			"src": "src",
 			"globs": [
 				"**/theme/**/theme.json"

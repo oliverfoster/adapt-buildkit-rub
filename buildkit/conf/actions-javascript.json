@@ -2,11 +2,12 @@
 	"actions": [
 		{
 			"@name": "libraries-bundle",
-			"@displayName": "Compiling foundation libraries...",
+			"@displayName": "Gathering foundation libraries...",
 			"@action": "javascriptbundle",
 			"@onlyOnSwitches": [
                 "build"
             ],
+            "@buildOnce": true,
             "@when": "postStart",
 			"src": "src",
 			"globs": [
@@ -29,6 +30,8 @@
 			"baseUrl": "src",
 			"optimize": "uglify2",
     		"generateSourceMaps": true,
+		    "preserveLicenseComments": false,
+		    "useSourceUrl": false,
 			"sourceMapRelocate": "../../../src/",
 			"includes": {
 				"*": {
@@ -85,6 +88,8 @@
 			"baseUrl": "src/core/js",
 			"optimize": "uglify2",
     		"generateSourceMaps": true,
+    		"preserveLicenseComments": false,
+		    "useSourceUrl": false,
 			"sourceMapRelocate": "../../../src/core/js/",
 			"empties": {
 				"*": {
@@ -126,7 +131,7 @@
 		},
 		{
 			"@name": "bundles-bundle",
-			"@displayName": "Compiling plugin javascript",
+			"@displayName": "Gathering plugin javascript...",
 			"@action": "javascriptbundle",
 			"@onlyOnSwitches": [
                 "build"
@@ -164,6 +169,8 @@
 			"baseUrl": "src",
 			"optimize": "uglify2",
     		"generateSourceMaps": true,
+    		"preserveLicenseComments": false,
+		    "useSourceUrl": false,
 			"sourceMapRelocate": "../../../src/",
 			"empties": {
 				"*": {
@@ -185,6 +192,64 @@
 				"bundles": "bundles"
 			},
 			"dest": "{{outputDest}}/{{course}}/adapt/js/bundles.js"
+		},
+		{
+			"@name": "javascript-blend",
+			"@displayName": "Generating single javascript file...",
+			"@action": "javascriptblend",
+			"@excludeOnSwitches": [
+                "debug"
+            ],
+            "@onlyOnSwitches": [
+                "build"
+            ],
+            "@types": [ "builds/courses/course", "src/courses/course" ],
+            "@when": "finish",
+			"root": "builds/{{course}}/adapt/js",
+			"src": "",
+			"globs": [
+				"!*.map",
+				"!scriptLoader.js",
+				"libraries.js",
+				"templates.js",
+				"core.js",
+				"bundles.js",
+				"adapt.min.js"
+			],
+			"optimize": [
+				"templates.js",
+				"adapt.min.js"
+			],
+			"dest": "{{outputDest}}/{{course}}/adapt/js/adapt.min.js"
+		},
+		{
+			"@name": "javascript-blend",
+			"@displayName": "Generating single javascript file...",
+			"@action": "javascriptblend",
+			"@excludeOnSwitches": [
+                "debug"
+            ],
+            "@onlyOnSwitches": [
+                "build"
+            ],
+            "@types": [ "src/course" ],
+            "@when": "finish",
+			"root": "build/adapt/js",
+			"src": "",
+			"globs": [
+				"!*.map",
+				"!scriptLoader.js",
+				"libraries.js",
+				"templates.js",
+				"core.js",
+				"bundles.js",
+				"adapt.min.js"
+			],
+			"optimize": [
+				"templates.js",
+				"adapt.min.js"
+			],
+			"dest": "{{outputDest}}/adapt/js/adapt.min.js"
 		}
 	]
 }

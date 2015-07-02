@@ -10,21 +10,20 @@ var zip = new Action({
 			"fs": "fs",
 			"path": "path",
 			"_": "underscore",
-			"hbs": "handlebars",
 			"zipLibrary": "node-native-zip-compression"
 		});
 
 	},
 
-	perform: function(options, done) {
+	perform: function(options, done, started) {
+		started();
+		
 		if (options.root === undefined) options.root = "";
-
-		logger.runlog(options);
 
 		var now = (new Date());
 		options.scoDate = now.getYear() + twoDigit(now.getMonth()) + twoDigit(now.getDate()) + "_" + twoDigit(now.getHours()) + twoDigit(now.getMinutes()) + twoDigit(now.getSeconds());
 		
-		options.root = hbs.compile(options.root)(options);
+		options.root = fsext.replace(options.root, options);
 		options.root = fsext.expand(options.root);
 		
 		var srcPath = path.join(options.root, options.src);
@@ -35,7 +34,7 @@ var zip = new Action({
 			options = _.extend({}, context, options);
 		}
 		
-		options.dest = hbs.compile(options.dest)(options);
+		options.dest = fsext.replace(options.dest, options);
 		options.dest = fsext.expand(options.dest);
 
 		var list = fsext.glob(srcPath, options.globs, { dirs: false });

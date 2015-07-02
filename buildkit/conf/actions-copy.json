@@ -43,7 +43,8 @@
                 "build"
             ],
             "@when": "postStart",
-			"root": "buildkit/res/",
+            "force": true,
+			"root": "buildkit/resources/",
 			"src": "",
 			"globs": [
 				"**/**"
@@ -91,7 +92,7 @@
 			"@name": "course-folder",
 			"@displayName": "Synching course folder...",
 			"@action": "copy",
-			"@types": [ "src/courses" ],
+			"@types": [ "src/courses/course" ],
 			"@onlyOnSwitches": [
                 "build"
             ],

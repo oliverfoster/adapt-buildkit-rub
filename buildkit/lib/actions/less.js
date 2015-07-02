@@ -1,17 +1,5 @@
 var Action = require("../utils/Action.js");
 
-var defaults = {
-		src: process.cwd(),
-		dest: path.join(process.cwd(), "templates.js"),
-		extensionGlobs: [ "*.hbs", '*.html', "*.handlebars", "*.htm" ],
-		paritalGlobs: [ "**/partial/**" ],
-		requires: {
-			Handlebars: 'handlebars'
-		},
-		context: "Handlebars.templates"
-	};
-
-
 var less = new Action({
 
 	initialize: function() {
@@ -22,17 +10,17 @@ var less = new Action({
             "fs": "fs",
             "path": "path",
             "_": "underscore",
-            "hbs": "handlebars",
             "lessCompiler": "less",
             "sourcemaps": "../utils/sourcemaps.js"
         });
 
     },
 
-	perform: function(options, done) {
-		options = _.extend({}, defaults, options, { sourceMap: options });
+	perform: function(options, done, started) {
+		
+		options = _.extend({}, options, { sourceMap: options });
 
-		options.dest = hbs.compile(options.dest)(options);
+		options.dest = fsext.replace(options.dest, options);
 
 		var output = "";
 		if (typeof options.src == "string") options.src = [options.src];
@@ -56,8 +44,8 @@ var less = new Action({
 		    	return done(options);
 		    }
 		}
-		
-		logger.runlog(options);
+
+		started();
 
 		if (fs.existsSync(options.dest)) fs.unlinkSync(options.dest);
 	    if (fs.existsSync(options.dest+".map")) fs.unlinkSync(options.dest+".map");

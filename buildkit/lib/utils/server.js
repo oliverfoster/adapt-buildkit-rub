@@ -4,8 +4,6 @@ var fs = require("fs");
 var path = require("path");
 var url = require('url');
 var _ = require("underscore");
-var index;
-var options;
 
 var pub = module.exports = {
 	
@@ -21,8 +19,8 @@ var pub = module.exports = {
     start: function (opts) {
     	this._isStarted = true;
         var serveIndex = require('serve-index');
-        options = opts;
-        index = serveIndex( options.outputDest, {'icons': true});
+        var options = opts;
+        var index = serveIndex( options.outputDest, {'icons': true});
 
     	var http = require("http");
     	var port = opts.switches.port;
@@ -51,7 +49,7 @@ var pub = module.exports = {
 			if (start > -1) {
 				var begin = fileString.substr(0, start);
 				var end = fileString.substr(start+6);
-				var js = '\n<script id="server-sync" src="/_server/sync.js" type="text/javascript" data-lastevent="'+ (new Date()).getTime() + '"></script>\n';
+				var js = '\n<script id="server-sync" src="/__server__/sync.js" type="text/javascript" data-lastevent="'+ (new Date()).getTime() + '"></script>\n';
 				fileString = begin+js+end;
 
 			}
@@ -88,7 +86,7 @@ var pub = module.exports = {
 		function request(req, res) {
 		   
 		    var stat = urlStat(req.url);
-		    if (path.dirname(stat.path) === "/_server/_poll") {
+		    if (path.dirname(stat.path) === "/__server__/poll") {
 		    	if (stat.search) {
 		    		var timestamp = parseInt(stat.search.substr(1));
 		    		if (!isNaN(timestamp)) {
@@ -106,7 +104,7 @@ var pub = module.exports = {
 		        res.write("200 Not Found");
 		        res.end();
 		        return;
-		    } else if (path.dirname(stat.path) === "/_server") {
+		    } else if (path.dirname(stat.path) === "/__server__") {
 		    	var filename = path.join(__dirname, stat.path);
 
 		    	if (!fs.existsSync(filename)) {

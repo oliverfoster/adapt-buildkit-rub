@@ -10,18 +10,17 @@ var jsonlint = new Action({
             "fs": "fs",
             "path": "path",
             "_": "underscore",
-            "hbs": "handlebars",
             "JSONLint": "json-lint"
         });
 
     },
 
-	perform: function(options, done) {
+	perform: function(options, done, started) {
+		started();
+		
 		if (options.root === undefined) options.root = "";
 
-		logger.runlog(options);
-
-		options.src = hbs.compile(options.src)(options);
+		options.src = fsext.replace(options.src, options);
 		options.src = fsext.expand(options.src);
 
 		var list = fsext.glob(options.src, options.globs, { dirs: false });
