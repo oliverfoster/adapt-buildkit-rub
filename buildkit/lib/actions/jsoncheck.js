@@ -1,14 +1,5 @@
 var Action = require("../utils/Action.js");
 
-var fsext = require("../utils/fsext.js");
-var taskqueue = require("../utils/taskqueue.js");
-var logger = require("../utils/logger.js");
-var fs = require("fs");
-var path = require("path");
-var _ = require("underscore");
-var hbs = require("handlebars");
-var JSONLint = require("json-lint");
-
 var jsoncheck = new Action({
 
     initialize: function() {
@@ -18,23 +9,28 @@ var jsoncheck = new Action({
             "logger": "../utils/logger.js",
             "fs": "fs",
             "path": "path",
-            "_": "underscore",
-            "hbs": "handlebars"
+            "_": "underscore"
         });
 
     },
     
-    perform: function(options) {
+    perform: function(options, done, started) {
 
+        started();
 
-    }
+        options = options || {};
+        options.src = fsext.replace(options.src, options);
 
-});
+        var idRegExp = options.validIdRegex || ".+";
 
-module.exports = jsoncheck;
+        try {
+            check(options);
+        } catch(e) {
+            logger.error(e);
+        }
 
-    var checkJson = function(options, config) {
-        var idRegExp;
+        done(options);
+
         function check(options) {
             var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
             var storedParentChildrenIds = {};
@@ -48,44 +44,43 @@ module.exports = jsoncheck;
 
             // method to check json ids
             function checkJsonIds() {
-                console.log(chalk.white("" + options.courseOptions.course + " - Checking JSON..."));
                 var currentCourseFolder;
                 // Go through each course folder inside the src/course directory
-                list( options.jsonconfig.courseBasePath, function(subdirs) {
-                    _.each(subdirs, function(subdir) {
-                        var dir = path.join(options.jsonconfig.courseBasePath, subdir);
-                        // Stored current path of folder - used later to read .json files
-                        currentCourseFolder = dir;
-                        storedParentChildrenIds = {};
-                        // Go through each list of declared course files
-                        listOfCourseFiles.forEach(function(jsonFileName) {
-                            // Make sure course.json file is not searched
-                            if (jsonFileName !== "course") {
-                                
-                                storedFileParentIds[jsonFileName] = [];
-                                storedFileIds[jsonFileName] = [];
-                                // Read each .json file
-                                var currentJsonFile = JSON.parse(fs.readFileSync(currentCourseFolder + "/" + jsonFileName + ".json"));
-                                currentJsonFile.forEach(function(item) {
-                                    idFile[item._id] = jsonFileName;
-                                    // Store _parentIds and _ids to be used by methods below
-                                    if (!storedParentChildrenIds[item._parentId]) storedParentChildrenIds[item._parentId] = [];
-                                    storedParentChildrenIds[item._parentId].push(item._id);
-                                    if (item._type !== "component") {
-                                        storedParentChildrenIds[item._id] = [];
-                                    }
-                                    storedFileParentIds[jsonFileName].push(item._parentId);
-                                    storedFileIds[jsonFileName].push(item._id);
-                                    storedIds.push(item._id);
-                                });
+                var nodes = fsext.list( options.src );
 
-                            } else {
-                                var currentJsonFile = JSON.parse(fs.readFileSync(currentCourseFolder + "/" + jsonFileName + ".json"));
-
-                                courseId = currentJsonFile._id
-                            }
+                _.each(nodes.dirs, function(subdir) {
+                    var dir = fsext.expand(subdir.toString());
+                    // Stored current path of folder - used later to read .json files
+                    currentCourseFolder = dir;
+                    storedParentChildrenIds = {};
+                    // Go through each list of declared course files
+                    listOfCourseFiles.forEach(function(jsonFileName) {
+                        // Make sure course.json file is not searched
+                        if (jsonFileName !== "course") {
                             
-                        });
+                            storedFileParentIds[jsonFileName] = [];
+                            storedFileIds[jsonFileName] = [];
+                            // Read each .json file
+                            var currentJsonFile = JSON.parse(fs.readFileSync(currentCourseFolder + "/" + jsonFileName + ".json"));
+                            currentJsonFile.forEach(function(item) {
+                                idFile[item._id] = jsonFileName;
+                                // Store _parentIds and _ids to be used by methods below
+                                if (!storedParentChildrenIds[item._parentId]) storedParentChildrenIds[item._parentId] = [];
+                                storedParentChildrenIds[item._parentId].push(item._id);
+                                if (item._type !== "component") {
+                                    storedParentChildrenIds[item._id] = [];
+                                }
+                                storedFileParentIds[jsonFileName].push(item._parentId);
+                                storedFileIds[jsonFileName].push(item._id);
+                                storedIds.push(item._id);
+                            });
+
+                        } else {
+                            var currentJsonFile = JSON.parse(fs.readFileSync(currentCourseFolder + "/" + jsonFileName + ".json"));
+
+                            courseId = currentJsonFile._id
+                        }
+                        
                     });
 
                     checkIds();
@@ -179,10 +174,10 @@ module.exports = jsoncheck;
             checkJsonIds();
         }
 
-        
-        var opts = _.extend({}, options, { jsonconfig: _.extend({}, options.jsonconfig) });
-        opts.jsonconfig.courseBasePath = path.join(process.cwd(), config.buildGlobs.srcPath, stringReplace(opts.jsonconfig.courseBasePath, opts.courseOptions));
-        idRegExp = new RegExp(opts.jsonconfig.idRegExp);
-        check(opts);
-            
-    };
+    }
+
+});
+
+module.exports = jsoncheck;
+
+    

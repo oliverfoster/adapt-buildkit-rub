@@ -1,0 +1,32 @@
+{
+	"actions": [
+		{
+			"@name": "json-check",
+			"@displayName": "Checking json...",
+			"@action": "jsoncheck",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
+            "@when": "finish",
+			"@types": [ "builds/courses/course", "src/courses/course" ],
+			"src": "{{outputDest}}/{{course}}/course"
+		},
+		{
+			"@name": "json-lint",
+			"@displayName": "Checking json...",
+			"@action": "jsoncheck",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
+            "@when": "finish",
+			"@types": [ "src/course" ],
+			"src": "{{outputDest}}/course"
+		}
+	]
+}
