@@ -21,7 +21,7 @@ var jsoncheck = new Action({
         options = options || {};
         options.src = fsext.replace(options.src, options);
 
-        var idRegExp = options.validIdRegex || ".+";
+        var idRegExp = new RegExp(options.validIdRegex || ".+");
 
         try {
             check(options);
@@ -83,6 +83,8 @@ var jsoncheck = new Action({
                         
                     });
 
+                    console.log(storedIds);
+        
                     checkIds();
                     
                     checkEachParentHasChildren();
@@ -105,7 +107,7 @@ var jsoncheck = new Action({
                     }
                 }
                 if (badIds.length > 0) {
-                    console.log(chalk.bgCyan("Unconventional IDs " + badIds));
+                    logger.log("Unconventional IDs " + badIds);
                 }
             }
 
@@ -117,7 +119,7 @@ var jsoncheck = new Action({
                     }
                 }
                 if (emptyIds.length > 0) {
-                    console.log(chalk.bgRed("Empty " + emptyIds));
+                    logger.log("Empty " + emptyIds, 1);
                 }
             }
 
@@ -136,7 +138,7 @@ var jsoncheck = new Action({
 
                 // Check if any duplicate _ids exist and return error
                 if (hasDuplicateIds) {
-                    console.log(chalk.bgRed("Duplicate ids " + duplicateIds));
+                    logger.log("Duplicate ids " + duplicateIds, 1);
                 }
             }
 
@@ -168,7 +170,7 @@ var jsoncheck = new Action({
                 });
 
                 if (hasOrphanedParentIds) {
-                    console.log(chalk.bgRed("Orphaned objects " + orphanedParentIds));
+                    logger.log("Orphaned objects " + orphanedParentIds, 1);
                 }
             }
             checkJsonIds();

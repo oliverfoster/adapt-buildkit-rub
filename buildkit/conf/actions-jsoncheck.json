@@ -12,7 +12,8 @@
             ],
             "@when": "finish",
 			"@types": [ "builds/courses/course", "src/courses/course" ],
-			"src": "{{outputDest}}/{{course}}/course"
+			"src": "{{outputDest}}/{{course}}/course",
+			"validIdRegex": "((co|b|a|c){1}\\-{1}[0-9]{1,5}[a-zA-Z]{1})|((co|b|a|c){1}\\-{1}[0-9]{1,5})"
 		},
 		{
 			"@name": "json-lint",
@@ -26,7 +27,8 @@
             ],
             "@when": "finish",
 			"@types": [ "src/course" ],
-			"src": "{{outputDest}}/course"
+			"src": "{{outputDest}}/course",
+			"validIdRegex": "((co|b|a|c){1}\\-{1}[0-9]{1,5}[a-zA-Z]{1})|((co|b|a|c){1}\\-{1}[0-9]{1,5})"
 		}
 	]
 }
