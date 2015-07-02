@@ -24,6 +24,7 @@
             ],
             "@when": "postStart",
 			"@buildOnce": true,
+			"libraryName": "libraries", 
 			"name": "core/js/libraries/libraries",
 			"src": "src",
 			"globs": [ "**/core/js/libraries/*.js" ],
@@ -84,6 +85,7 @@
 			"@buildOnce": true,
 			"src": "src/core/js",
 			"globs": [ "*.js" ],
+			"libraryName": "core",
 			"name": "app",
 			"baseUrl": "src/core/js",
 			"optimize": "uglify2",
@@ -165,6 +167,7 @@
 				"**/src/menu/**/*.js",
 				"**/src/theme/**/*.js"
 			],
+			"libraryName": "bundles",
 			"name": "bundles",
 			"baseUrl": "src",
 			"optimize": "uglify2",
@@ -194,9 +197,9 @@
 			"dest": "{{outputDest}}/{{course}}/adapt/js/bundles.js"
 		},
 		{
-			"@name": "javascript-blend",
-			"@displayName": "Generating single javascript file...",
-			"@action": "javascriptblend",
+			"@name": "javascript-uglify",
+			"@displayName": "Uglifying javascript...",
+			"@action": "javascriptuglify",
 			"@excludeOnSwitches": [
                 "debug"
             ],
@@ -206,26 +209,16 @@
             "@types": [ "builds/courses/course", "src/courses/course" ],
             "@when": "finish",
 			"root": "builds/{{course}}/adapt/js",
-			"src": "",
 			"globs": [
-				"!*.map",
-				"!scriptLoader.js",
-				"libraries.js",
+				"adapt.min.js",
 				"templates.js",
-				"core.js",
-				"bundles.js",
-				"adapt.min.js"
-			],
-			"optimize": [
-				"templates.js",
-				"adapt.min.js"
-			],
-			"dest": "{{outputDest}}/{{course}}/adapt/js/adapt.min.js"
+				"scriptLoader.js"
+			]
 		},
 		{
-			"@name": "javascript-blend",
-			"@displayName": "Generating single javascript file...",
-			"@action": "javascriptblend",
+			"@name": "javascript-uglify",
+			"@displayName": "Uglifying javascript...",
+			"@action": "javascriptuglify",
 			"@excludeOnSwitches": [
                 "debug"
             ],
@@ -235,21 +228,11 @@
             "@types": [ "src/course" ],
             "@when": "finish",
 			"root": "build/adapt/js",
-			"src": "",
 			"globs": [
-				"!*.map",
-				"!scriptLoader.js",
-				"libraries.js",
+				"adapt.min.js",
 				"templates.js",
-				"core.js",
-				"bundles.js",
-				"adapt.min.js"
-			],
-			"optimize": [
-				"templates.js",
-				"adapt.min.js"
-			],
-			"dest": "{{outputDest}}/adapt/js/adapt.min.js"
+				"scriptLoader.js"
+			]
 		}
 	]
 }

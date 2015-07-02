@@ -67,12 +67,12 @@ var pub = {
 		return { dirs: dirs, files: files };
 	},
 
-	filter: function(list, globs) {
+	filter: function(list, globs, options) {
 		//filter an array of paths according to the globs supplied
 
 		if (globs === undefined) return list;
 
-		var options = { matchBase: true, dot: true };
+		options = _.extend({}, { matchBase: true, dot: true }, options);
 
 		var finished;
 
@@ -126,7 +126,15 @@ var pub = {
 	},
 
 	replace: function(path, context) {
-		return hbs.compile(path)(context);
+		if (path instanceof Array) {
+			var rtn = [];
+			for (var i = 0, l = path.length; i < l; i++) {
+				rtn.push(pub.replace(path[i], context));
+			}
+			return rtn;
+		} else {
+			return hbs.compile(path)(context);
+		}
 	},
 	
 
@@ -139,7 +147,7 @@ var pub = {
 
 		var list = listFromCache(atPath, options);
 
-		return pub.filter(list, globs, options, globs);
+		return pub.filter(list, globs, options);
 
 
 		function listFromCache(atPath, options) {

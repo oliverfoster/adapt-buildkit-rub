@@ -18,9 +18,9 @@ var buildcleanup = new Action({
 	perform: function(options, done, started) {
 		
 		options = options || {};
-		options.root = fsext.expand(options.root);
+		
 		options.root = fsext.replace(options.root, options);
-
+		options.root = fsext.expand(options.root);
 
 		var output = "";
 
@@ -29,7 +29,6 @@ var buildcleanup = new Action({
 	    var files = fsext.glob(options.root, options.globs);
 
 	    if (files.length > 0) {
-
 		    fsext.remove(options.root, options.globs);
 		    
 		}

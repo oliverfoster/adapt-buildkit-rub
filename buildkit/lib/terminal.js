@@ -28,9 +28,11 @@ var pub = {
                 watch: 'named'/true/undefined,
                 debug: 'named'/true/undefined,
                 force: 'named'/true/undefined,
+                forceAll: 'named'/true/undefined,
                 server: 'named'/true/undefined,
                 port: '8080'/undefined,
                 quick: 'named'/true/undefined,
+                clear: 'named'/true/undefined,
                 zip: 'named'/true/undefined,
             }
         commands: "default"/"watch"/"dev"/"build"
@@ -53,6 +55,7 @@ var pub = {
             .option('-w, --watch', "watch for changes (assumes: -b)")
             .option('-d, --debug', "no minification, produce sourcemaps (assumes: -b)")
             .option('-f, --force', "force rebuild (assumes: -b)")
+            .option('-F, --forceall', "force rebuild and resync (assumes: -b)")
             .option('-s, --server', "run server (assumes: -bw --port 3001)")
             .option('--port [value]', "set server port")
             .option('-q, --quick', "skip minification and sourcemapping (assumes: -b)")

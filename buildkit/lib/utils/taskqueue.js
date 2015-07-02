@@ -90,8 +90,7 @@ var pub =  _.extend(eventEmitter, {
 			var tasks =  pub._tasks[phaseName];
 			if (!tasks || tasks.length === 0) return nextPhase();
 
-			var phaseName = pub._phases[pub._phaseIndex];
-			console.log(pub._phaseDisplayNames[pub._phaseIndex]);
+			//console.log(pub._phaseDisplayNames[pub._phaseIndex]);
 		}
 
 		function endLoop() {

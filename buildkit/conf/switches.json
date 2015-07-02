@@ -26,6 +26,15 @@
 		},
 		{
 			"on": {
+				"forceall": true
+			},
+			"alwaysSet": {
+				"build": true,
+				"force": true
+			}
+		},
+		{
+			"on": {
 				"debug": true
 			},
 			"alwaysSet": {

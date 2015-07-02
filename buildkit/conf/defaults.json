@@ -18,6 +18,6 @@
 			"!**/properties.schema",
 			"!**/README.md"
 		],
-		"taskLimit": 20
+		"taskLimit": 10
 	}
 }

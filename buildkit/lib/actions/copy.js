@@ -41,7 +41,7 @@ var copy = new Action({
 				var dirname = path.dirname(outputPath);
 				fsext.mkdir(dirname);
 
-				if (fs.existsSync(outputPath) && options.force !== true && options.always !== true) {
+				if ((fs.existsSync(outputPath) && options.force !== true) && !options.switches.forceall) {
 					var outputStat = fs.statSync(outputPath);
 					if (outputStat.mtime >= item.mtime ) continue;
 				} 
@@ -66,7 +66,7 @@ var copy = new Action({
 			copyInterval = setInterval(copyLoop, 250);
 		}
 		function copyLoop() {
-			for (var i = 0, l = copyTasks.length; i < l && copyTasksRunning < 20; i++) {
+			for (var i = 0, l = copyTasks.length; i < l && copyTasksRunning < 5; i++) {
 				var task = copyTasks.shift();
 				copyTasksRunning++;
 				var rs = fs.createReadStream(task.from);

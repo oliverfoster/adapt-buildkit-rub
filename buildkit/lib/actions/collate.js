@@ -26,26 +26,27 @@ var collate = new Action({
 
 		var srcPath = path.join(options.root, options.src);
 
-		var list = fsext.glob(srcPath, options.globs);
+		var diffGlobs = fsext.replace(options.diffGlobs, options);
 
-		var destList = fsext.glob(fsext.expand(options.dest), options.diffGlobs);
+		var list = fsext.glob(srcPath, options.globs);
+		var destList = fsext.glob(options.dest, diffGlobs);
 
 		for (var d = destList.length -1, dl = -1; d > dl; d--) {
 			var destItem = destList[d];
-			var shortenedPathDest = (destItem.path).substr( options.dest.length  );
+			var shortenedPathDest = (destItem.path).substr( options.dest.length  ).replace(/\\/g, "/");
 			if (shortenedPathDest.substr(0,1) == "/") shortenedPathDest = shortenedPathDest.substr(1);
 			var found = false;
 			for (var i = 0, l = list.length; i < l; i ++) {
 				var srcItem = list[i];
-				var shortenedPathSrc = (srcItem.path).substr( (srcItem.path).indexOf(options.on) + options.on.length  );
+				var shortenedPathSrc = (srcItem.path).substr( (srcItem.path).indexOf(options.on) + options.on.length  ).replace(/\\/g, "/");;
 				if (shortenedPathSrc.substr(0,1) == "/") shortenedPathSrc = shortenedPathSrc.substr(1);
 				if (shortenedPathDest == shortenedPathSrc) {
 					found = true;
 					break;
 				}
 			}
-			if (!found) {
-				logger.log("Removing: " + destItem.path.substr(process.cwd().length), 1);
+			if (!found || options.switches.forceall) {
+				//logger.log("Removing: " + destItem.path.substr(process.cwd().length), 1);
 				if (destItem.dir) {
 					fs.rmdirSync(destItem.path);
 				} else {
@@ -76,7 +77,7 @@ var collate = new Action({
 					if (outputStat.mtime >= item.mtime && outputStat.ctime >= item.ctime) continue;
 				} 
 				if (!ifExists) {
-					logger.log("Adding: " + outputPath.substr(process.cwd().length),1);
+					//logger.log("Adding: " + outputPath.substr(process.cwd().length),1);
 				} else {
 					fs.unlinkSync(outputPath);
 				}
@@ -101,7 +102,7 @@ var collate = new Action({
 			copyInterval = setInterval(copyLoop, 250);
 		}
 		function copyLoop() {
-			for (var i = 0, l = copyTasks.length; i < l && copyTasksRunning < 20; i++) {
+			for (var i = 0, l = copyTasks.length; i < l && copyTasksRunning < 5; i++) {
 				var task = copyTasks.shift();
 				copyTasksRunning++;
 				var rs = fs.createReadStream(task.from);

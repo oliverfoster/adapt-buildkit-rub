@@ -25,7 +25,7 @@ var less = new Action({
 		var output = "";
 		if (typeof options.src == "string") options.src = [options.src];
 
-		if (fs.existsSync(options.dest) && options.switches.force !== true) {
+		if (fs.existsSync(options.dest) && options.switches.force !== true && !options.switches.forceall) {
 			var destStat = fs.statSync(options.dest);
 			for (var s = 0, sl = options.src.length; s < sl; s++) {
 				if (fs.existsSync(options.src[s])) {
@@ -40,6 +40,13 @@ var less = new Action({
 			    }
 			    if (changed) break;
 		    }
+
+		    var mapExists = false;
+            if (fs.existsSync(options.dest + ".map")  ) {
+                mapExists = true;
+            } 
+            changed = (mapExists == (!options.switches.debug)) || changed;
+            
 		    if (!changed) {
 		    	return done(options);
 		    }

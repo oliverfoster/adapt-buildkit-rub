@@ -18,15 +18,15 @@
 				"**/menu/**/required/**"		
 			],
 			"diffGlobs": [
-				"!**/adapt/**",
-				"!**/adapt",
-				"!**/assets/**",
-				"!**/assets",
-				"!**/course/**",
-				"!**/course",
-				"!**/libraries/**",
-				"!**/libraries",
-				"!index.html",
+				"!{{dest}}/adapt/**",
+				"!{{dest}}/adapt",
+				"!{{dest}}/assets/**",
+				"!{{dest}}/assets",
+				"!{{dest}}/course/**",
+				"!{{dest}}/course",
+				"!{{dest}}/libraries/**",
+				"!{{dest}}/libraries",
+				"!{{dest}}/index.html",
 				"**"
 			],
 			"dest": "{{outputDest}}/{{course}}"

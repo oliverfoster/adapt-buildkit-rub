@@ -129,7 +129,7 @@ var javascript = new Action({
             break;
         } 
 
-        requirejs.optimize(options, function (buildResponse) {
+        requirejs.optimize(options, _.bind(function (buildResponse) {
             try {
                 if (options.sourceMapRelocate && options.generateSourceMaps) sourcemaps.relocate(options.dest + ".map", options.sourceMapRelocate);
 
@@ -159,13 +159,15 @@ var javascript = new Action({
                     }
                     
                 }
+
             } catch(e) {
-                console.log(e);
+
+                console.log("requirejs.optimize: ", e);
             }
 
             done(options);
 
-        }, function(error) {
+        }, this), function(error) {
             done(options, error);
         });
         

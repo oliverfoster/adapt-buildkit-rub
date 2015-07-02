@@ -244,12 +244,16 @@ var pub = {
 		}
 
 		function displayHeader(terminalOptions) {
-			logger.log("Building Mode: "+(terminalOptions.switches.debug ? "Debug": "Production") , (terminalOptions.switches.debug ? 1:0));
-			var forceBuild = (terminalOptions.switches.force || false);
-			if (forceBuild) logger.log("Forced Rebuild", 1);
-			else logger.log("Quick Rebuild", 0);
-			logger.log("Structure Type: "+terminalOptions.switches.typeName,0);
-			logger.log("Output Courses: "+(terminalOptions.courses.join(",")||"All"),0);
+			logger.log("Adapt Framework Buildkit",0 );
+			var mode = (terminalOptions.switches.debug ? "Debug": "Production");
+			var color = (terminalOptions.switches.debug ? 1:0);
+			color = (terminalOptions.switches.force ? 1 : color);
+			if (terminalOptions.switches.forceall) mode += ", Forced Rebuild and Resync";
+			else if (terminalOptions.switches.force) mode += ", Forced Rebuild";
+			else mode += ", Quick Rebuild";
+			mode += ", " + terminalOptions.switches.typeName + " Style"
+			logger.log(">"+mode, color);
+			logger.log(">Courses: "+(terminalOptions.courses.join(",")||"All"),0);
 		}
 	},
 
