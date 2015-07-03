@@ -92,7 +92,6 @@ var pub = {
 
         if (terminalOptions.switches.watch == "named") {
             // rub watch
-            terminalOptions.courses.shift();
             terminalOptions.switches.debug = true;
             terminalOptions.switches.watch = true;
             terminalOptions.command = "watch";

@@ -1,10 +1,11 @@
 
 function Action(overrideObject) { for (var k  in overrideObject) { this[k] = overrideObject[k]; } }
 Action.prototype.initialize = function() {};
+Action.prototype.restrict = function(options) {};
 Action.prototype.perform = function(options, done, started) { done(options); };
 Action.prototype.reset = function() {};
-
-Action.deps = function(global, dependencies) {
+Action.prototype.deps = function(global, dependencies) {
+	this._global = global;
 	for (var k in dependencies) {
 		global[k] = require(dependencies[k]);
 	}

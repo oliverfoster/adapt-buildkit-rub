@@ -4,7 +4,7 @@ var copy = new Action({
 
 	initialize: function() {
 
-        Action.deps(GLOBAL, {
+        this.deps(GLOBAL, {
             "fsext": "../utils/fsext.js",
             "logger": "../utils/logger.js",
             "fs": "fs",
@@ -23,9 +23,14 @@ var copy = new Action({
 		options.dest = fsext.replace(options.dest, options);
 		options.dest = fsext.expand(options.dest);
 
+		var globs = [].concat(options.globs);
+		if (options.exclusionGlobs) {
+			globs = globs.concat(options.exclusionGlobs);
+		}
+
 		var srcPath = path.join(options.root, options.src);
 
-		var list = fsext.glob(srcPath, options.globs);
+		var list = fsext.glob(srcPath, globs);
 		var copyTasks = [];
 		var copyInterval = null;
 		var copyTasksRunning = 0;

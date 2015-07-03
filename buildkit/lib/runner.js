@@ -7,7 +7,10 @@ var taskqueue = require("./utils/taskqueue.js");
 var logger = require("./utils/logger.js");
 var _ = require("underscore");
 
-var pub = {
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
+
+var pub =  _.extend(eventEmitter, {
 	_serverReloadType: null,
 	_configuration: {},
 	_indexedActions: null,
@@ -20,11 +23,19 @@ var pub = {
 
  		pub.setupConfig(terminalOptions);
 
- 		fsext.exclusionGlobs = pub._configuration.defaults.exclusionGlobs || [];
- 		fswatch.exclusionGlobs = pub._configuration.defaults.exclusionGlobs || [];
+ 		pub.emit("config:loaded", pub._configuration);
+
+ 		fsext.exclusionGlobs = pub._configuration.defaults.globalExclusionGlobs || [];
+ 		fswatch.exclusionGlobs = pub._configuration.defaults.globalExclusionGlobs || [];
  		taskqueue.taskLimit = pub._configuration.defaults.taskLimit || 20;
 
  		pub.setupActions();
+
+ 		pub.emit("actions:setup", pub._selectedActions);
+
+ 		taskqueue.on("nextPhase", function(phaseName) {
+ 			pub.emit("actions:phase", phaseName);
+ 		});
 
  		switch (terminalOptions.command) {
  		case "watch":
@@ -35,13 +46,17 @@ var pub = {
  		}
 
  		function runWatchOnly() {
-			taskqueue.on("error", logger.error);
+			taskqueue.on("error", function(options, err) {
+				logger.error(err);
+			});
 
 			pub.thenWatchForChanges();
 		}
 
 		function runAllTasks() {
-			taskqueue.on("error", logger.error);
+			taskqueue.on("error", function(options, err) {
+				logger.error(err);
+			});
 
 			pub.startBuildOperations(pub._selectedActions);
 
@@ -100,12 +115,16 @@ var pub = {
 	},
 
 	setupConfig: function(terminalOptions) {
+		pub._terminalOptions = terminalOptions;
+
+		loadPlugins();
+
 		loadConfigFiles();
+		loadBuildConfig();
+		
 		setDirectoryLayout(terminalOptions);
 		setSwitches(terminalOptions);
-		setDefaults(terminalOptions);
-
-		this._terminalOptions = terminalOptions;
+		setDefaults(terminalOptions);		
 
 		function loadConfigFiles() {
 
@@ -128,6 +147,32 @@ var pub = {
 				}
 
 			}
+		}
+
+		function loadBuildConfig() {
+			var configsPath = path.join(process.cwd(), "rubconfig.json");
+			if (fs.existsSync(configsPath)) {
+				try {
+					pub._terminalOptions.buildConfig = JSON.parse(fs.readFileSync(configsPath));
+				} catch (e) {
+					logger.error("rubconfig.json is corrupt");
+					logger.error(e);
+				}
+			}
+		}
+
+		function loadPlugins() {
+			var pluginsPath = path.join(path.dirname(__dirname), "/plugins/");
+			var pluginFilePaths = fsext.glob(pluginsPath, "*.js");
+			for (var i = 0, l = pluginFilePaths.length; i < l; i++) {
+				try {
+					require(pluginFilePaths[i].path)(pub);
+				} catch (e) {
+					logger.error("Plugin " + pluginFilePaths[i].basename + " is corrupt");
+					logger.error(e);
+				}
+			}
+			
 		}
 
 		function setDirectoryLayout(terminalOptions) {
@@ -312,12 +357,19 @@ var pub = {
 
 		function runActions(terminalOptions, actions) {
 
+			var configured = [];
 			for (var i = 0, l = actions.length; i < l; i++) {
 
 				var actionConfig = actions[i];
 				var terminalOptionsAndActionConfig = _.extend({}, terminalOptions, actionConfig);
 
-				runAction(terminalOptionsAndActionConfig);
+				configured.push(terminalOptionsAndActionConfig);
+			}
+
+			pub.emit("actions:build", configured);
+
+			for (var i = 0, l = configured.length; i < l; i++) {
+				runAction(configured[i]);
 			}
 
 			function runAction(terminalOptionsAndActionConfig) {
@@ -337,9 +389,18 @@ var pub = {
 						action._isInitialized = true;
 					}
 	
-					action.perform(terminalOptionsAndActionConfig, done, function() {
+					pub.emit("action:prep", terminalOptionsAndActionConfig, action);
+					action.perform(terminalOptionsAndActionConfig, done, _.bind(function() {
+
 						logger.runlog(terminalOptionsAndActionConfig);
-					});
+						pub.emit("action:start", terminalOptionsAndActionConfig, action);
+						
+					}, action));
+
+				}, function(terminalOptionsAndActionConfig) {
+					pub.emit("action:end", terminalOptionsAndActionConfig);
+				}, function(terminalOptionsAndActionConfig, error) {
+					pub.emit("action:error", terminalOptionsAndActionConfig, error);
 				});
 				
 			}
@@ -371,6 +432,8 @@ var pub = {
 			}
 
 		}, pub);
+
+		pub.emit("actions:wait");
 
 		function selectWatches() {
 			pub._selectedWatches = pub._configuration.watches;
@@ -412,6 +475,33 @@ var pub = {
 				return true;
 
 			});
+
+			var expanded = [];
+			var courses = pub._terminalOptions.courses;
+
+			pub._selectedWatches = _.filter(pub._selectedWatches, function(item) {
+				if (item.expand) {
+					var cloned = _.extend({}, item);
+					var options = _.extend({}, pub._terminalOptions);
+					if (courses.length === 0) {
+						options.course = "";
+						cloned.path = fsext.replace(cloned.path, options);
+						cloned.globs = fsext.replace(cloned.globs, options);
+						expanded.push(cloned);
+					} else {
+						for (var i = 0, l = courses.length; i < l; i++) {
+							options.course = courses[i];
+							cloned.path = fsext.replace(cloned.path, options);
+							cloned.globs = fsext.replace(cloned.globs, options);
+							expanded.push(cloned);
+						}
+					}
+					return false;
+				}
+				return true;
+			});
+
+			pub._selectedWatches = pub._selectedWatches.concat(expanded);
 
 		}
 
@@ -467,6 +557,8 @@ var pub = {
 					pub._server.reload(pub._serverReloadType);
 				}
 
+				pub.emit("actions:wait");
+
 				logger.log("Watching for changes...\n", 1);
 
 				fswatch.resume();
@@ -474,7 +566,7 @@ var pub = {
 		}
 
 	}
-};
+});
 
 module.exports = function(config) {
 	pub.entryPoint(config);

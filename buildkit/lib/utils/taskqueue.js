@@ -27,11 +27,14 @@ var pub =  _.extend(eventEmitter, {
 		pub._inLoop = false;
 	},
 
-	add: function(options, executor) {
+	add: function(options, executor, complete, error, that) {
 		if (!pub._tasks[options['@when']]) pub._tasks[options['@when']] = [];
 		pub._tasks[options['@when']].push({
 			options: options,
-			executor: executor
+			executor: executor,
+			complete: complete,
+			error: error, 
+			that: that
 		});
 	},
 
@@ -42,7 +45,6 @@ var pub =  _.extend(eventEmitter, {
 		pub._queueLoopInterval = setInterval(queueLoop, 1);
 
 		function queueLoop() {
-
 			var phaseName = pub._phases[pub._phaseIndex];
 			var tasks =  pub._tasks[phaseName];
 
@@ -53,7 +55,7 @@ var pub =  _.extend(eventEmitter, {
 					pub._hasLoopRun = true;
 					var task = tasks.shift();
 					pub._running++;
-					task.executor(task.options, taskDone);	
+					task.executor.call(task.that, task.options, _.bind(taskDone, task));	
 				}
 				pub._inLoop = false;
 			}
@@ -64,6 +66,12 @@ var pub =  _.extend(eventEmitter, {
 		function taskDone(options, err) {
 			if (err) {
 				pub.emit("error", options, err);
+				if (this.error) {
+					this.error(this.options, err);
+				}
+			}
+			if (this.complete) {
+				this.complete(this.options);
 			}
 			pub._running--;
 			checkNext()
@@ -82,15 +90,16 @@ var pub =  _.extend(eventEmitter, {
 		function nextPhase(isStart) {
 			pub._hasDisplayedPhaseName = true;
 			pub._running = 0;
+			
 			if (!isStart) pub._phaseIndex++;
 
 			if (pub._phaseIndex >= pub._phases.length) return endLoop();
 
-			var phaseName = pub._phases[pub._phaseIndex];
+			var phaseName = pub._phases[pub._phaseIndex];			
 			var tasks =  pub._tasks[phaseName];
-			if (!tasks || tasks.length === 0) return nextPhase();
+			pub.emit("nextPhase", phaseName )
 
-			//console.log(pub._phaseDisplayNames[pub._phaseIndex]);
+			if (!tasks || tasks.length === 0) return nextPhase();
 		}
 
 		function endLoop() {

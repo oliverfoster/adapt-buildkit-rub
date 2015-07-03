@@ -4,7 +4,7 @@ var jsoncheck = new Action({
 
     initialize: function() {
 
-        Action.deps(GLOBAL, {
+        this.deps(GLOBAL, {
             "fsext": "../utils/fsext.js",
             "logger": "../utils/logger.js",
             "fs": "fs",
@@ -26,7 +26,7 @@ var jsoncheck = new Action({
         try {
             check(options);
         } catch(e) {
-            logger.error(e);
+            //logger.error(e);
         }
 
         done(options);
@@ -82,8 +82,6 @@ var jsoncheck = new Action({
                         }
                         
                     });
-
-                    console.log(storedIds);
         
                     checkIds();
                     
@@ -102,12 +100,13 @@ var jsoncheck = new Action({
             function checkIds () {
                 var badIds = [];
                 for (var i = 0, l = storedIds.length; i < l; i++) {
-                    if (storedIds[i].match(idRegExp) === null) {
+                    var matches = storedIds[i].match(idRegExp);
+                    if (matches === null || matches[0] !== storedIds[i]) {
                         badIds.push(storedIds[i]);
                     }
                 }
                 if (badIds.length > 0) {
-                    logger.log("Unconventional IDs " + badIds);
+                    logger.log("Unconventional IDs " + badIds, 1);
                 }
             }
 

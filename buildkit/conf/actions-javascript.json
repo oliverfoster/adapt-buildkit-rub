@@ -198,7 +198,7 @@
 		},
 		{
 			"@name": "javascript-uglify",
-			"@displayName": "Uglifying javascript...",
+			"@displayName": "Minifying javascript...",
 			"@action": "javascriptuglify",
 			"@excludeOnSwitches": [
                 "debug"
@@ -217,7 +217,7 @@
 		},
 		{
 			"@name": "javascript-uglify",
-			"@displayName": "Uglifying javascript...",
+			"@displayName": "Minifying javascript...",
 			"@action": "javascriptuglify",
 			"@excludeOnSwitches": [
                 "debug"

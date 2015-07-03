@@ -18,13 +18,32 @@ var pub = {
 		if (typeof options != "object") throw "No options specified for watch";
 		if (!options.path) throw "No path specified for watch";
 		if (!options.progress) throw "No progress callback specified for watch";
-		if (typeof options.globs == "string") options.globs = [options.globs];
+		
+		var globName = "";
+		if (options.globs !== undefined) {
+			if (typeof options.globs == "string") options.globs = [options.globs];
+			globName = options.globs.join(",");
+		}
 
-		var watchName = options.path+":"+options.globs.join(",");
+		var pathName = "";
+		if (pathName instanceof Array) {
+			pathName = options.path.join(",");
+		} else {
+			pathName = options.path;
+		}
+
+		var watchName = pathName+":"+globName;
+
 		if (pub._watching[watchName]) return;
 
 		pub._watching[watchName] = options;
-		pub._watching[watchName].cur = fsext.glob(options.path, options.globs, options);
+
+		if (options.globs == undefined) {
+			options.cur = fsext.file(options.path);
+			if (!(options.cur instanceof Array)) options.cur = [options.cur];
+		} else {
+			options.cur = fsext.glob(options.path, options.globs, options);
+		}
 
 		watchStart();
 
@@ -32,19 +51,28 @@ var pub = {
 			fsext.exclusionGlobs = pub.exclusionGlobs;
 			
 			if (pub._watchingInterval !== null) return;
-			pub._watchingInterval = setInterval(watchLoop, 250);
+			pub._watchingInterval = setInterval(watchLoop, 100);
 		}
 
 		function watchLoop() {
+			// /console.log("tick");
 			if (pub._paused) return;
 			if (_.keys(pub._watching).length === 0) return watchEnd();
 
-			//var startTime = (new Date()).getTime();
+			var startTime = (new Date()).getTime();
 			for (var k in pub._watching) {
 				var options = pub._watching[k];
 				options.refresh = true;
 				options.prev = options.cur;
-				options.cur = fsext.glob(options.path, options.globs, options);
+
+				if (options.globs == undefined) {
+					options.cur = fsext.file(options.path);
+					if (!(options.cur instanceof Array)) options.cur = [options.cur];
+				} else {
+					options.cur = fsext.glob(options.path, options.globs, options);
+				}
+
+				//console.log(options['@name'], _.pluck(options.cur,"path"));
 				watchChanges(options.cur, options.prev, options);
 			}
 			//console.log((new Date()).getTime() - startTime);

@@ -4,7 +4,7 @@ var buildcleanup = new Action({
 
 	initialize: function() {
 
-        Action.deps(GLOBAL, {
+        this.deps(GLOBAL, {
             "fsext": "../utils/fsext.js",
             "logger": "../utils/logger.js",
             "fs": "fs",

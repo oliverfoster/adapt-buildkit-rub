@@ -4,7 +4,7 @@ var handlebars = new Action({
 
 	initialize: function() {
 
-        Action.deps(GLOBAL, {
+        this.deps(GLOBAL, {
             "fsext": "../utils/fsext.js",
             "logger": "../utils/logger.js",
             "fs": "fs",
@@ -39,6 +39,11 @@ var handlebars = new Action({
 		options = options || {};
 		
 		options.dest = fsext.replace(options.dest, options);
+
+		var globs = [].concat(options.globs);
+		if (options.exclusionGlobs) {
+			globs = globs.concat(options.exclusionGlobs);
+		}
 		
 		if (typeof options.src == "string") options.src = [options.src];
 
@@ -47,7 +52,7 @@ var handlebars = new Action({
 			var changed = false;
 			for (var s = 0, sl = options.src.length; s < sl; s++) {
 				if (fs.existsSync(options.src[s])) {
-			        var files = fsext.glob(options.src[s], options.globs, { dirs: false });
+			        var files = fsext.glob(options.src[s], globs, { dirs: false });
 			        for (var i = 0, l = files.length; i < l; i++) {
 			            if (files[i].mtime > destStat.mtime || files[i].ctime > destStat.mtime) {
 			                changed = true;
@@ -87,7 +92,7 @@ var handlebars = new Action({
 		output+=options.context+"={};"+spacer;
 
 		for (var s = 0, sl = options.src.length; s < sl; s++) {
-			var files = fsext.glob(options.src[s], options.globs, { dirs: false });
+			var files = fsext.glob(options.src[s], globs, { dirs: false });
 
 			for (var i = 0, l = files.length; i < l; i++) {
 				var file = files[i];

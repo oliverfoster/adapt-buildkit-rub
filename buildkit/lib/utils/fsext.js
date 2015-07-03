@@ -8,6 +8,40 @@ var hbs = require("handlebars");
 var pub = {
 	exclusionGlobs: null,
 
+	file: function(filepath) {
+
+		if (filepath instanceof Array) {
+			var filePaths = [];
+			for (var i = 0, l = filepath.length; i < l; i++) {
+				filePaths = pub.file(filepath[i]);
+			}
+			return filePaths;
+		}
+
+		var osbp = filepath
+		var stat = fs.statSync(filepath);
+		
+		filepath = new String(filepath);
+
+		stat.basename = path.basename(filepath);
+		stat.extname = path.extname(filepath);
+		stat.filename = path.basename(filepath, stat.extname);
+		stat.dirname = path.dirname(filepath);
+		stat.path = osbp;
+
+		if (stat && !stat.isDirectory()) {
+			stat.dir = false;
+			stat.file = true;
+			filepath = _.extend(filepath, stat);
+		} else {
+			stat.dir = true;
+			stat.file = false;
+			filepath = _.extend(filepath, stat);
+		}
+
+		return filepath;
+	},
+
 	list: function (dir) {
 		//return two arrays of all files and dirs in the given directory
 		/*	
@@ -33,36 +67,23 @@ var pub = {
 			return { dirs: dirs, files: files };
 		}
 		var red = 0;
-		list.forEach(function(file) {
-			var osbp;
-			var subdirpath = osbp = path.join(dir, file);
-			var stat = fs.statSync(subdirpath);
-			
-			subdirpath = new String(subdirpath);
-
-			stat.basename = path.basename(subdirpath);
-			stat.extname = path.extname(subdirpath);
-			stat.filename = path.basename(subdirpath, stat.extname);
-			stat.dirname = path.dirname(subdirpath);
-			stat.path = osbp;
-
+		for (var i = 0, l = list.length; i < l; i++) {
+			var file = list[i];
+			var fullpath = path.join(dir, file);
+			var fileObject = pub.file(fullpath);
 
 			red++;
-			if (stat && !stat.isDirectory()) {
-				stat.dir = false;
-				stat.file = true;
-				subdirpath = _.extend(subdirpath, stat);
-				files.push( subdirpath );
-			} else {
-				stat.dir = true;
-				stat.file = false;
-				subdirpath = _.extend(subdirpath, stat);
-				dirs.push( subdirpath );
+
+			if (fileObject && fileObject.dir) {
+				dirs.push(fileObject);
+			} else if (fileObject && fileObject.file) {
+				files.push(fileObject);
 			}
+
 			if (red == pending) {
-				return;
+				continue;
 			}
-		});
+		}
 
 		return { dirs: dirs, files: files };
 	},
@@ -144,13 +165,13 @@ var pub = {
 		//distinguish between requests for files and directorys or both
 
 		options = _.extend({}, { files: true, dirs: true, matchBase: true, dot: true }, options);
-
-		var list = listFromCache(atPath, options);
+		//console.log("glob", atPath+"");
+		var list = listFromCache(atPath, options, globs);
 
 		return pub.filter(list, globs, options);
 
 
-		function listFromCache(atPath, options) {
+		function listFromCache(atPath, options, globs) {
 
 			options = options || {};
 
@@ -185,6 +206,7 @@ var pub = {
 
 			for (var d = 0, l = pathsList.dirs.length; d < l; d++) {
 				var dir = pathsList.dirs[d];
+
 				if (options.dirs) paths.push(dir);
 				paths = paths.concat(listFromCache(dir, options));
 			}

@@ -5,7 +5,7 @@ var javascriptbundle = new Action({
 
 	initialize: function() {
 
-        Action.deps(GLOBAL, {
+        this.deps(GLOBAL, {
             "fsext": "../utils/fsext.js",
             "logger": "../utils/logger.js",
             "fs": "fs",
@@ -22,8 +22,13 @@ var javascriptbundle = new Action({
 
 		var output = "";
 
+		var globs = [].concat(options.globs);
+		if (options.exclusionGlobs) {
+			globs = globs.concat(options.exclusionGlobs);
+		}
+
 		if (fs.existsSync(options.dest) && options.switches.force !== true) {
-	        var files = fsext.glob(options.src, options.globs);
+	        var files = fsext.glob(options.src, globs);
 	        var destStat = fs.statSync(options.dest);
 	        var changed = false;
 	        for (var i = 0, l = files.length; i < l; i++) {
@@ -48,14 +53,14 @@ var javascriptbundle = new Action({
 		var base = options.src;
 
 		var listGroups = fsext.list(base);
-		var groupDirs = fsext.filter(listGroups.dirs, options.globs);
+		var groupDirs = fsext.filter(listGroups.dirs, globs);
 
 		for (var g = 0, lg = groupDirs.length; g < lg; g++) {
 			var groupDir = groupDirs[g];
 			var listPluginPath = fsext.list(groupDir.path);
 			var pluginDirs = listPluginPath.dirs
 
-			pluginDirs = fsext.filter(pluginDirs, options.globs);
+			pluginDirs = fsext.filter(pluginDirs, globs);
 
 			for (var p = 0, lp = pluginDirs.length; p < lp; p++) {
 				var pluginDir = pluginDirs[p];

@@ -1,8 +1,8 @@
 {
 	"watches": [
 		{
-			"@name": "bundles-templates",
-			"path": "src",
+			"@name": "bundles-templates-components",
+			"path": "src/components",
 			"globs": [
 				"**/templates/**/*.hbs", 
 				"**/templates/**/*.html", 
@@ -18,13 +18,106 @@
 			]
 		},
 		{
-			"@name": "bundles-javascript",
-			"path": "src",
+			"@name": "bundles-templates-extensions",
+			"path": "src/extensions",
 			"globs": [
-				"**/components/**/js/**/*.js",
-				"**/extensions/**/js/**/*.js",
-				"**/menu/**/js/**/*.js",
-				"**/theme/**/js/**/*.js"
+				"**/templates/**/*.hbs", 
+				"**/templates/**/*.html", 
+				"**/templates/**/*.handlebars", 
+				"**/templates/**/*.htm"
+			],
+			"actions": [
+				"bundles-handlebars",
+				"bundles-fonts-folder",
+				"bundles-required-folder",
+				"bundles-assets-folder-folder",
+				"stringreplacement"
+			]
+		},
+		{
+			"@name": "bundles-templates-theme",
+			"path": "src/theme",
+			"globs": [
+				"**/templates/**/*.hbs", 
+				"**/templates/**/*.html", 
+				"**/templates/**/*.handlebars", 
+				"**/templates/**/*.htm"
+			],
+			"actions": [
+				"bundles-handlebars",
+				"bundles-fonts-folder",
+				"bundles-required-folder",
+				"bundles-assets-folder-folder",
+				"stringreplacement"
+			]
+		},
+		{
+			"@name": "bundles-templates-menu",
+			"path": "src/menu",
+			"globs": [
+				"**/templates/**/*.hbs", 
+				"**/templates/**/*.html", 
+				"**/templates/**/*.handlebars", 
+				"**/templates/**/*.htm"
+			],
+			"actions": [
+				"bundles-handlebars",
+				"bundles-fonts-folder",
+				"bundles-required-folder",
+				"bundles-assets-folder-folder",
+				"stringreplacement"
+			]
+		},
+		{
+			"@name": "bundles-javascript-components",
+			"path": "src/components",
+			"globs": [
+				"**/js/**/*.js"
+			],
+			"actions": [
+				"bundles-bundle",
+				"bundles-javascript",
+				"bundles-fonts-folder",
+				"bundles-required-folder",
+				"bundles-assets-folder-folder",
+				"stringreplacement"
+			]
+		},
+		{
+			"@name": "bundles-javascript-extensions",
+			"path": "src/extensions",
+			"globs": [
+				"**/js/**/*.js"
+			],
+			"actions": [
+				"bundles-bundle",
+				"bundles-javascript",
+				"bundles-fonts-folder",
+				"bundles-required-folder",
+				"bundles-assets-folder-folder",
+				"stringreplacement"
+			]
+		},
+		{
+			"@name": "bundles-javascript-theme",
+			"path": "src/theme",
+			"globs": [
+				"**/js/**/*.js"
+			],
+			"actions": [
+				"bundles-bundle",
+				"bundles-javascript",
+				"bundles-fonts-folder",
+				"bundles-required-folder",
+				"bundles-assets-folder-folder",
+				"stringreplacement"
+			]
+		},
+		{
+			"@name": "bundles-javascript-menu",
+			"path": "src/menu",
+			"globs": [
+				"**/js/**/*.js"
 			],
 			"actions": [
 				"bundles-bundle",
@@ -37,10 +130,10 @@
 		},
 		{
 			"@name": "libraries-javascript",
-			"path": "src",
+			"path": "src/core",
 			"globs": [
-				"**/core/js/libraries/**/*.js",
-				"!**/core/js/libraries/**/libraries.js"
+				"**/js/libraries/**/*.js",
+				"!**/js/libraries/**/libraries.js"
 			],
 			"actions": [
 				"libraries-bundle",
@@ -49,12 +142,12 @@
 		},
 		{
 			"@name": "core-javascript",
-			"path": "src",
+			"path": "src/core",
 			"globs": [
-				"**/core/**/js/*.js",
-				"**/core/**/js/models/*.js",
-				"**/core/**/js/view/*.js",
-				"!**/core/**/js/scriptLoader.js"
+				"**/js/*.js",
+				"**/js/models/*.js",
+				"**/js/view/*.js",
+				"!**/js/scriptLoader.js"
 			],
 			"actions": [
 				"core-javascript",
@@ -62,8 +155,8 @@
 			]
 		},
 		{
-			"@name": "bundles-less",
-			"path": "src",
+			"@name": "bundles-less-core",
+			"path": "src/core",
 			"globs": [
 				"**/less/**/*.less"
 			],
@@ -72,18 +165,51 @@
 			]
 		},
 		{
-			"@name": "foundation",
-			"path": "src",
+			"@name": "bundles-less-components",
+			"path": "src/components",
 			"globs": [
-				"!**/make/**",
-				"!**/extensions/**",
-				"!**/components/**",
-				"!**/theme/**",
-				"!**/menu/**",
-				"**/core/js/libraries/**/*.js",
-				"!**/core/js/libraries/**/libraries.js",
-				"**/core/js/scriptLoader.js",
-				"**/index.html"
+				"**/less/**/*.less"
+			],
+			"actions": [
+				"bundles-less"
+			]
+		},
+		{
+			"@name": "bundles-less-extensions",
+			"path": "src/extensions",
+			"globs": [
+				"**/less/**/*.less"
+			],
+			"actions": [
+				"bundles-less"
+			]
+		},
+		{
+			"@name": "bundles-less-menu",
+			"path": "src/menu",
+			"globs": [
+				"**/less/**/*.less"
+			],
+			"actions": [
+				"bundles-less"
+			]
+		},
+		{
+			"@name": "bundles-less-theme",
+			"path": "src/theme",
+			"globs": [
+				"**/less/**/*.less"
+			],
+			"actions": [
+				"bundles-less"
+			]
+		},
+		{
+			"@name": "foundation-index-html",
+			"path": "src/core/js/libraries",
+			"globs": [
+				"**/*.js",
+				"!**/libraries.js"
 			],
 			"actions": [
 				"foundation-libraries",
@@ -92,26 +218,64 @@
 			]
 		},
 		{
-			"@name": "bundles-fonts-folder-folder",
-			"path": "src",
+			"@name": "foundation-scriptLoader",
+			"path": "src/core/js/scriptLoader.js",
+			"actions": [
+				"foundation-scriptLoader"
+			]
+		},
+		{
+			"@name": "foundation-index",
+			"path": "src/index.html",
+			"actions": [
+				"foundation-index.html"
+			]
+		},
+		{
+			"@name": "bundles-fonts-folder-extensions",
+			"path": "src/extensions",
 			"globs": [
-				"**/extensions/**/fonts/**",
-				"**/components/**/fonts/**",
-				"**/theme/**/fonts/**",
-				"**/menu/**/fonts/**"	
+				"**/fonts/**"
 			],
 			"actions": [
 				"bundles-fonts-folder"
 			]
 		},
 		{
-			"@name": "bundles-required-folder",
-			"path": "src",
+			"@name": "bundles-fonts-folder-components",
+			"path": "src/components",
 			"globs": [
-				"**/extensions/**/required/**",
-				"**/components/**/required/**",
-				"**/theme/**/required/**",
-				"**/menu/**/required/**"
+				"**/fonts/**"
+			],
+			"actions": [
+				"bundles-fonts-folder"
+			]
+		},
+		{
+			"@name": "bundles-fonts-folder-theme",
+			"path": "src/theme",
+			"globs": [
+				"**/fonts/**"
+			],
+			"actions": [
+				"bundles-fonts-folder"
+			]
+		},
+		{
+			"@name": "bundles-fonts-folder-menu",
+			"path": "src/menu",
+			"globs": [
+				"**/fonts/**"
+			],
+			"actions": [
+				"bundles-fonts-folder"
+			]
+		},
+		{
+			"@name": "bundles-required-extensions",
+			"path": "src/extensions",
+			"globs": [
+				"**/required/**"
 			],
 			"actions": [
 				"bundles-required-folder",
@@ -119,59 +283,165 @@
 			]
 		},
 		{
-			"@name": "theme-assets-folder",
-			"path": "src",
+			"@name": "bundles-required-components",
+			"path": "src/components",
 			"globs": [
-				"**/theme/**/assets/**"
+				"**/required/**"
 			],
 			"actions": [
-				"theme-assets-folder"
+				"bundles-required-folder",
+				"stringreplacement"
 			]
 		},
 		{
-			"@name": "bundles-assets-folder",
-			"path": "src",
+			"@name": "bundles-required-menu",
+			"path": "src/menu",
 			"globs": [
-				"**/extensions/**/assets/**",
-				"**/components/**/assets/**",
-				"**/menu/**/assets/**"
+				"**/required/**"
+			],
+			"actions": [
+				"bundles-required-folder",
+				"stringreplacement"
+			]
+		},
+		{
+			"@name": "bundles-required-theme",
+			"path": "src/theme",
+			"globs": [
+				"**/required/**"
+			],
+			"actions": [
+				"bundles-required-folder",
+				"stringreplacement"
+			]
+		},
+		{
+			"@name": "bundles-assets-folder-extensions",
+			"path": "src/extensions",
+			"globs": [
+				"**/assets/**"
 			],
 			"actions": [
 				"bundles-assets-folder"
 			]
 		},
 		{
-			"@name": "course-folder",
-			"@types": [ "src/course" ],
-			"path": "src",
+			"@name": "bundles-assets-folder-components",
+			"path": "src/components",
 			"globs": [
-				"**/course/**"
+				"**/assets/**"
 			],
 			"actions": [
-				"course-folder"
+				"bundles-assets-folder"
+			]
+		},
+		{
+			"@name": "bundles-assets-folder-menu",
+			"path": "src/menu",
+			"globs": [
+				"**/assets/**"
+			],
+			"actions": [
+				"bundles-assets-folder"
+			]
+		},
+		{
+			"@name": "theme-assets-folder",
+			"path": "src/theme",
+			"globs": [
+				"**/assets/**"
+			],
+			"actions": [
+				"theme-assets-folder"
+			]
+		},
+		{
+			"@name": "course-folder",
+			"@types": [ "src/course" ],
+			"path": "src/course",
+			"expand": true,
+			"globs": [
+				"**/*",
+				"**",
+				"!*.json"
+			],
+			"actions": [
+				"course-folder",
+				"assetsize"
 			]
 		},
 		{
 			"@name": "course-folder",
 			"@types": [ "src/courses/course" ],
-			"path": "src",
+			"path": "src/courses",
+			"expand": true,
 			"globs": [
-				"**/courses/**"
+				"**/{{course}}/**/*",
+				"**/**/{{course}}/**",
+				"!*.json"
 			],
 			"actions": [
-				"course-folder"
+				"course-folder",
+				"assetsize"
 			]
 		},
 		{
-			"@name": "bundles-assets-folder",
-			"path": "src",
+			"@name": "course-folder",
+			"@types": [ "builds/courses/course" ],
+			"@onlyOnSwitches": [
+                "debug"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
+			"path": "builds/{{course}}",
+			"expand": true,
 			"globs": [
-				"**/extensions/**/assets/**",
-				"**/components/**/assets/**",
-				"**/menu/**/assets/**"
+				"**/course/**/*",
+				"**/course/**",
+				"!*.json"
 			],
 			"actions": [
-				"themejson"
+				"assetsize"
+			]
+		},
+		{
+			"@name": "course-json",
+			"@types": [ "src/course" ],
+			"path": "src/course",
+			"expand": false,
+			"globs": [
+				"**/*.json"
+			],
+			"actions": [
+				"json-lint",
+				"json-check"
+			]
+		},
+		{
+			"@name": "course-json",
+			"@types": [ "src/courses/course" ],
+			"path": "src/courses/{{course}}",
+			"expand": true,
+			"globs": [
+				"**/*.json"
+			],
+			"actions": [
+				"json-lint",
+				"json-check"
+			]
+		},
+		{
+			"@name": "course-json",
+			"@types": [ "builds/courses/course" ],
+			"path": "builds/{{course}}",
+			"expand": true,
+			"globs": [
+				"**/course/**/*.json"
+			],
+			"actions": [
+				"json-lint",
+				"json-check"
 			]
 		}
 	]

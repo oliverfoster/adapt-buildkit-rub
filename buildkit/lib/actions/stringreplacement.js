@@ -4,7 +4,7 @@ var stringreplacement = new Action({
 
     initialize: function() {
 
-        Action.deps(GLOBAL, {
+        this.deps(GLOBAL, {
             "fsext": "../utils/fsext.js",
             "logger": "../utils/logger.js",
             "fs": "fs",
@@ -31,7 +31,12 @@ var stringreplacement = new Action({
 
         if (fs.existsSync(srcPath)) {
 
-    		var list = fsext.glob(srcPath, options.globs);
+            var globs = [].concat(options.globs);
+            if (options.exclusionGlobs) {
+                globs = globs.concat(options.exclusionGlobs);
+            }
+
+    		var list = fsext.glob(srcPath, globs);
             if (list.length > 0) {
                 var filePath = list[0]+"";
                 var isFileExists = fs.existsSync(filePath);

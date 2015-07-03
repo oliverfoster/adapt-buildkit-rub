@@ -4,7 +4,7 @@ var combinejson = new Action({
 
     initialize: function() {
 
-        Action.deps(GLOBAL, {
+        this.deps(GLOBAL, {
             "fsext": "../utils/fsext.js",
             "logger": "../utils/logger.js",
             "fs": "fs",
@@ -28,7 +28,12 @@ var combinejson = new Action({
 
         if (fs.existsSync(srcPath)) {
 
-            var list = fsext.glob(srcPath, options.globs);
+            var globs = [].concat(options.globs);
+            if (options.exclusionGlobs) {
+                globs = globs.concat(options.exclusionGlobs);
+            }
+
+            var list = fsext.glob(srcPath, globs);
             for (var i = 0, pathItem; pathItem = list[i++];) {
                 var filePath = pathItem+"";
                 var isSrcExists = fs.existsSync(filePath);

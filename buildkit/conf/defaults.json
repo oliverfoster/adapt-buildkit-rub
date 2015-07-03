@@ -3,7 +3,7 @@
 		"multipleDestPath":  "./builds",
 		"singleDestPath": "./build",
 		"srcCoursesPath": "./src/courses",
-		"exclusionGlobs": [
+		"globalExclusionGlobs": [
 			"**",
 			"!**/.git",
 			"!**/LICENSE",
