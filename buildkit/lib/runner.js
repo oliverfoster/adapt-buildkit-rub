@@ -37,6 +37,10 @@ var pub =  _.extend(eventEmitter, {
  			pub.emit("actions:phase", phaseName);
  		});
 
+ 		taskqueue.on("stat", function(stats) {
+ 			logger.log(stats.count + " tasks in " + (Math.round( (stats.endTime - stats.startTime) / 10, 2 )/100) + " seconds.", 0);
+ 		});
+
  		switch (terminalOptions.command) {
  		case "watch":
  			runWatchOnly();

@@ -10,6 +10,29 @@ var pub = {
 	complete: null,
 	exclusionGlobs: null,
 
+	_poll: function(each) {
+		for (var k in pub._watching) {
+			var options = pub._watching[k];
+			pub._pollOptions(options);
+
+			if (each) {
+				each(options);
+			}
+		}
+	},
+
+	_pollOptions: function(options) {
+		options.refresh = true;
+		options.prev = options.cur;
+
+		if (options.globs == undefined) {
+			options.cur = fsext.file(options.path);
+			if (!(options.cur instanceof Array)) options.cur = [options.cur];
+		} else {
+			options.cur = fsext.glob(options.path, options.globs, options);
+		}
+	},
+
 	watches: function() {
 		return _.value(pub._watching);
 	},
@@ -38,12 +61,7 @@ var pub = {
 
 		pub._watching[watchName] = options;
 
-		if (options.globs == undefined) {
-			options.cur = fsext.file(options.path);
-			if (!(options.cur instanceof Array)) options.cur = [options.cur];
-		} else {
-			options.cur = fsext.glob(options.path, options.globs, options);
-		}
+		pub._pollOptions(options);
 
 		watchStart();
 
@@ -55,26 +73,14 @@ var pub = {
 		}
 
 		function watchLoop() {
-			// /console.log("tick");
+
 			if (pub._paused) return;
 			if (_.keys(pub._watching).length === 0) return watchEnd();
 
 			var startTime = (new Date()).getTime();
-			for (var k in pub._watching) {
-				var options = pub._watching[k];
-				options.refresh = true;
-				options.prev = options.cur;
-
-				if (options.globs == undefined) {
-					options.cur = fsext.file(options.path);
-					if (!(options.cur instanceof Array)) options.cur = [options.cur];
-				} else {
-					options.cur = fsext.glob(options.path, options.globs, options);
-				}
-
-				//console.log(options['@name'], _.pluck(options.cur,"path"));
+			pub._poll(function(options) {
 				watchChanges(options.cur, options.prev, options);
-			}
+			});
 			//console.log((new Date()).getTime() - startTime);
 		}
 
@@ -117,7 +123,10 @@ var pub = {
 			}
 
 			if (changeCount > 0) {
-				_.debounce(pub.complete, 100)();
+				if (!pub._complete) {
+					pub._complete = _.debounce(pub.complete, 100);	
+				}
+				pub._complete();
 			}
 			
 		}
@@ -126,6 +135,7 @@ var pub = {
 			if (pub._watchingInterval === null) return;
 			clearTimeout(pub._watchingInterval);
 			pub._watchingInterval = null;
+
 		}
 
 	},
@@ -146,6 +156,7 @@ var pub = {
 
 	resume: function() {
 		pub._paused = false;
+		pub._poll();
 	}
 	
 };

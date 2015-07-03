@@ -38,7 +38,7 @@ module.exports = function(buildkit) {
 				options.exclusionGlobs = _.uniq(options.exclusionGlobs);
 
 				if (!displayedGlobalExclusions) {
-					logger.log("Excluding:\n    " + globalExcludes.join(",\n    ") + "\n", 1);
+					logger.log(">Excluding:\n    " + globalExcludes.join(",\n    "), 1);
 					displayedGlobalExclusions = true;
 				}
 			}
@@ -71,7 +71,7 @@ module.exports = function(buildkit) {
 						options.exclusionGlobs = _.uniq(options.exclusionGlobs);
 
 						if (!displayedCourseExclusions[options.course]) {
-							logger.log(options.course + " - Excluding:\n    " + excludes.join(",\n    ") + "\n", 1);
+							logger.log(">"+options.course + " - Excluding:\n    " + excludes.join(",\n    "), 1);
 							displayedCourseExclusions[options.course] = true;
 						}
 					}

@@ -36,7 +36,7 @@ var assetsize = new Action({
         if (suspects.length > 0) {
             for (var i = 0, l = suspects.length; i < l; i++) {
                 var shortenedPath = (suspects[i].path+"").substr(options.src.length);
-                logger.log(options.course + " - " + shortenedPath+" - " + suspects[i].flaggedProps.join(","), 2);                        
+                logger.log(options.course + " -  Size: " + shortenedPath+" - " + suspects[i].flaggedProps.join(","), 2);                        
             }
         }
         

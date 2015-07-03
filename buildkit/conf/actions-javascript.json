@@ -201,7 +201,8 @@
 			"@displayName": "Minifying javascript...",
 			"@action": "javascriptuglify",
 			"@excludeOnSwitches": [
-                "debug"
+                "debug",
+                "quick"
             ],
             "@onlyOnSwitches": [
                 "build"
@@ -220,7 +221,8 @@
 			"@displayName": "Minifying javascript...",
 			"@action": "javascriptuglify",
 			"@excludeOnSwitches": [
-                "debug"
+                "debug",
+                "quick"
             ],
             "@onlyOnSwitches": [
                 "build"

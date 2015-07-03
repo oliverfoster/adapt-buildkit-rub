@@ -15,6 +15,9 @@ var pub =  _.extend(eventEmitter, {
 	_loopOverRun: 0,
 	_inLoop: false,
 	_hasDisplayedPhaseName: false,
+	_stats: {
+		count: 0
+	},
 
 	isRunning:function() {
 		return (pub._phaseIndex < pub._phases.length);
@@ -25,6 +28,9 @@ var pub =  _.extend(eventEmitter, {
 		pub._tasks = {};
 		pub._running = 0;
 		pub._inLoop = false;
+		pub._stats = {
+			count: 0
+		};
 	},
 
 	add: function(options, executor, complete, error, that) {
@@ -36,11 +42,13 @@ var pub =  _.extend(eventEmitter, {
 			error: error, 
 			that: that
 		});
+		pub._stats.count++;
 	},
 
 	start: function() {
 
 		if (pub._queueLoopInterval) return;
+		pub._stats.startTime = (new Date()).getTime();
 		nextPhase(true);
 		pub._queueLoopInterval = setInterval(queueLoop, 1);
 
@@ -105,6 +113,8 @@ var pub =  _.extend(eventEmitter, {
 		function endLoop() {
 			clearInterval(pub._queueLoopInterval);
 			pub._queueLoopInterval = null;
+			pub._stats.endTime = (new Date()).getTime();
+			pub.emit("stat", pub._stats);
 			pub.emit("wait");
 			pub.removeAllListeners("wait");
 		}

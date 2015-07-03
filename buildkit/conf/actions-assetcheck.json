@@ -1,0 +1,50 @@
+{
+	"actions": [
+		{
+			"@name": "asset-check",
+			"@displayName": "Checking assets...",
+			"@action": "assetcheck",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
+            "@when": "finish",
+			"@types": [ "builds/courses/course", "src/courses/course" ],
+			"jsonRoot": "{{outputDest}}/{{course}}", 
+			"jsonSrc": "course",
+			"jsonAssetGlobs": [
+				"**/course/**/images/**/*",
+				"**/course/**/pdf/**/*",
+				"**/course/**/video/**/*"
+			],
+			"assetRegex": "((\\\\\"|\"|'|url\\(){1}([^\"'\\)]*((\\.png|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\\\\"|\"|'|\\)){1})",
+			"cssRoot": "{{outputDest}}/{{course}}/adapt/css",
+			"cssSrc": "adapt.css"
+		},
+		{
+			"@name": "json-lint",
+			"@displayName": "Checking assets...",
+			"@action": "assetcheck",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
+            "@when": "finish",
+			"@types": [ "src/course" ],
+			"jsonRoot": "{{outputDest}}",
+			"jsonSrc": "course",
+			"jsonAssetGlobs": [
+				"**/course/**/images/**/*",
+				"**/course/**/pdf/**/*",
+				"**/course/**/video/**/*"
+			],
+			"assetRegex": "((\\\\\"|\"|'|url\\(){1}([^\"'\\)]*((\\.png|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\\\\"|\"|'|\\)){1})",
+			"cssRoot": "{{outputDest}}/adapt/css",
+			"cssSrc": "adapt.css"
+		}
+	]
+}
