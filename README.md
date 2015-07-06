@@ -79,6 +79,7 @@ It backports dynamic jquery selection to v1.1.1
 
 ###JSON linting and LESS sourcemaps
 Yes.
+For Adapt and the builder configurations.
 
 
 

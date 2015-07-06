@@ -1,12 +1,12 @@
-var Action = require("../utils/Action.js");
+var Action = require("../lib/Action.js");
 
 var assetcheck = new Action({
 
     initialize: function() {
 
         this.deps(GLOBAL, {
-            "fsext": "../utils/fsext.js",
-            "logger": "../utils/logger.js",
+            "fsext": "../lib/fsext.js",
+            "logger": "../lib/logger.js",
             "fs": "fs",
             "path": "path",
             "_": "underscore"
@@ -26,6 +26,16 @@ var assetcheck = new Action({
 
         options.jsonRoot = fsext.expand(options.jsonRoot);
         options.cssRoot = fsext.expand(options.cssRoot);
+
+        if (options.logPath) logger.file(options.logPath, "", true);
+
+        function log(text, type) {
+            if (options.logPath) {
+                logger.file(options.logPath, text, false);
+            } else {
+                logger.log(text, type);
+            }
+        }
 
         var assetRegExp = new RegExp(options.assetRegex, "g");
 
@@ -82,6 +92,7 @@ var assetcheck = new Action({
                             case "'": case '"':
                                 matches[i] = matches[i].substr(0, matches[i].length-1);
                             }
+                            if (matches[i] == ")") continue;
                             jsonAssetListPaths.push(matches[i]);
 
                         }
@@ -94,9 +105,9 @@ var assetcheck = new Action({
                 for (var i = 0, l = jsonAssetListPaths.length; i < l; i++ ){
                     if (jsonAssetListPaths[i].substr(0,4) === "http") {
                         if (options.course) {
-                            logger.log(options.course + " -  External: " + jsonAssetListPaths[i], 2);
+                            log(options.course + " -  JSON External: " + jsonAssetListPaths[i], 2);
                         } else {
-                            logger.log(" External: " + jsonAssetListPaths[i], 2);
+                            log(" External: " + jsonAssetListPaths[i], 2);
                         }
                         continue;
                     }
@@ -104,9 +115,9 @@ var assetcheck = new Action({
                     fileAssetListPaths.push(filePath);
                     if (!fs.existsSync( filePath )) {
                         if (options.course) {
-                            logger.log(options.course + " -  Missing: " + jsonAssetListPaths[i], 2);
+                            log(options.course + " -  JSON Missing: " + jsonAssetListPaths[i], 2);
                         } else {
-                            logger.log(" Missing: " + jsonAssetListPaths[i], 2);
+                            log(" Missing: " + jsonAssetListPaths[i], 2);
                         }
                     }
                 }
@@ -161,18 +172,18 @@ var assetcheck = new Action({
 
                 for (var i = 0, l = cssAssetListPaths.length; i < l; i++ ){
                     if (cssAssetListPaths[i].substr(0,4) === "http") {
-                        if (options.couse) {
-                            logger.log(options.course + " -  External: " + cssAssetListPaths[i], 2);
+                        if (options.course) {
+                            log(options.course + " -  CSS External: " + cssAssetListPaths[i], 2);
                         } else {
-                            logger.log(" External: " + cssAssetListPaths[i], 2);
+                            log(" External: " + cssAssetListPaths[i], 2);
                         }
                         continue;
                     }
                     var filePath = path.join(options.cssRoot, cssAssetListPaths[i]);
                     fileAssetListPaths.push(filePath);
-                    /*if (!fs.existsSync( filePath )) {
-                        logger.log(options.course + " -  Missing: " + cssAssetListPaths[i], 2);
-                    }*/
+                    if (!fs.existsSync( filePath )) {
+                        log(options.course + " -  CSS Missing: " + cssAssetListPaths[i], 2);
+                    }
                 }
 
 
@@ -189,10 +200,10 @@ var assetcheck = new Action({
                 });
 
                 for (var i = 0, l = redundant.length; i < l; i++ ){
-                    if (options.couse) {
-                        logger.log(options.course + " -  Redundant: " + redundant[i], 2);
+                    if (options.course) {
+                        log(options.course + " -  Redundant by CSS and JSON: " + redundant[i], 2);
                     } else {
-                        logger.log(" Redundant: " + redundant[i], 2);
+                        log(" Redundant: " + redundant[i], 2);
                     }
                 }
 

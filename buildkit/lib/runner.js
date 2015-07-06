@@ -1,11 +1,12 @@
 var fs = require("fs");
-var fsext = require("./utils/fsext");
-var fswatch = require("./utils/fswatch");
+var fsext = require("./fsext");
+var fswatch = require("./fswatch");
 var path = require("path");
 var hbs = require("handlebars");
-var taskqueue = require("./utils/taskqueue.js");
-var logger = require("./utils/logger.js");
+var taskqueue = require("./taskqueue.js");
+var logger = require("./logger.js");
 var _ = require("underscore");
+var JSONLint = require("json-lint");
 
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
@@ -137,7 +138,15 @@ var pub =  _.extend(eventEmitter, {
 			var configFilePaths = fsext.glob(configsPath, "*.json");
 			for (var i = 0, l = configFilePaths.length; i < l; i++) {
 
-				var json = JSON.parse(fs.readFileSync(configFilePaths[i].path));
+				var fileString = fs.readFileSync(configFilePaths[i].path).toString();
+
+				var lint = JSONLint(fileString)
+				if (lint.error) {
+					logger.error("\nFile: " +configFilePaths[i].path+ "\nError: " + lint.error + "\nLine: " + lint.line + "\nCharacter: " + lint.character+"\n");
+					continue;
+				}
+
+				var json = JSON.parse(fileString);
 
 				for (var k in json) {
 					if (json[k] instanceof Array) {
@@ -157,7 +166,16 @@ var pub =  _.extend(eventEmitter, {
 			var configsPath = path.join(process.cwd(), "rubconfig.json");
 			if (fs.existsSync(configsPath)) {
 				try {
-					pub._terminalOptions.buildConfig = JSON.parse(fs.readFileSync(configsPath));
+					var fileString = fs.readFileSync(configsPath).toString();
+
+					var lint = JSONLint(fileString)
+					if (lint.error) {
+						logger.error("\nFile: " +configsPath+ "\nError: " + lint.error + "\nLine: " + lint.line + "\nCharacter: " + lint.character+"\n");
+						return;
+					}
+
+					pub._terminalOptions.buildConfig = JSON.parse(fileString);
+
 				} catch (e) {
 					logger.error("rubconfig.json is corrupt");
 					logger.error(e);
@@ -170,7 +188,8 @@ var pub =  _.extend(eventEmitter, {
 			var pluginFilePaths = fsext.glob(pluginsPath, "*.js");
 			for (var i = 0, l = pluginFilePaths.length; i < l; i++) {
 				try {
-					require(pluginFilePaths[i].path)(pub);
+					var plugin = require(pluginFilePaths[i].path);
+					plugin.initialize();
 				} catch (e) {
 					logger.error("Plugin " + pluginFilePaths[i].basename + " is corrupt");
 					logger.error(e);
@@ -365,9 +384,9 @@ var pub =  _.extend(eventEmitter, {
 			for (var i = 0, l = actions.length; i < l; i++) {
 
 				var actionConfig = actions[i];
-				var terminalOptionsAndActionConfig = _.extend({}, terminalOptions, actionConfig);
+				var actionOptions = _.extend({}, terminalOptions, actionConfig);
 
-				configured.push(terminalOptionsAndActionConfig);
+				configured.push(actionOptions);
 			}
 
 			pub.emit("actions:build", configured);
@@ -376,37 +395,57 @@ var pub =  _.extend(eventEmitter, {
 				runAction(configured[i]);
 			}
 
-			function runAction(terminalOptionsAndActionConfig) {
+			function runAction(actionOptions) {
 				pub._serverReloadType = "window";
 
-				if (terminalOptionsAndActionConfig["@serverReloadType"]) {
+				if (actionOptions["@serverReloadType"]) {
 
-					pub._serverReloadType = terminalOptionsAndActionConfig["@serverReloadType"];	
+					pub._serverReloadType = actionOptions["@serverReloadType"];	
 				}
 
-				taskqueue.add(terminalOptionsAndActionConfig, function(terminalOptionsAndActionConfig, done) {
-					var actionName = terminalOptionsAndActionConfig['@action'];
-					var action = require("./actions/"+actionName+".js");
+				var actionName = actionOptions['@action'];
+				var action = require("../actions/"+actionName+".js");
 
-					if (!actions._isInitialized) {
-						action.initialize();
-						action._isInitialized = true;
-					}
-	
-					pub.emit("action:prep", terminalOptionsAndActionConfig, action);
-					action.perform(terminalOptionsAndActionConfig, done, _.bind(function() {
+				if (!actions._isInitialized) {
+					action.initialize();
+					action._isInitialized = true;
+				}
 
-						logger.runlog(terminalOptionsAndActionConfig);
-						pub.emit("action:start", terminalOptionsAndActionConfig, action);
+				var task = {
+					options: actionOptions,
+					start: function(actionOptions, taskDone) {
 						
-					}, action));
+		
+						pub.emit("action:prep", actionOptions, this);
 
-				}, function(terminalOptionsAndActionConfig) {
-					pub.emit("action:end", terminalOptionsAndActionConfig);
-				}, function(terminalOptionsAndActionConfig, error) {
-					pub.emit("action:error", terminalOptionsAndActionConfig, error);
-				});
-				
+						this.perform(actionOptions, taskDone, _.bind(started, this));
+
+						function started() {
+
+							if (actionOptions['@buildOnce'] === true) {
+								if (actionOptions["@displayName"]) logger.log(actionOptions["@displayName"], 0);
+							} else {
+								if (actionOptions['course']) {
+									if (actionOptions["@displayName"]) logger.log(actionOptions['course'] + " - " + actionOptions["@displayName"], 0);
+								} else {
+									if (actionOptions["@displayName"]) logger.log(actionOptions["@displayName"], 0);
+								}
+							}
+
+							pub.emit("action:start", actionOptions, this);
+						}
+
+					},
+					end: function(actionOptions) {
+						pub.emit("action:end", actionOptions, this);
+					},
+					error: function(actionOptions, error) {
+						pub.emit("action:error", actionOptions, error, this);
+					},
+					context: action
+				};
+
+				taskqueue.add(task);				
 			}
 
 		}
@@ -429,7 +468,7 @@ var pub =  _.extend(eventEmitter, {
 
 		taskqueue.defer(function startServer() {
 
-			pub._server = require("./utils/server.js");
+			pub._server = require("./server.js");
 
 			if (pub._terminalOptions.switches['server'] && !pub._server.isStarted()) {
 				pub._server.start(pub._terminalOptions);
@@ -537,7 +576,7 @@ var pub =  _.extend(eventEmitter, {
 				if (isActionInList.length === 0) {
 					pub._fileChangeActionQueue.push(actionConfig);
 				} else {
-					require("./actions/"+actionConfig['@action']+".js").reset();
+					require("../actions/"+actionConfig['@action']+".js").reset();
 				}
 			}
 
@@ -572,8 +611,6 @@ var pub =  _.extend(eventEmitter, {
 	}
 });
 
-module.exports = function(config) {
-	pub.entryPoint(config);
-};
+module.exports = pub;
 
 

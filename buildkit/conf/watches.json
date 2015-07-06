@@ -14,7 +14,9 @@
 				"bundles-fonts-folder",
 				"bundles-required-folder",
 				"bundles-assets-folder",
-				"stringreplacement"
+				"stringreplacement",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -31,7 +33,9 @@
 				"bundles-fonts-folder",
 				"bundles-required-folder",
 				"bundles-assets-folder",
-				"stringreplacement"
+				"stringreplacement",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -48,7 +52,9 @@
 				"bundles-fonts-folder",
 				"bundles-required-folder",
 				"bundles-assets-folder",
-				"stringreplacement"
+				"stringreplacement",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -65,7 +71,9 @@
 				"bundles-fonts-folder",
 				"bundles-required-folder",
 				"bundles-assets-folder",
-				"stringreplacement"
+				"stringreplacement",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -80,7 +88,9 @@
 				"bundles-fonts-folder",
 				"bundles-required-folder",
 				"bundles-assets-folder",
-				"stringreplacement"
+				"stringreplacement",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -95,7 +105,9 @@
 				"bundles-fonts-folder",
 				"bundles-required-folder",
 				"bundles-assets-folder",
-				"stringreplacement"
+				"stringreplacement",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -110,7 +122,9 @@
 				"bundles-fonts-folder",
 				"bundles-required-folder",
 				"bundles-assets-folder",
-				"stringreplacement"
+				"stringreplacement",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -125,7 +139,9 @@
 				"bundles-fonts-folder",
 				"bundles-required-folder",
 				"bundles-assets-folder",
-				"stringreplacement"
+				"stringreplacement",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -240,7 +256,9 @@
 				"**/fonts/**"
 			],
 			"actions": [
-				"bundles-fonts-folder"
+				"bundles-fonts-folder",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -250,7 +268,9 @@
 				"**/fonts/**"
 			],
 			"actions": [
-				"bundles-fonts-folder"
+				"bundles-fonts-folder",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -260,7 +280,9 @@
 				"**/fonts/**"
 			],
 			"actions": [
-				"bundles-fonts-folder"
+				"bundles-fonts-folder",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -270,7 +292,9 @@
 				"**/fonts/**"
 			],
 			"actions": [
-				"bundles-fonts-folder"
+				"bundles-fonts-folder",
+				"assetrequired",
+				"assetsize"
 			]
 		},
 		{
@@ -281,6 +305,8 @@
 			],
 			"actions": [
 				"bundles-required-folder",
+				"assetrequired",
+				"assetsize",
 				"stringreplacement"
 			]
 		},
@@ -292,6 +318,8 @@
 			],
 			"actions": [
 				"bundles-required-folder",
+				"assetrequired",
+				"assetsize",
 				"stringreplacement"
 			]
 		},
@@ -303,6 +331,8 @@
 			],
 			"actions": [
 				"bundles-required-folder",
+				"assetrequired",
+				"assetsize",
 				"stringreplacement"
 			]
 		},
@@ -314,6 +344,8 @@
 			],
 			"actions": [
 				"bundles-required-folder",
+				"assetrequired",
+				"assetsize",
 				"stringreplacement"
 			]
 		},
@@ -325,6 +357,8 @@
 			],
 			"actions": [
 				"bundles-assets-folder",
+				"assetrequired",
+				"assetsize",
 				"stringreplacement"
 			]
 		},
@@ -336,6 +370,8 @@
 			],
 			"actions": [
 				"bundles-assets-folder",
+				"assetrequired",
+				"assetsize",
 				"stringreplacement"
 			]
 		},
@@ -347,6 +383,8 @@
 			],
 			"actions": [
 				"bundles-assets-folder",
+				"assetrequired",
+				"assetsize",
 				"stringreplacement"
 			]
 		},
@@ -358,6 +396,8 @@
 			],
 			"actions": [
 				"theme-assets-folder",
+				"assetrequired",
+				"assetsize",
 				"stringreplacement"
 			]
 		},
@@ -386,6 +426,7 @@
 			],
 			"actions": [
 				"course-folder",
+				"assetrequired",
 				"assetsize",
 				"stringreplacement"
 			]
@@ -402,6 +443,7 @@
 			],
 			"actions": [
 				"course-folder",
+				"assetrequired",
 				"assetsize",
 				"stringreplacement"
 			]
@@ -423,6 +465,7 @@
 				"!*.json"
 			],
 			"actions": [
+				"assetrequired",
 				"assetsize",
 				"stringreplacement"
 			]
@@ -438,6 +481,8 @@
 			"actions": [
 				"json-lint",
 				"json-check",
+				"assetrequired",
+				"assetsize",
 				"themejson",
 				"stringreplacement"
 			]
@@ -453,6 +498,8 @@
 			"actions": [
 				"json-lint",
 				"json-check",
+				"assetrequired",
+				"assetsize",
 				"themejson",
 				"stringreplacement"
 			]
@@ -468,6 +515,8 @@
 			"actions": [
 				"json-lint",
 				"json-check",
+				"assetrequired",
+				"assetsize",
 				"themejson",
 				"stringreplacement"
 			]

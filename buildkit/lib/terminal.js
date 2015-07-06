@@ -8,7 +8,7 @@ var pub = {
 
         var prog = pub.runProgram();
 
-        var switches = _.extend(pub.generateSwitches(prog), forceSwitches);
+        var switches = _.extend(pub.processSwitches(prog), forceSwitches);
 
         var terminalOptions =  {
             switches: switches,
@@ -28,7 +28,7 @@ var pub = {
                 watch: 'named'/true/undefined,
                 debug: 'named'/true/undefined,
                 force: 'named'/true/undefined,
-                forceAll: 'named'/true/undefined,
+                forceall: 'named'/true/undefined,
                 server: 'named'/true/undefined,
                 port: '8080'/undefined,
                 quick: 'named'/true/undefined,
@@ -69,7 +69,7 @@ var pub = {
         return program;
     },
 
-    generateSwitches: function(program) {
+    processSwitches: function(program) {
         var switches = {};
         _.each(program.options, function(opt) {
             var k = opt.long.slice(2);
@@ -124,4 +124,4 @@ var pub = {
 
 };
 
-module.exports = pub.entryPoint;
+module.exports = pub;

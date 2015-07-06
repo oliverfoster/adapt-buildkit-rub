@@ -56,7 +56,8 @@
                 "ogg": {
                     "size": 10240
                 }
-            }
+            },
+            "logPath": "rub-assetsize.log"
 		},
 		{
 			"@name": "assetsize",
@@ -114,7 +115,8 @@
                 "ogg": {
                     "size": 10240
                 }
-            }
+            },
+            "logPath": "rub-assetsize.log"
 		}
 	]
 }

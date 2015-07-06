@@ -1,9 +1,9 @@
 {
 	"actions": [
 		{
-			"@name": "asset-check",
+			"@name": "assetrequired",
 			"@displayName": "Checking assets...",
-			"@action": "assetcheck",
+			"@action": "assetrequired",
 			"@onlyOnSwitches": [
                 "build"
             ],
@@ -15,18 +15,21 @@
 			"jsonRoot": "{{outputDest}}/{{course}}", 
 			"jsonSrc": "course",
 			"jsonAssetGlobs": [
+				"!**/adapt/css/assets/**/*",
+				"**/assets/**/*",
 				"**/course/**/images/**/*",
 				"**/course/**/pdf/**/*",
 				"**/course/**/video/**/*"
 			],
-			"assetRegex": "((\\\\\"|\"|'|url\\(){1}([^\"'\\)]*((\\.png|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\\\\"|\"|'|\\)){1})",
+			"assetRegex": "((\\\\\"|\"|'|url\\(){1}([^\"'\\)]*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\\\\"|\"|'|\\)){1})",
 			"cssRoot": "{{outputDest}}/{{course}}/adapt/css",
-			"cssSrc": "adapt.css"
+			"cssSrc": "adapt.css",
+			"logPath": "rub-assetcheck.log"
 		},
 		{
-			"@name": "json-lint",
+			"@name": "assetrequired",
 			"@displayName": "Checking assets...",
-			"@action": "assetcheck",
+			"@action": "assetrequired",
 			"@onlyOnSwitches": [
                 "build"
             ],
@@ -38,13 +41,16 @@
 			"jsonRoot": "{{outputDest}}",
 			"jsonSrc": "course",
 			"jsonAssetGlobs": [
+				"!**/adapt/css/assets/**/*",
+				"**/assets/**/*",
 				"**/course/**/images/**/*",
 				"**/course/**/pdf/**/*",
 				"**/course/**/video/**/*"
 			],
-			"assetRegex": "((\\\\\"|\"|'|url\\(){1}([^\"'\\)]*((\\.png|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\\\\"|\"|'|\\)){1})",
+			"assetRegex": "((\\\\\"|\"|'|url\\(){1}([^\"'\\)]*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\\\\"|\"|'|\\)){1})",
 			"cssRoot": "{{outputDest}}/adapt/css",
-			"cssSrc": "adapt.css"
+			"cssSrc": "adapt.css",
+			"logPath": "rub-assetcheck.log"
 		}
 	]
 }

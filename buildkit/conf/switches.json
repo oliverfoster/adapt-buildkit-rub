@@ -39,7 +39,8 @@
 			},
 			"alwaysSet": {
 				"build": true,
-				"trackinginsert": true
+				"trackinginsert": true,
+				"techspec": false
 			}
 		},
 		{

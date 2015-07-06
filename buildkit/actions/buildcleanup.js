@@ -1,12 +1,12 @@
-var Action = require("../utils/Action.js");
+var Action = require("../lib/Action.js");
 
 var buildcleanup = new Action({
 
 	initialize: function() {
 
         this.deps(GLOBAL, {
-            "fsext": "../utils/fsext.js",
-            "logger": "../utils/logger.js",
+            "fsext": "../lib/fsext.js",
+            "logger": "../lib/logger.js",
             "fs": "fs",
             "path": "path",
             "_": "underscore",
