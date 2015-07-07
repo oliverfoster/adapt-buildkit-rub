@@ -34,8 +34,6 @@ var techspec = new Action({
             }
         }
 
-        console.log("isSupported", probe.isSupported());
-
         if (!probe.isSupported()) {
         	if (options.course) {
             	log(options.course + " - TechSpec: " + "Cannot find video+audio information. Unsupported platform " + os.platform(), 1);
