@@ -1,12 +1,12 @@
-var Action = require("../lib/Action.js");
+var Action = require("../libraries/Action.js");
 
 var assetcheck = new Action({
 
     initialize: function() {
 
         this.deps(GLOBAL, {
-            "fsext": "../lib/fsext.js",
-            "logger": "../lib/logger.js",
+            "fsext": "../libraries/fsext.js",
+            "logger": "../libraries/logger.js",
             "fs": "fs",
             "path": "path",
             "_": "underscore"
@@ -27,13 +27,11 @@ var assetcheck = new Action({
         options.jsonRoot = fsext.expand(options.jsonRoot);
         options.cssRoot = fsext.expand(options.cssRoot);
 
-        if (options.logPath) logger.file(options.logPath, "", true);
-
         function log(text, type) {
             if (options.logPath) {
                 logger.file(options.logPath, text, false);
             } else {
-                logger.log(text, type);
+                logger.log(" " + text, type);
             }
         }
 
@@ -105,9 +103,9 @@ var assetcheck = new Action({
                 for (var i = 0, l = jsonAssetListPaths.length; i < l; i++ ){
                     if (jsonAssetListPaths[i].substr(0,4) === "http") {
                         if (options.course) {
-                            log(options.course + " -  JSON External: " + jsonAssetListPaths[i], 2);
+                            log(options.course + " - Assets: JSON External " + jsonAssetListPaths[i], 2);
                         } else {
-                            log(" External: " + jsonAssetListPaths[i], 2);
+                            log("Assets: JSON External " + jsonAssetListPaths[i], 2);
                         }
                         continue;
                     }
@@ -115,9 +113,9 @@ var assetcheck = new Action({
                     fileAssetListPaths.push(filePath);
                     if (!fs.existsSync( filePath )) {
                         if (options.course) {
-                            log(options.course + " -  JSON Missing: " + jsonAssetListPaths[i], 2);
+                            log(options.course + " - Assets: JSON Missing " + jsonAssetListPaths[i], 2);
                         } else {
-                            log(" Missing: " + jsonAssetListPaths[i], 2);
+                            log("Assets: JSON Missing: " + jsonAssetListPaths[i], 2);
                         }
                     }
                 }
@@ -173,16 +171,16 @@ var assetcheck = new Action({
                 for (var i = 0, l = cssAssetListPaths.length; i < l; i++ ){
                     if (cssAssetListPaths[i].substr(0,4) === "http") {
                         if (options.course) {
-                            log(options.course + " -  CSS External: " + cssAssetListPaths[i], 2);
+                            log(options.course + " - Assets: CSS External " + cssAssetListPaths[i], 2);
                         } else {
-                            log(" External: " + cssAssetListPaths[i], 2);
+                            log("Assets: CSS External " + cssAssetListPaths[i], 2);
                         }
                         continue;
                     }
                     var filePath = path.join(options.cssRoot, cssAssetListPaths[i]);
                     fileAssetListPaths.push(filePath);
                     if (!fs.existsSync( filePath )) {
-                        log(options.course + " -  CSS Missing: " + cssAssetListPaths[i], 2);
+                        log(options.course + " - Assets: CSS Missing " + cssAssetListPaths[i], 2);
                     }
                 }
 
@@ -201,9 +199,9 @@ var assetcheck = new Action({
 
                 for (var i = 0, l = redundant.length; i < l; i++ ){
                     if (options.course) {
-                        log(options.course + " -  Redundant by CSS and JSON: " + redundant[i], 2);
+                        log(options.course + " - Assets: Redundant by CSS and JSON " + redundant[i], 2);
                     } else {
-                        log(" Redundant: " + redundant[i], 2);
+                        log("Assets: Redundant " + redundant[i], 2);
                     }
                 }
 

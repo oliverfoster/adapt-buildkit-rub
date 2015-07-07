@@ -1,17 +1,17 @@
-var Action = require("../lib/Action.js");
+var Action = require("../libraries/Action.js");
 
 var less = new Action({
 
 	initialize: function() {
 
         this.deps(GLOBAL, {
-            "fsext": "../lib/fsext.js",
-            "logger": "../lib/logger.js",
+            "fsext": "../libraries/fsext.js",
+            "logger": "../libraries/logger.js",
             "fs": "fs",
             "path": "path",
             "_": "underscore",
             "lessCompiler": "less",
-            "sourcemaps": "../lib/sourcemaps.js"
+            "sourcemaps": "../libraries/sourcemaps.js"
         });
 
     },

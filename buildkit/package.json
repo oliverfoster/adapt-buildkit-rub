@@ -14,12 +14,14 @@
     "json-lint": "^0.1.0",
     "less": "^2.5.0",
     "minimatch": "^2.0.4",
+    "node-ffprobe": "^1.2.2",
     "node-native-zip-compression": "^1.0.1",
     "open": "0.0.5",
     "osenv": "^0.1.0",
     "requirejs": "^2.1.17",
     "serve-index": "^1.6.3",
     "uglify-js": "^2.4.23",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "underscore-deep-extend": "0.0.5"
   }
 }

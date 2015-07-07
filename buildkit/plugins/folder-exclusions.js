@@ -1,11 +1,11 @@
-var Plugin = require("../lib/Plugin.js");
+var Plugin = require("../libraries/Plugin.js");
 
 module.exports = new Plugin({
 
 	initialize: function() {
 		this.deps(GLOBAL, {
 			'_': "underscore",
-			"logger": "../lib/logger.js"
+			"logger": "../libraries/logger.js"
 		});
 	},
 
@@ -24,7 +24,7 @@ module.exports = new Plugin({
 		
 		for (var a = 0, al = actions.length; a < al; a++) {
 			var options = actions[a];
-			if (options['@buildOnce'] || !options.buildConfig) continue;	
+			if (options['@buildOnce'] || (!options.buildConfig || !options.buildConfig.excludes)) continue;	
 
 			applyGeneralExclusions.call(this, options);
 			applyCourseSpecificExclusions.call(this, options);
@@ -33,7 +33,7 @@ module.exports = new Plugin({
 
 		function applyGeneralExclusions(options) {
 			//do general exclusions
-			var globalExcludes = options.buildConfig.excludes;
+			var globalExcludes = options.buildConfig.excludes.folderNames;
 			if (globalExcludes && globalExcludes instanceof Array && globalExcludes.length > 0) {
 
 				var globs = [];
@@ -59,9 +59,9 @@ module.exports = new Plugin({
 		
 		function applyCourseSpecificExclusions(options) {
 			//do course specific exclusions
-			if (options.course == '' || !options.buildConfig[options.course]) return;
+			if (options.course == '' || !options.buildConfig.excludes[options.course]) return;
 
-			var excludes = options.buildConfig[options.course].excludes;
+			var excludes = options.buildConfig.excludes[options.course].folderNames;
 			if (excludes && excludes instanceof Array && excludes.length > 0) {
 
 				if (globalExcludes && globalExcludes instanceof Array && globalExcludes.length > 0) {

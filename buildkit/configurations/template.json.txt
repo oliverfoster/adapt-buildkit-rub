@@ -1,0 +1,47 @@
+{
+	"actions": [
+		{
+			"@name": "nameOfActionForWatches",
+			"@displayName": "Display Description",
+			"@action": "nameOfActionJavascriptFile",
+			"@onlyOnSwitches": [
+                "build",
+                "wait",
+                "trackinginsert",
+                "trackingdelete",
+                "trackingreset",
+                "watch",
+                "debug",
+                "force",
+                "forceall",
+                "server",
+                "port",
+                "quick",
+                "clear",
+                "zip"
+            ],
+            "@excludeOnSwitches": [
+                "build",
+                "wait",
+                "trackinginsert",
+                "trackingdelete",
+                "trackingreset",
+                "watch",
+                "debug",
+                "force",
+                "forceall",
+                "server",
+                "port",
+                "quick",
+                "clear",
+                "zip"
+            ],
+            "@buildOnce": false,
+            "@when": "finish|preFinish|postStart|start",
+			"@types": [ "builds/courses/course", "src/courses/course", "src/course" ]
+			/*
+				put your action configuration here
+			*/
+		}
+	]
+}

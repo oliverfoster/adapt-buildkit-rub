@@ -1,10 +1,12 @@
 {
-	"p101": {
-		"excludes": [
+	"excludes": {
+		"p101": {
+			"folderNames": [
+				
+			]
+		},
+		"folderNames": [
 			
 		]
-	},
-	"excludes": [
-		
-	]
+	}
 }

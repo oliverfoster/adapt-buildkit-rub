@@ -1,4 +1,4 @@
-var terminal = require("./lib/terminal.js");
-var runner = require("./lib/runner.js");
+var terminal = require("./libraries/terminal.js");
+var runner = require("./libraries/runner.js");
 
 runner.entryPoint( terminal.entryPoint( {} ) );

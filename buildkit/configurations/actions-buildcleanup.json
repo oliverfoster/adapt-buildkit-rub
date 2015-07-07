@@ -1,0 +1,51 @@
+{
+	"actions": [
+		{
+			"@name": "build-cleanup",
+			"@displayName": "Cleaning build folder...",
+			"@action": "buildcleanup",
+            "@onlyOnSwitches": [
+                "clean"
+            ],
+            "@types": [ "builds/courses/course" ],
+            "@when": "start",
+			"root": "{{outputDest}}/{{course}}",
+			"deleteRoot": false,
+			"globs": [
+				"!**/course/**",
+				"!**/course",
+				"**"
+			]
+		},
+		{
+			"@name": "build-cleanup",
+			"@displayName": "Cleaning build folder...",
+			"@action": "buildcleanup",
+            "@onlyOnSwitches": [
+                "clean"
+            ],
+            "@types": [ "src/courses/course" ],
+            "@when": "start",
+            "deleteRoot": true,
+			"root": "{{outputDest}}/{{course}}",
+			"globs": [
+				"**"
+			]
+		},
+		{
+			"@name": "build-cleanup",
+			"@displayName": "Cleaning build folder...",
+			"@action": "buildcleanup",
+            "@onlyOnSwitches": [
+                "clean"
+            ],
+            "@types": [ "src/course" ],
+            "@when": "start",
+            "deleteRoot": true,
+			"root": "{{outputDest}}/",
+			"globs": [
+				"**"
+			]
+		}
+	]
+}

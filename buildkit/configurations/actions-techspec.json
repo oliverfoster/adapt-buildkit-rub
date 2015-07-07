@@ -1,0 +1,162 @@
+{
+	"actions": [
+		{
+			"@name": "techspec",
+			"@displayName": "Tech Spec checking...",
+			"@action": "techspec",
+            "@onlyOnSwitches": [
+                "debug"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
+            "@when": "preFinish",
+			"@types": [ "builds/courses/course", "src/courses/course" ],
+			"src": "{{outputDest}}/{{course}}",
+			"globs": [
+				"**/*"
+			],
+			"techspec": {
+                "extensions": {
+                    "png": {
+                        "size": "1.5MB",
+                        "width": 2500,
+                        "height": 2500
+                    },
+                    "jpg": {
+                        "size": "1.5MB",
+                        "width": 2500,
+                        "height": 2500
+                    },
+                    "jpeg": {
+                        "size": "1.5MB",
+                        "width": 2500,
+                        "height": 2500
+                    },
+                    "gif": {
+                        "size": "1.5MB",
+                        "width": 1440,
+                        "height": 1025
+                    },
+                    "mp4": {
+                        "size": "10MB",
+                        "width": 1440,
+                        "height": 810,
+                        "audio_bitrate": "128kb/s",
+                        "audio_codec": "aac",
+                        "video_bitrate": "1.5mb/s",
+                        "video_fps": 25,
+                        "video_codec": "h264"
+                    },
+                    "mp3": {
+                        "size": "10MB",
+                        "audio_bitrate": "128kb/s"
+                    },
+                    "ogv": {
+                        "size": "10MB",
+                        "width": 1440,
+                        "height": 810,
+                        "audio_bitrate": "128kb/s",
+                        "audio_codec": "vorbis",
+                        "video_bitrate": "1.5mb/s",
+                        "video_fps": 25,
+                        "video_codec": "theora"
+                    },
+                    "ogg": {
+                        "size": "10MB",
+                        "width": 1440,
+                        "height": 810,
+                        "audio_bitrate": "128kb/s",
+                        "audio_codec": "vorbis",
+                        "video_bitrate": "1.5mb/s",
+                        "video_fps": 25,
+                        "video_codec": "theora"
+                    }
+                },
+                "totalSize": "100MB",
+                "fileSize": "10MB",
+                "restrictedExtensions": [ "log" ]
+            },
+            "logPath": "rub-check.log"
+		},
+		{
+			"@name": "techspec",
+			"@displayName": "Tech Spec checking...",
+			"@action": "techspec",
+            "@onlyOnSwitches": [
+                "debug"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
+			"@types": [ "src/course" ],
+            "@when": "preFinish",
+			"src": "{{outputDest}}",
+			"globs": [
+                "**/*"
+			],
+			"techspec": {
+                "extensions": {
+                    "png": {
+                        "size": "1.5MB",
+                        "width": 2500,
+                        "height": 2500
+                    },
+                    "jpg": {
+                        "size": "1.5MB",
+                        "width": 2500,
+                        "height": 2500
+                    },
+                    "jpeg": {
+                        "size": "1.5MB",
+                        "width": 2500,
+                        "height": 2500
+                    },
+                    "gif": {
+                        "size": "1.5MB",
+                        "width": 1440,
+                        "height": 1025
+                    },
+                    "mp4": {
+                        "size": "10MB",
+                        "width": 1440,
+                        "height": 810,
+                        "audio_bitrate": "128kb/s",
+                        "audio_codec": "aac",
+                        "video_bitrate": "1.5mb/s",
+                        "video_fps": 25,
+                        "video_codec": "h264"
+                    },
+                    "mp3": {
+                        "size": "10MB",
+                        "audio_bitrate": "128kb/s"
+                    },
+                    "ogv": {
+                        "size": "10MB",
+                        "width": 1440,
+                        "height": 810,
+                        "audio_bitrate": "128kb/s",
+                        "audio_codec": "vorbis",
+                        "video_bitrate": "1.5mb/s",
+                        "video_fps": 25,
+                        "video_codec": "theora"
+                    },
+                    "ogg": {
+                        "size": "10MB",
+                        "width": 1440,
+                        "height": 810,
+                        "audio_bitrate": "128kb/s",
+                        "audio_codec": "vorbis",
+                        "video_bitrate": "1.5mb/s",
+                        "video_fps": 25,
+                        "video_codec": "theora"
+                    }
+                },
+                "totalSize": "100MB",
+                "fileSize": "10MB",
+                "restrictedExtensions": [ "log" ]
+            },
+            "logPath": "rub-check.log"
+		}
+	]
+}

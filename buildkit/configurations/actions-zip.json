@@ -1,0 +1,40 @@
+{
+	"actions": [
+		{
+			"@name": "zip",
+			"@displayName": "Creating sco zip",
+			"@action": "zip",
+			"@onlyOnSwitches": [
+				"zip"
+			],
+			"@when": "finish",
+			"@types": [ "builds/courses/course", "src/courses/course" ],
+			"root": "{{outputDest}}/{{course}}",
+			"src": "",
+			"globs": [
+				"!*.zip",
+				"**"
+			],
+			"contextGlob": "**/course.json",
+			"dest": "~/Desktop/scos/{{scoDate}}{{#if _projectCode}}_{{_projectCode}}{{/if}}_{{course}}.zip"
+		},
+		{
+			"@name": "zip",
+			"@displayName": "Creating sco zip",
+			"@action": "zip",
+			"@onlyOnSwitches": [
+				"zip"
+			],
+			"@when": "finish",
+			"@types": [ "src/course" ],
+			"root": "{{outputDest}}",
+			"src": "",
+			"globs": [
+				"!*.zip",
+				"**"
+			],
+			"contextGlob": "**/course.json",
+			"dest": "~/Desktop/scos/{{scoDate}}{{#if _projectCode}}_{{_projectCode}}{{/if}}_{{course}}.zip"
+		}
+	]
+}

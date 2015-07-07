@@ -1,4 +1,4 @@
-var Action = require("../lib/Action.js");
+var Action = require("../libraries/Action.js");
 
 var javascript = new Action({
     _outputCache: {},
@@ -7,13 +7,13 @@ var javascript = new Action({
     initialize: function() {
 
         this.deps(GLOBAL, {
-            "fsext": "../lib/fsext.js",
-            "logger": "../lib/logger.js",
+            "fsext": "../libraries/fsext.js",
+            "logger": "../libraries/logger.js",
             "fs": "fs",
             "path": "path",
             "_": "underscore",
             "requirejs": "requirejs",
-            "sourcemaps": "../lib/sourcemaps.js"
+            "sourcemaps": "../libraries/sourcemaps.js"
         });
 
     },

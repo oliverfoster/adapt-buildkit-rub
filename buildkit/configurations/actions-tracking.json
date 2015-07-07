@@ -1,0 +1,166 @@
+{
+	"actions": [
+		{
+			"@name": "trackinginsert",
+			"@displayName": "Inserting tracking ids...",
+			"@action": "tracking",
+			"@onlyOnSwitches": [
+				"trackinginsert"
+			],
+			"@when": "start",
+			"@types": [ "src/course" ],
+			"blocksPath": {
+				"src": "src/course",
+				"glob": "**/blocks.json"
+			},
+			"coursePath": {
+				"src": "src/course",
+				"glob": "**/course.json"
+			}
+		},
+		{
+			"@name": "trackinginsert",
+			"@displayName": "Inserting tracking ids...",
+			"@action": "tracking",
+			"@onlyOnSwitches": [
+				"trackinginsert"
+			],
+			"@when": "start",
+			"@types": [ "src/courses/course" ],
+			"blocksPath": {
+				"src": "src/courses/{{course}}",
+				"glob": "**/blocks.json"
+			},
+			"coursePath": {
+				"src": "src/courses/{{course}}",
+				"glob": "**/course.json"
+			}
+		},
+		{
+			"@name": "trackinginsert",
+			"@displayName": "Inserting tracking ids...",
+			"@action": "tracking",
+			"@onlyOnSwitches": [
+				"trackinginsert"
+			],
+			"@when": "start",
+			"@types": [ "builds/courses/course" ],
+			"blocksPath": {
+				"src": "{{outputDest}}/{{course}}/course",
+				"glob": "**/blocks.json"
+			},
+			"coursePath": {
+				"src": "{{outputDest}}/{{course}}/course",
+				"glob": "**/course.json"
+			}
+		},
+		{
+			"@name": "trackingdelete",
+			"@displayName": "Deleting tracking ids...",
+			"@action": "tracking",
+			"@onlyOnSwitches": [
+				"trackingdelete"
+			],
+			"@when": "start",
+			"@types": [ "src/course" ],
+			"blocksPath": {
+				"src": "{{outputDest}}/{{course}}/course",
+				"glob": "**/blocks.json"
+			},
+			"coursePath": {
+				"src": "{{outputDest}}/{{course}}/course",
+				"glob": "**/course.json"
+			}
+		},
+		{
+			"@name": "trackingdelete",
+			"@displayName": "Deleting tracking ids...",
+			"@action": "tracking",
+			"@onlyOnSwitches": [
+				"trackingdelete"
+			],
+			"@when": "start",
+			"@types": [ "src/courses/course" ],
+			"blocksPath": {
+				"src": "src/courses/{{course}}",
+				"glob": "**/blocks.json"
+			},
+			"coursePath": {
+				"src": "src/courses/{{course}}",
+				"glob": "**/course.json"
+			}
+		},
+		{
+			"@name": "trackingdelete",
+			"@displayName": "Deleting tracking ids...",
+			"@action": "tracking",
+			"@onlyOnSwitches": [
+				"trackingdelete"
+			],
+			"@when": "start",
+			"@types": [ "builds/courses/course" ],
+			"blocksPath": {
+				"src": "{{outputDest}}/{{course}}/course",
+				"glob": "**/blocks.json"
+			},
+			"coursePath": {
+				"src": "{{outputDest}}/{{course}}/course",
+				"glob": "**/course.json"
+			}
+		},
+		{
+			"@name": "trackingreset",
+			"@displayName": "Resetting tracking ids...",
+			"@action": "tracking",
+			"@onlyOnSwitches": [
+				"trackingreset"
+			],
+			"@when": "start",
+			"@types": [ "src/course" ],
+			"blocksPath": {
+				"src": "src/course",
+				"glob": "**/blocks.json"
+			},
+			"coursePath": {
+				"src": "src/course",
+				"glob": "**/course.json"
+			}
+		},
+		{
+			"@name": "trackingreset",
+			"@displayName": "Resetting tracking ids...",
+			"@action": "tracking",
+			"@onlyOnSwitches": [
+				"trackingreset"
+			],
+			"@when": "start",
+			"@types": [ "src/courses/course" ],
+			"blocksPath": {
+				"src": "src/courses/{{course}}",
+				"glob": "**/blocks.json"
+			},
+			"coursePath": {
+				"src": "{{outputDest}}/{{course}}/course",
+				"glob": "**/course.json"
+			}
+		},
+		{
+			"@name": "trackingreset",
+			"@displayName": "Resetting tracking ids...",
+			"@action": "tracking",
+			"@onlyOnSwitches": [
+				"trackingreset"
+			],
+			"@when": "start",
+			"@types": [ "builds/courses/course" ],
+			"blocksPath": {
+				"src": "{{outputDest}}/{{course}}/course",
+				"glob": "**/blocks.json"
+			},
+			"coursePath": {
+				"src": "{{outputDest}}/{{course}}/course",
+				"glob": "**/course.json"
+			}
+		}
+	]
+}

@@ -1,0 +1,108 @@
+{
+	"actions": [
+		{
+			"@name": "foundation-libraries",
+			"@displayName": "Synching external libraries...",
+			"@action": "copy",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "postStart",
+			"root": "src/core/js/",
+			"src": "libraries",
+			"globs": [
+				"jquery.v2.js",
+				"jquery.js",
+				"require.js",
+				"modernizr.js",
+				"consoles.js",
+				"json2.js"
+			],
+			"dest": "{{outputDest}}/{{course}}"
+		},
+		{
+			"@name": "foundation-scriptLoader",
+			"@displayName": "Synching script loader...",
+			"@action": "copy",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "postStart",
+			"root": "src/core/js/",
+			"src": "",
+			"globs": [
+				"scriptLoader.js"
+			],
+			"dest": "{{outputDest}}/{{course}}/adapt/js"
+		},
+		{
+			"@name": "loader",
+			"@displayName": "Synching buildkit resources...",
+			"@action": "copy",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "postStart",
+            "force": true,
+			"root": "buildkit/resources/",
+			"src": "",
+			"globs": [
+				"**/**"
+			],
+			"dest": "{{outputDest}}/{{course}}"
+		},
+		{
+			"@name": "foundation-index.html",
+			"@displayName": "Synching index.html",
+			"@action": "copy",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "postStart",
+			"root": "src",
+			"src": "",
+			"globs": [
+				"!**/buildkit/**",
+				"!**/core/**",
+				"!**/extensions/**",
+				"!**/components/**",
+				"!**/theme/**",
+				"!**/menu/**",
+				"index.html"				
+			],
+			"dest": "{{outputDest}}/{{course}}"
+		},
+		{
+			"@name": "course-folder",
+			"@displayName": "Synching course folder...",
+			"@action": "copy",
+			"@types": [ "src/course" ],
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "postStart",
+			"root": "src/course",
+			"src": "",
+			"globs": [
+				"**"
+			],
+			"dest": "{{outputDest}}/course"
+		},
+		{
+			"@name": "course-folder",
+			"@displayName": "Synching course folder...",
+			"@action": "copy",
+			"@types": [ "src/courses/course" ],
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "postStart",
+			"root": "src/courses/{{course}}/",
+			"src": "",
+			"globs": [
+				"**"
+			],
+			"dest": "{{outputDest}}/{{course}}/course"
+		}
+	]
+}
