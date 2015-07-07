@@ -61,6 +61,11 @@ var pub = {
 		*/
 		var dirs = [];
 		var files = [];
+
+		if (!fs.existsSync(dir)) {
+			return {dirs:[], files:[]};
+		}
+
 		var list = fs.readdirSync(dir);
 		var pending = list.length;
 		if (!pending) {
