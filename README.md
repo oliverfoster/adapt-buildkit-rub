@@ -64,7 +64,7 @@ Due to the low utilisation of third-party libraries and node-native only third-p
 Adapt Leanring's gruntfile: ~90mb installed (including node_modules)  
 Kineo's gruntfile: ~90mb installed (including node_modules)  
 Kineo's gulpfile: ~201mb installed (including node_modules)  
-this buildkit: ~110mb installed (including node_modules and ffmpeg for linux, mac and windows ~110mb)
+this buildkit: ~110mb installed (including node_modules and [ffprobe](https://www.ffmpeg.org/download.html) for linux, mac and windows ~110mb)
 
 ###Builds only when necessary
 As the tasks/actions performed by the buildkit are all custom written, the buildkit can decide if a source update has occured which requires the build to be updated. A second run of the buildkit on an unchanged course will be much faster than when using gulp or grunt. A second run on a changed course will rebuild only what is necessary.
