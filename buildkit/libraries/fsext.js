@@ -346,10 +346,10 @@ var pub = {
 		var dirs = _.where(list, { dir: true });
 		var files = _.where(list, { dir: false });
 		for (var i = 0, l = files.length; i < l; i++) {
-			fs.unlinkSync(files[i].path);
+			if (fs.existsSync(files[i].path)) fs.unlinkSync(files[i].path);
 		}
 		for (var i = dirs.length - 1, l = -1; i > l; i--) {
-			fs.rmdirSync(dirs[i].path);
+			if (fs.existsSync(dirs[i].path)) fs.rmdirSync(dirs[i].path);
 		}
 	},
 
@@ -361,7 +361,7 @@ var pub = {
 		}
 
 		pub.remove(pub.expand(path), [ "**" ]);
-		fs.rmdirSync(path);
+		if (fs.existsSync(path)) fs.rmdirSync(path);
 	}
 
 };

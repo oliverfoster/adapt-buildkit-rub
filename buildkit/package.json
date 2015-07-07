@@ -1,10 +1,10 @@
 {
   "name": "adapt-buildkit-rub",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},
   "author": "AdaptLearning",
-  "license": "GPL",
+  "license": "GPL-3.0",
   "devDependencies": {},
   "dependencies": {
     "chalk": "^1.0.0",
