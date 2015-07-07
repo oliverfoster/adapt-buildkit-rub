@@ -68,7 +68,7 @@
             }
         },
         "totalSize": "100MB",
-        "fileSize": "10MB",
+        "fileSize": "15MB",
         "restrictedExtensions": [ "log" ]
     }
 }
