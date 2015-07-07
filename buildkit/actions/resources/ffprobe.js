@@ -89,6 +89,8 @@ module.exports = (function() {
 			run = "./buildkit/actions/resources/ffprobe-win.exe";
 		} else if (platform.match(/^darwin/g) !== null) {
 			run = "./buildkit/actions/resources/ffprobe-mac";
+		} else if (platform.match(/^linux/g) !== null) {
+			run = "./buildkit/actions/resources/ffprobe-linux";
 		} else {
 			throw "Platform not currently supported: " + platform;
 		}
@@ -137,7 +139,7 @@ module.exports = (function() {
 
 	doProbe.isSupported = function() {
 		var platform = os.platform();
-		if (platform.match(/(^win)|(^darwin)/g) !== null) {
+		if (platform.match(/(^win)|(^darwin)|(^linux)/g) !== null) {
 			return true;
 		}
 		return false;
