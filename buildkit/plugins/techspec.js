@@ -11,8 +11,6 @@ module.exports = new Plugin({
 		_.mixin({deepExtend: underscoreDeepExtend(_)});
 	},
 
-	_displayedCourseTechSpec: {},
-
 	"config:loaded": function(config) {
 		//console.log("config:loaded", config);
 	},
