@@ -85,8 +85,10 @@ module.exports = (function() {
 
 		var platform = os.platform();
 		var run = "";
-		if (platform.match(/win/g) !== null) {
+		if (platform.match(/^win/g) !== null) {
 			run = "./buildkit/actions/resources/ffprobe-win.exe";
+		} else if (platform.match(/^darwin/g) !== null) {
+			run = "./buildkit/actions/resources/ffprobe-mac";
 		} else {
 			throw "Platform not currently supported: " + platform;
 		}
@@ -135,7 +137,8 @@ module.exports = (function() {
 
 	doProbe.isSupported = function() {
 		var platform = os.platform();
-		if (platform.match(/win/g) !== null) {
+		console.log(platform);
+		if (platform.match(/(^win)|(^darwin)/g) !== null) {
 			return true;
 		}
 		return false;
