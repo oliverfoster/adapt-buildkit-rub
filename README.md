@@ -59,7 +59,7 @@ Having a custom task runner is also useful for throttling task execution to acco
 The inbuilt task manager has a 'plugin' style architecture making adding new build tasks a much simpler endeavour. Each task and its configuration are distinct and separate, meaning that targeting bugs and updating becomes much easier.
 
 ###Reduced footprint
-Due to the low utilisation of third-party libraries and node-native only third-party libraries, the resultant buildkit is packs more punch than the alternatives.
+Due to the low utilisation of third-party libraries and node-native only third-party libraries, the resultant buildkit packs more punch than the alternatives.
 
 Adapt Leanring's gruntfile: ~90mb installed (including node_modules)  
 Kineo's gruntfile: ~90mb installed (including node_modules)  
