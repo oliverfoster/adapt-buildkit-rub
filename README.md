@@ -1,5 +1,5 @@
 # adapt-buildkit-rub
-Native BuildKit (alternative to gulp and grunt)
+Native Buildkit (alternative to gulp and grunt)
 
 ```
 
