@@ -221,6 +221,77 @@ var pub = {
 		}
 	},
 
+	copy: function(from, to, copyGlobs, callback, that) {
+
+		var list = pub.glob(from, copyGlobs);
+		var copyTasks = [];
+		var copyInterval = null;
+		var copyTasksRunning = 0;
+
+		for (var i = 0, l = list.length; i < l; i ++) {
+			var item = list[i];
+			var shortenedPath = (item.path).substr(from.length);
+			var outputPath = path.join(to, shortenedPath);
+
+			if (item.dir) {
+				pub.mkdir( outputPath, { norel: true });
+			} else {
+				var dirname = path.dirname(outputPath);
+				pub.mkdir( dirname, { norel: true });
+
+				if (fs.existsSync(outputPath)) {
+					var outputStat = fs.statSync(outputPath);
+					if (outputStat.mtime >= item.mtime ) continue;
+				} 
+
+				addCopyTask(item.path, outputPath);
+			}
+			
+		}
+
+		copyTaskEnd();
+
+		
+		function addCopyTask(from, to) {
+			copyTasks.push({
+				from: from,
+				to: to
+			});
+			startCopyTasks();
+		}
+		function startCopyTasks() {
+			if (copyInterval !== null) return;
+			copyInterval = setInterval(copyLoop, 0);
+		}
+		function copyLoop() {
+			for (var i = 0, l = copyTasks.length; i < l && copyTasksRunning < 5; i++) {
+				var task = copyTasks.shift();
+				copyTasksRunning++;
+				var rs = fs.createReadStream(task.from);
+				var ws = fs.createWriteStream(task.to);
+				rs.pipe(ws);
+				rs.on("end", copyTaskDone);
+				rs.on("error", function(e) {
+					console.log(e);
+				});
+				ws.on("error", function(e) {
+					console.log(e);
+				});
+			}
+		}
+		function copyTaskDone() {
+			copyTasksRunning--;
+			copyTaskEnd();
+		}
+		function copyTaskEnd() {
+			if (copyTasksRunning === 0 && copyTasks.length === 0) {
+				clearInterval(copyInterval);
+				copyInterval = null;
+				callback.call(that);
+			}
+		}
+	},
+
 	mkdir: function(dest, options) {
 		//make a directory recursively if need be
 
@@ -280,6 +351,17 @@ var pub = {
 		for (var i = dirs.length - 1, l = -1; i > l; i--) {
 			fs.rmdirSync(dirs[i].path);
 		}
+	},
+
+	rm: function(path) {
+		if (!fs.existsSync(path)) return;
+		if (!fs.statSync(path).isDirectory()) {
+			fs.unlinkSync(path);
+			return;
+		}
+
+		pub.remove(pub.expand(path), [ "**" ]);
+		fs.rmdirSync(path);
 	}
 
 };
