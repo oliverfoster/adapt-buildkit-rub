@@ -59,12 +59,12 @@ Having a custom task runner is also useful for throttling task execution to acco
 The inbuilt task manager has a 'plugin' style architecture making adding new build tasks a much simpler endeavour. Each task and its configuration are distinct and separate, meaning that targeting bugs and updating becomes much easier.
 
 ###Reduced footprint
-Due to the low utilisation of third-party libraries and node-native only third-party libraries, the resultant buildkit is vastly smaller than the alterrnatives.
+Due to the low utilisation of third-party libraries and node-native only third-party libraries, the resultant buildkit is packs more punch than the alternatives.
 
 Adapt Leanring's gruntfile: ~90mb installed (including node_modules)  
 Kineo's gruntfile: ~90mb installed (including node_modules)  
 Kineo's gulpfile: ~201mb installed (including node_modules)  
-this buildkit: ~14mb installed (including node_modules)  
+this buildkit: ~110mb installed (including node_modules and ffmpeg for linux, mac and windows ~110mb)
 
 ###Builds only when necessary
 As the tasks/actions performed by the buildkit are all custom written, the buildkit can decide if a source update has occured which requires the build to be updated. A second run of the buildkit on an unchanged course will be much faster than when using gulp or grunt. A second run on a changed course will rebuild only what is necessary.
@@ -80,6 +80,12 @@ It backports dynamic jquery selection to v1.1.1
 ###JSON linting and LESS sourcemaps
 Yes.
 For Adapt and the builder configurations.
+
+###Course asset checking
+It is now possible to define video and audio codec, bitrate, framerate & dimensions checks in the ``rubconfig.json`` file. The output of these checks appears in the ``rub-check.log`` file.
+
+###Exclusions
+Folder exclusions are now possible in the ``rubconfig.json`` file.
 
 
 
