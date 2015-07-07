@@ -1,6 +1,6 @@
 {
   "name": "adapt-buildkit-rub",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},
   "author": "AdaptLearning",
@@ -24,5 +24,6 @@
     "underscore": "~1.6.0",
     "underscore-deep-extend": "0.0.5"
   },
-  "repository": "https://github.com/oliverfoster/adapt-buildkit-rub"
+  "repository": "https://github.com/oliverfoster/adapt-buildkit-rub",
+  "license": "GPL v3"
 }
