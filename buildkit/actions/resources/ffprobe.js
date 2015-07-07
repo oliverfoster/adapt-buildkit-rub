@@ -137,7 +137,6 @@ module.exports = (function() {
 
 	doProbe.isSupported = function() {
 		var platform = os.platform();
-		console.log(platform);
 		if (platform.match(/(^win)|(^darwin)/g) !== null) {
 			return true;
 		}
