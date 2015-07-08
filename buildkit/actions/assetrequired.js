@@ -35,7 +35,8 @@ var assetcheck = new Action({
             }
         }
 
-        var assetRegExp = new RegExp(options.assetRegex, "g");
+        var jsonAssetRegExp = new RegExp(options.jsonAssetRegex, "g");
+        var cssAssetRegExp = new RegExp(options.cssAssetRegex, "g");
 
         try {
             check(options);
@@ -70,7 +71,7 @@ var assetcheck = new Action({
                         jsonAssetListPaths[jsonFileName] = [];
                         // Read each .json file
                         var currentJsonFile = ""+ fs.readFileSync(currentCourseFolder + "/" + jsonFileName + ".json");
-                        var matches = currentJsonFile.match(assetRegExp);
+                        var matches = currentJsonFile.match(jsonAssetRegExp);
                         matches = _.uniq(matches);
                         if (matches === null) return;
                         for (var i = 0, l = matches.length; i < l; i++) {
@@ -125,7 +126,7 @@ var assetcheck = new Action({
                 var cssPath = path.join(options.cssRoot, options.cssSrc);
                 if (fs.existsSync(cssPath)) {
                     var cssFile = fs.readFileSync(cssPath).toString();
-                    var matches = cssFile.match(assetRegExp);
+                    var matches = cssFile.match(cssAssetRegExp);
                     matches = _.uniq(matches);
                     if (matches === null) return;
                     for (var i = 0, l = matches.length; i < l; i++) {

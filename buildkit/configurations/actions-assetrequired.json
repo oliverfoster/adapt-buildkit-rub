@@ -21,9 +21,10 @@
 				"**/course/**/pdf/**/*",
 				"**/course/**/video/**/*"
 			],
-			"assetRegex": "((\\\\\"|\"|'|url\\(){1}([^\"'\\)]*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\\\\"|\"|'|\\)){1})",
+			"jsonAssetRegex": "((\\\\\"|\"|'){1}([^\"']*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\\\\"|\"|'|){1})",
 			"cssRoot": "{{outputDest}}/{{course}}/adapt/css",
 			"cssSrc": "adapt.css",
+			"cssAssetRegex": "((url\\()){1}([^\\)]*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\)){1})",
 			"logPath": "rub-check.log"
 		},
 		{
@@ -47,9 +48,10 @@
 				"**/course/**/pdf/**/*",
 				"**/course/**/video/**/*"
 			],
-			"assetRegex": "((\\\\\"|\"|'|url\\(){1}([^\"'\\)]*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\\\\"|\"|'|\\)){1})",
+			"jsonAssetRegex": "((\\\\\"|\"|'){1}([^\"']*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\\\\"|\"|'|){1})",
 			"cssRoot": "{{outputDest}}/adapt/css",
 			"cssSrc": "adapt.css",
+			"cssAssetRegex": "((url\\()){1}([^\\)]*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf)+)|.{0})(\\)){1})",
 			"logPath": "rub-check.log"
 		}
 	]
