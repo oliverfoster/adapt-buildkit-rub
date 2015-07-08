@@ -24,7 +24,7 @@ module.exports = new Plugin({
 				var onlineVersion = JSON.parse(data).version;
 				if (onlineVersion != version) {
 					logger.log("Out of date. Current version is v" +version+ ". New version is v"+onlineVersion+".",1);
-					logger.log("Please run 'adapt-buildkits install rub'",1);
+					logger.log("Please run 'adapt-buildkit install rub'",1);
 				} else {
 					logger.log("Version v"+version+".",0)
 				}
