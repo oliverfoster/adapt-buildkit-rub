@@ -58,43 +58,10 @@ module.exports = new Plugin({
 				});
 			});
 			req.on("error", function(e) {
-				console.log(e);
-				process.exit(0);
+				
 			});
 			req.end();
 		}
-	},
-
-	"actions:setup": function(actions) {
-		//console.log("actions:setup", actions);
-	},
-
-	"actions:build": function(actions) {
-		//console.log("actions:build", actions);
-	},
-
-	"actions:phase": function(phaseName) {
-		//console.log("actions:phase", phaseName);
-	},
-
-	"action:prep": function(options, action) {		
-		//console.log("action:prep", options, action);
-	},
-
-	"action:start": function(options, action) {
-		//console.log("action:start", options, action);
-	},
-
-	"action:error": function(options, error, action) {
-		//console.log("action:error", options, error, action);
-	},
-
-	"action:end": function(options, action) {
-		//console.log("action:end", options, action);
-	},
-
-	"actions:wait": function() {
-		//console.log("actions:wait");
 	}
 
 })
