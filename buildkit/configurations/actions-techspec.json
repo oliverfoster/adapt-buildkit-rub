@@ -17,6 +17,7 @@
 				"**/*"
 			],
 			"techspec": {
+                "example":{
                 "extensions": {
                     "png": {
                         "size": "1.5MB",
@@ -66,6 +67,7 @@
                 "totalSize": "100MB",
                 "fileSize": "15MB",
                 "restrictedExtensions": [ "log" ]
+                }
             },
             "logPath": "rub-check.log"
 		},
@@ -86,6 +88,7 @@
                 "**/*"
 			],
 			"techspec": {
+                "example":{
                 "extensions": {
                     "png": {
                         "size": "1.5MB",
@@ -135,6 +138,7 @@
                 "totalSize": "100MB",
                 "fileSize": "15MB",
                 "restrictedExtensions": [ "log" ]
+                }
             },
             "logPath": "rub-check.log"
 		}
