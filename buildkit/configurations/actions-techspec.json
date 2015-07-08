@@ -61,16 +61,6 @@
                         "video_bitrate": "1.5mb/s",
                         "video_fps": 25,
                         "video_codec": "theora"
-                    },
-                    "ogg": {
-                        "size": "10MB",
-                        "width": 1440,
-                        "height": 810,
-                        "audio_bitrate": "128kb/s",
-                        "audio_codec": "vorbis",
-                        "video_bitrate": "1.5mb/s",
-                        "video_fps": 25,
-                        "video_codec": "theora"
                     }
                 },
                 "totalSize": "100MB",
@@ -132,16 +122,6 @@
                         "audio_bitrate": "128kb/s"
                     },
                     "ogv": {
-                        "size": "10MB",
-                        "width": 1440,
-                        "height": 810,
-                        "audio_bitrate": "128kb/s",
-                        "audio_codec": "vorbis",
-                        "video_bitrate": "1.5mb/s",
-                        "video_fps": 25,
-                        "video_codec": "theora"
-                    },
-                    "ogg": {
                         "size": "10MB",
                         "width": 1440,
                         "height": 810,
