@@ -21,7 +21,7 @@ var zip = new Action({
 		if (options.root === undefined) options.root = "";
 
 		var now = (new Date());
-		options.scoDate = now.getYear() + twoDigit(now.getMonth()) + twoDigit(now.getDate()) + "_" + twoDigit(now.getHours()) + twoDigit(now.getMinutes()) + twoDigit(now.getSeconds());
+		options.scoDate = (now.getYear()+"").substr(1) + twoDigit(now.getMonth()+1) + twoDigit(now.getDate()) + "_" + twoDigit(now.getHours()) + twoDigit(now.getMinutes()) + twoDigit(now.getSeconds());
 		
 		options.root = fsext.replace(options.root, options);
 		options.root = fsext.expand(options.root);
@@ -68,7 +68,7 @@ var zip = new Action({
 
 		function twoDigit(num) {
 			var snum = ""+num;
-			return (snum.length < 2 ? "0" : "") + snum;
+			return (snum.length < 2 ? "0" : "") + snum + "";
 		}
 
 	}
