@@ -64,8 +64,11 @@ var techspec = new Action({
 
         	totalSize += file.size;
 
-        	var settings = options.techspec.extensions[extension];
-            if (settings) {
+
+        	
+            if (options.techspec.extensions && options.techspec.extensions[extension]) {
+                var settings = options.techspec.extensions[extension];
+                
             	file.flaggedProps = [];
             	
                 if ( file.size > textSizeToBytes(settings.size)) {
