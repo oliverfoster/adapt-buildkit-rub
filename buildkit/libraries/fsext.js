@@ -75,6 +75,12 @@ var pub = {
 		for (var i = 0, l = list.length; i < l; i++) {
 			var file = list[i];
 			var fullpath = path.join(dir, file);
+
+			if (!fs.existsSync(fullpath)) {
+				red++;
+				continue;
+			}
+			
 			var fileObject = pub.file(fullpath);
 
 			red++;
