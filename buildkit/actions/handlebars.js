@@ -98,7 +98,11 @@ var handlebars = new Action({
 				var file = files[i];
 
 				var contents = fs.readFileSync(file+"").toString();
-				var precompiled = hbsCompiler.precompile(contents);
+				try {
+					var precompiled = hbsCompiler.precompile(contents);
+				} catch(e) {
+					return done(options, "File: " + file+"\n" + e);
+				}
 
 				var isPartial = fsext.filter([file], options.paritalGlobs);
 				if (isPartial.length > 0) {
