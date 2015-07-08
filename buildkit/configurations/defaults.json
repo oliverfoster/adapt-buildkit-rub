@@ -18,6 +18,7 @@
 			"!**/properties.schema",
 			"!**/README.md"
 		],
-		"taskLimit": 10
+		"taskLimit": 10,
+		"versionURL": "https://raw.githubusercontent.com/oliverfoster/adapt-buildkit-rub/master/buildkit/package.json"
 	}
 }
