@@ -8,10 +8,10 @@ var pub = {
 			if (!text) {
 				fs.writeFileSync(path, "");
 			} else {
-				fs.writeFileSync(path, text+"\n");
+				fs.writeFileSync(path, text+"\n\r");
 			}
 		} else {
-			fs.appendFileSync(path, text+"\n");
+			fs.appendFileSync(path, text+"\n\r");
 		}
 	},
 
