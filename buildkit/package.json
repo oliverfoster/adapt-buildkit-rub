@@ -1,6 +1,6 @@
 {
   "name": "adapt-buildkit-rub",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},
   "author": "AdaptLearning",
@@ -22,7 +22,7 @@
     "uglify-js": "^2.4.23",
     "underscore": "~1.6.0",
     "underscore-deep-extend": "0.0.5",
-    "util-ffprobe": "0.0.1"
+    "util-ffprobe": "0.0.3"
   },
   "repository": "https://github.com/oliverfoster/adapt-buildkit-rub"
 }
