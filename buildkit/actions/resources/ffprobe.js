@@ -86,11 +86,11 @@ module.exports = (function() {
 		var platform = os.platform();
 		var run = "";
 		if (platform.match(/^win/g) !== null) {
-			run = "./buildkit/actions/resources/ffprobe-win.exe";
+			run = "./buildkit/node_modules/util-ffprobe/bin/util-ffprobe-win.exe";
 		} else if (platform.match(/^darwin/g) !== null) {
-			run = "./buildkit/actions/resources/ffprobe-mac";
+			run = "./buildkit/node_modules/util-ffprobe/bin/util-ffprobe-mac";
 		} else if (platform.match(/^linux/g) !== null) {
-			run = "./buildkit/actions/resources/ffprobe-linux";
+			run = "./buildkit/node_modules/util-ffprobe/bin/util-ffprobe-linux";
 		} else {
 			throw "Platform not currently supported: " + platform;
 		}
