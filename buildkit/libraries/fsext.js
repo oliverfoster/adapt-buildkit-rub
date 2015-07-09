@@ -252,7 +252,7 @@ var pub = {
 
 				if (fs.existsSync(outputPath)) {
 					var outputStat = fs.statSync(outputPath);
-					if (outputStat.mtime >= item.mtime ) continue;
+					if (outputStat.mtime >= item.mtime && outputStat.ctime >= item.ctime) continue;
 				} 
 
 				addCopyTask(item.path, outputPath);
