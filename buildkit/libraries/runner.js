@@ -571,12 +571,11 @@ var pub =  _.extend(eventEmitter, {
 				var actionName = data.actions[a];
 				if (!pub._indexedActions[actionName]) return;
 				var actionConfig = pub._indexedActions[actionName];
+				require("../actions/"+actionConfig['@action']+".js").reset();
 
 				var isActionInList = _.where(pub._fileChangeActionQueue, { "@name": actionConfig["@name"] });
 				if (isActionInList.length === 0) {
 					pub._fileChangeActionQueue.push(actionConfig);
-				} else {
-					require("../actions/"+actionConfig['@action']+".js").reset();
 				}
 			}
 

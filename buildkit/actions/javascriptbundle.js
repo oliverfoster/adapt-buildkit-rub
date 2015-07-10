@@ -106,6 +106,10 @@ var javascriptbundle = new Action({
 		fs.writeFileSync(options.dest, output);
 
 		done(options);
+	},
+
+	reset: function() {
+		this._outputCache = {};
 	}
 
 });
