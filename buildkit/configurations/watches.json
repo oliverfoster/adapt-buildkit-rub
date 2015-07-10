@@ -162,7 +162,7 @@
 			"globs": [
 				"**/js/*.js",
 				"**/js/models/*.js",
-				"**/js/view/*.js",
+				"**/js/views/*.js",
 				"!**/js/scriptLoader.js"
 			],
 			"actions": [
