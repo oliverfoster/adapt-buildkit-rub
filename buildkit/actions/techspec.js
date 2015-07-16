@@ -89,8 +89,14 @@ var techspec = new Action({
                 if (file.height && settings.height && file.height > settings.height) {
                     file.flaggedProps.push("height: " + file.height + "px");
                 } 
+                if (file.ratio && settings.ratio && Math.round(file.ratio*10) != Math.round(eval(settings.ratio)*10)) {
+                    file.flaggedProps.push("ratio: " + file.ratio);
+                } 
                 if (file.audio_bitrate && settings.audio_bitrate && file.audio_bitrate > textSizeToBytes(settings.audio_bitrate) && file.audio_bitrate !== "N/A") {
                     file.flaggedProps.push("audio bitrate: " + bytesSizeToString(file.audio_bitrate, "kb") + "/s");
+                } 
+                if (file.audio_channel_layout && settings.audio_channel_layout && file.audio_channel_layout !== settings.audio_channel_layout && file.audio_channel_layout !== "N/A") {
+                    file.flaggedProps.push("audio channels: " + file.audio_channel_layout);
                 } 
                 if (file.video_bitrate && settings.video_bitrate && file.video_bitrate > textSizeToBytes(settings.video_bitrate) && file.video_bitrate !== "N/A") {
                     file.flaggedProps.push("video bitrate: " + bytesSizeToString(file.video_bitrate, "kb") + "/s");
@@ -206,6 +212,7 @@ var techspec = new Action({
                         if (video) {
                             file.width = video.width;
                             file.height = video.height;
+                            file.ratio = file.width / file.height;
                             if (video.bit_rate !== "N/A") {
                                 file.video_bitrate = video.bit_rate;
                             }
@@ -223,6 +230,7 @@ var techspec = new Action({
                                 file.audio_bitrate = audio.bit_rate;
                             }
                             file.audio_codec = audio.codec_name;
+                            file.audio_channel_layout = audio.channel_layout
                         }
 
                         checkCallback(file, options);
