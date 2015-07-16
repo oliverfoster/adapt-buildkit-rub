@@ -23,7 +23,8 @@
     "uglify-js": "^2.4.23",
     "underscore": "~1.6.0",
     "underscore-deep-extend": "0.0.5",
-    "util-ffprobe": "0.0.3"
+    "util-ffprobe": "0.0.3",
+    "semver": "^4.3.3"
   },
   "repository": "https://github.com/oliverfoster/adapt-buildkit-rub"
 }
