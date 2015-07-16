@@ -569,7 +569,10 @@ var pub =  _.extend(eventEmitter, {
 			
 			for (var a = 0, al = data.actions.length; a < al; a++) {
 				var actionName = data.actions[a];
-				if (!pub._indexedActions[actionName]) return;
+				if (!pub._indexedActions[actionName]) {
+					logger.error("Action not found: " + actionName);
+					continue;
+				}
 				var actionConfig = pub._indexedActions[actionName];
 				require("../actions/"+actionConfig['@action']+".js").reset();
 
