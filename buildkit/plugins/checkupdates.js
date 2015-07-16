@@ -8,7 +8,8 @@ module.exports = new Plugin({
 			"logger": "../libraries/logger.js",
 			"url": "url",
 			"fs": "fs",
-			"path": "path"
+			"path": "path",
+			"semver": "semver"
 		});
 	},
 
@@ -17,12 +18,19 @@ module.exports = new Plugin({
 
 		if (!config.defaults.versionURL) return;
 
-		var version = JSON.parse(fs.readFileSync(path.join(__dirname, "../package.json"))).version;
+		var currentVersionJSON = JSON.parse(fs.readFileSync(path.join(__dirname, "../package.json")));
+		var version = currentVersionJSON.version;
+
+		if (currentVersionJSON.custom) {
+			logger.log("Custom Buildkit",1)
+			return;
+		}
+
 
 		download(config.defaults.versionURL, function(data) {
 			try {
 				var onlineVersion = JSON.parse(data).version;
-				if (onlineVersion != version) {
+				if (semver.lt(version, onlineVersion)) {
 					logger.log("Out of date. Current version is v" +version+ ". New version is v"+onlineVersion+".",1);
 					logger.log("Please run 'adapt-buildkit install rub'",1);
 				} else {
