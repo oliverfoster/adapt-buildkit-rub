@@ -479,6 +479,7 @@
 				"**/*.json"
 			],
 			"actions": [
+				"course-folder",
 				"json-lint",
 				"json-check",
 				"assetrequired",
@@ -496,6 +497,7 @@
 				"**/*.json"
 			],
 			"actions": [
+				"course-folder",
 				"json-lint",
 				"json-check",
 				"assetrequired",
