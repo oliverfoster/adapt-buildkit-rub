@@ -186,6 +186,7 @@ var pub =  _.extend(eventEmitter, {
 		function loadPlugins() {
 			var pluginsPath = path.join(path.dirname(__dirname), "/plugins/");
 			var pluginFilePaths = fsext.glob(pluginsPath, "*.js");
+			var errored = false;
 			for (var i = 0, l = pluginFilePaths.length; i < l; i++) {
 				try {
 					var plugin = require(pluginFilePaths[i].path);
@@ -193,9 +194,14 @@ var pub =  _.extend(eventEmitter, {
 				} catch (e) {
 					logger.error("Plugin " + pluginFilePaths[i].basename + " is corrupt");
 					logger.error(e);
+					errored = true;
 				}
 			}
-			
+			if (errored) {
+				logger.error("\nPlease run 'adapt-buildkit install rub'.\n")
+				logger.error("Note: You may need to install adapt-buildkits.")
+				logger.error("If so, please run 'sudo npm install -g adapt-buildkits'.");
+			}
 		}
 
 		function setDirectoryLayout(terminalOptions) {
