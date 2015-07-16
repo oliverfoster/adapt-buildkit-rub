@@ -1,6 +1,7 @@
 {
   "name": "adapt-buildkit-rub",
   "version": "0.0.42",
+  "custom": false,
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},
   "author": "AdaptLearning",
