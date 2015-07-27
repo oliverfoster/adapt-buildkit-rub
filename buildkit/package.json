@@ -1,6 +1,6 @@
 {
   "name": "adapt-buildkit-rub",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "custom": false,
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},
@@ -20,6 +20,7 @@
     "osenv": "^0.1.0",
     "requirejs": "^2.1.17",
     "serve-index": "^1.6.3",
+    "source-map": "^0.4.4",
     "uglify-js": "^2.4.23",
     "underscore": "~1.6.0",
     "underscore-deep-extend": "0.0.5",
