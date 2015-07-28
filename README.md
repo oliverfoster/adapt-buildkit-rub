@@ -2,6 +2,17 @@
 (Rapid-Unified-Builder)  
 Native Buildkit (alternative to gulp and grunt)
 
+##Installation / Update / Repair
+
+Please make sure [adapt-buildkits](https://github.com/cgkineo/adapt-buildkits) is installed.
+
+Run this command in your build folder:
+```
+adapt-buildkit install rub
+```
+
+##Usage
+
 ```
 
   Usage: ./rub [options] [courses...]
