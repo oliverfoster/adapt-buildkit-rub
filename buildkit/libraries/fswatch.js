@@ -65,7 +65,7 @@ var pub = {
 			fsext.exclusionGlobs = pub.exclusionGlobs;
 			
 			if (pub._watchingInterval !== null) return;
-			pub._watchingInterval = setInterval(watchLoop, 100);
+			pub._watchingInterval = setInterval(watchLoop, 1000);
 		}
 
 		function watchLoop() {
