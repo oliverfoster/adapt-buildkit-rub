@@ -22,7 +22,8 @@
 				"trackingreset": true
 			},
 			"alwaysSet": {
-				"build": false
+				"build": false,
+				"trackinginsert": false
 			}
 		},
 		{
