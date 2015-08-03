@@ -4,7 +4,7 @@
 			"on": {
 				"trackinginsert": true
 			},
-			"unspecifiedSet": {
+			"alwaysSet": {
 				"build": false
 			}
 		},
@@ -12,16 +12,18 @@
 			"on": {
 				"trackingdelete": true
 			},
-			"unspecifiedSet": {
-				"build": false
+			"alwaysSet": {
+				"build": false,
+				"trackinginsert": false
 			}
 		},
 		{
 			"on": {
 				"trackingreset": true
 			},
-			"unspecifiedSet": {
-				"build": false
+			"alwaysSet": {
+				"build": false,
+				"trackinginsert": false
 			}
 		},
 		{
