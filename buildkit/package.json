@@ -1,6 +1,6 @@
 {
   "name": "adapt-buildkit-rub",
-  "version": "0.0.47",
+  "version": "0.0.48",
   "custom": false,
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},
