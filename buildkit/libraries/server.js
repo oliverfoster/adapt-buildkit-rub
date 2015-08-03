@@ -74,7 +74,7 @@ var pub = module.exports = {
 		        return;
 		    }
 
-		    res.writeHead(200, mimeType);
+		    res.writeHead(200, {"Content-Type": mimeType});
 
 		    if (mimeType === "text/html") {
 		    	if (req.headers.referer !== undefined) {
