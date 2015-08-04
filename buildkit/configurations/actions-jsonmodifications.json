@@ -1,0 +1,93 @@
+{
+	"actions": [
+		{
+			"@name": "themejson",
+			"@displayName": "Adding theme.json...",
+			"@action": "combinejson",
+            "@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "preFinish",
+			"@types": [ "builds/courses/course" ],
+			"src": "src",
+			"globs": [
+                "**/theme/**/theme.json"
+            ],
+            "dest": "{{outputDest}}/{{course}}/course/**/course.json"
+		},
+		{
+			"@name": "themejson",
+			"@displayName": "Adding theme.json...",
+			"@action": "combinejson",
+            "@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "preFinish",
+			"@types": [ "src/courses/course" ],
+			"src": "src",
+			"globs": [
+                "**/theme/**/theme.json"
+            ],
+            "dest": "{{outputDest}}/{{course}}/course/**/course.json"
+		},
+		{
+			"@name": "themejson",
+			"@displayName": "Adding theme.json...",
+			"@action": "combinejson",
+            "@onlyOnSwitches": [
+                "build"
+            ],
+			"@types": [ "src/course" ],
+            "@when": "preFinish",
+			"src": "src",
+			"globs": [
+				"**/theme/**/theme.json"
+			],
+            "dest": "{{outputDest}}/course/**/course.json"
+		},
+		{
+			"@name": "schemadefaults",
+			"@displayName": "Collating schema defaults...",
+			"@action": "schemadefaults",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@types": [ "src/course" ],
+            "@when": "preFinish",
+			"src": "src",
+			"globs": [
+				"**/src/extensions",
+				"**/src/components",
+				"**/src/menu",
+				"**/src/theme",
+				"**/src/extensions/**",
+				"**/src/components/**",
+				"**/src/menu/**",
+				"**/src/theme/**"
+			],
+			"dest": "{{outputDest}}/course/**/course.json"
+		},
+		{
+			"@name": "schemadefaults",
+			"@displayName": "Collating schema defaults...",
+			"@action": "schemadefaults",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@types": [ "src/courses/course" ],
+            "@when": "preFinish",
+			"src": "src",
+			"globs": [
+				"**/src/extensions",
+				"**/src/components",
+				"**/src/menu",
+				"**/src/theme",
+				"**/src/extensions/**",
+				"**/src/components/**",
+				"**/src/menu/**",
+				"**/src/theme/**"
+			],
+			"dest": "{{outputDest}}/{{course}}/course/**/course.json"
+		}
+	]
+}
