@@ -29,7 +29,7 @@ var copy = new Action({
             var globIndex = options.dest.indexOf("**");
             var base = options.dest.slice(0, globIndex);
             var glob = options.dest.slice(globIndex);
-            var results = fsext.glob(base, glob, {dir:true, file:false});
+            var results = fsext.glob(base, glob, {dirs:true, files:false});
 
             for (var i = 0, l = results.length; i < l; i++) {
                 var expandedPath = results[i].path;
