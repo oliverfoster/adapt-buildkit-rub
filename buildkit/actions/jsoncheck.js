@@ -23,156 +23,132 @@ var jsoncheck = new Action({
 
         var idRegExp = new RegExp(options.validIdRegex || ".+");
 
-        try {
-            check(options);
-        } catch(e) {
-            //logger.error(e);
+        var hasErrored = false;
+
+        if (options.src.indexOf("**") || options.src.indexOf("*")) {
+            //expand language folders
+            var globIndex = options.src.indexOf("*");
+            var base = options.src.slice(0, globIndex);
+            var glob = options.src.slice(globIndex);
+            var results = fsext.list(base).dirs;
+            results = fsext.filter(results, glob);
+
+            for (var i = 0, l = results.length; i < l; i++) {
+                var expandedPath = results[i].path;
+                var opts = _.deepExtend({}, options, {src:expandedPath});
+                try {
+                    check(opts);
+                } catch(e) {
+                    //logger.error(e);
+                }
+            }
+
+        } else {
+            try {
+                check(options);
+            } catch (e) {
+
+            }
+        }
+
+        //if any error has occured, stop processing.
+        if (hasErrored) {
+            return done(options, 'Oops, looks like you have some json errors.')
         }
 
         done(options);
 
         function check(options) {
-            var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
-            var storedParentChildrenIds = {};
-            var idFile = {};
-            var storedIds = [];
-            var storedFileParentIds = {};
-            var storedFileIds = {};
-            var hasOrphanedParentIds = false;
-            var orphanedParentIds = [];
-            var courseId;
 
-            // method to check json ids
-            function checkJsonIds() {
-                var currentCourseFolder;
-                // Go through each course folder inside the src/course directory
-                var nodes = fsext.list( options.src );
+            var languagePath = options.src;
 
-                _.each(nodes.dirs, function(subdir) {
-                    var dir = fsext.expand(subdir.toString());
-                    // Stored current path of folder - used later to read .json files
-                    currentCourseFolder = dir;
-                    storedParentChildrenIds = {};
-                    // Go through each list of declared course files
-                    listOfCourseFiles.forEach(function(jsonFileName) {
-                        // Make sure course.json file is not searched
-                        if (jsonFileName !== "course") {
-                            
-                            storedFileParentIds[jsonFileName] = [];
-                            storedFileIds[jsonFileName] = [];
-                            // Read each .json file
-                            var currentJsonFile = JSON.parse(fs.readFileSync(currentCourseFolder + "/" + jsonFileName + ".json"));
-                            currentJsonFile.forEach(function(item) {
-                                idFile[item._id] = jsonFileName;
-                                // Store _parentIds and _ids to be used by methods below
-                                if (!storedParentChildrenIds[item._parentId]) storedParentChildrenIds[item._parentId] = [];
-                                storedParentChildrenIds[item._parentId].push(item._id);
-                                if (item._type !== "component") {
-                                    storedParentChildrenIds[item._id] = [];
-                                }
-                                storedFileParentIds[jsonFileName].push(item._parentId);
-                                storedFileIds[jsonFileName].push(item._id);
-                                storedIds.push(item._id);
-                            });
-
-                        } else {
-                            var currentJsonFile = JSON.parse(fs.readFileSync(currentCourseFolder + "/" + jsonFileName + ".json"));
-
-                            courseId = currentJsonFile._id
-                        }
-                        
-                    });
-        
-                    checkIds();
-                    
-                    checkEachParentHasChildren();
-
-                    checkDuplicateIds();
-
-                    checkEachElementHasParentId();
-
-                });
+            var listOfCourseFiles = ['course', 'contentObjects', 'articles', 'blocks', 'components'];
+            var listOfObjectTypes = ['course', 'menu', 'page', 'article', 'block', 'component' ];
                 
-                //console.log(chalk.white("" + options.courseOptions.course + " - Finished Checking JSON."));
+            var courseItemObjects = [];
+
+            // Go through each list of declared course files
+            listOfCourseFiles.forEach(function(jsonFileName) {
+                var currentJson = JSON.parse(fs.readFileSync(languagePath + '/' + jsonFileName + '.json'));
+                
+                //collect all course items in a single array
+                switch (jsonFileName) {
+                case "course":
+                    //course file is a single courseItemObject
+                    courseItemObjects.push(currentJson);
+                    break;
+                default:
+                    //all other files are arrays of courseItemObjects
+                    courseItemObjects = courseItemObjects.concat(currentJson);
+                    break;
+                }
+
+            });
+
+            //index and group the courseItemObjects
+            var idIndex = _.indexBy(courseItemObjects, "_id");
+            var idGroups = _.groupBy(courseItemObjects, "_id");
+            var parentIdGroups = _.groupBy(courseItemObjects, "_parentId");
+
+            //setup error collection arrays
+            var orphanedIds = [];
+            var emptyIds = [];
+            var duplicateIds = [];
+            var missingIds = [];
+
+            for (var i = 0, l = courseItemObjects.length; i < l; i++) {
+                var contentObject = courseItemObjects[i];
+                var id = contentObject._id;
+                var parentId = contentObject._parentId;
+                var typeName = contentObject._type;
+                var typeIndex = listOfObjectTypes.indexOf(typeName);
+
+                var isRootType = typeIndex === 0;
+                var isBranchType = typeIndex < listOfObjectTypes.length - 1;
+                var isLeafType = !isRootType && !isBranchType;
+
+                if (!isLeafType) { //(course, contentObjects, articles, blocks)
+                    if (parentIdGroups[id] === undefined) emptyIds.push(id); //item has no children
+                }
+
+                if (!isRootType) { //(contentObjects, articles, blocks, components)
+                    if (idGroups[id].length > 1) duplicateIds.push(id); //id has more than one item
+                    if (!parentId || idIndex[parentId] === undefined) orphanedIds.push(id); //item has no defined parent id or the parent id doesn't exist
+                    if (idIndex[parentId] === undefined) missingIds.push(parentId); //referenced parent item does not exist
+                }
 
             }
 
-            function checkIds () {
-                var badIds = [];
-                for (var i = 0, l = storedIds.length; i < l; i++) {
-                    var matches = storedIds[i].match(idRegExp);
-                    if (matches === null || matches[0] !== storedIds[i]) {
-                        badIds.push(storedIds[i]);
-                    }
-                }
-                if (badIds.length > 0) {
-                    logger.log("Unconventional IDs " + badIds, 1);
-                }
+            //output only unique entries
+            orphanedIds = _.uniq(orphanedIds);
+            emptyIds = _.uniq(emptyIds);
+            duplicateIds = _.uniq(duplicateIds);
+            missingIds = _.uniq(missingIds);
+
+            //output for each type of error
+            if (orphanedIds.length > 0) {
+                hasErrored = true;
+                logger.log('Orphaned _ids: ', 1);
             }
 
-            function checkEachParentHasChildren() {
-                var emptyIds = [];
-                for (var id in storedParentChildrenIds) {
-                    if (storedParentChildrenIds[id].length === 0) {
-                        emptyIds.push( idFile[id] + ": " + id );
-                    }
-                }
-                if (emptyIds.length > 0) {
-                    logger.log("Empty " + emptyIds, 1);
-                }
+            if (missingIds.length > 0) {
+                hasErrored = true;
+                logger.log('Missing _ids: ' + missingIds,1);
             }
 
-            function checkDuplicateIds() {
-                // Change _ids into an object of key value pairs that contains _ids as keys and a number count of same _ids
-                var countIdsObject = _.countBy(storedIds);
-                var hasDuplicateIds = false;
-                var duplicateIds = [];
-                _.each(countIdsObject, function(value, key) {
-                    // Check value of each _ids is not more than 1
-                    if (value > 1) {
-                        hasDuplicateIds = true;
-                        duplicateIds.push(key);
-                    }
-                });
-
-                // Check if any duplicate _ids exist and return error
-                if (hasDuplicateIds) {
-                    logger.log("Duplicate ids " + duplicateIds, 1);
-                }
+            if (emptyIds.length > 0) {
+                hasErrored = true;
+                logger.log('Empty _ids: ' + emptyIds,1);
             }
 
-            function checkIfOrphanedElementsExist(value, parentFileToCheck) {
-                _.each(value, function(parentId) {
-                    if (parentId === courseId) {
-                        return;
-                    }
-                    if (_.indexOf(storedFileIds[parentFileToCheck], parentId) === -1) {
-                        hasOrphanedParentIds = true;
-                        orphanedParentIds.push(parentId);
-                    }
-                });
+            if (duplicateIds.length > 0) {
+                hasErrored = true;
+                logger.log('Duplicate _ids: ' + duplicateIds, 1);
             }
 
-            function checkEachElementHasParentId() {
-                _.each(storedFileParentIds, function(value, key) {
-                    switch(key){
-                        case "contentObjects":
-                            return checkIfOrphanedElementsExist(value, "contentObjects");
-                        case "articles":
-                            return checkIfOrphanedElementsExist(value, "contentObjects");
-                        case "blocks":
-                            return checkIfOrphanedElementsExist(value, "articles");
-                        case "components":
-                            return checkIfOrphanedElementsExist(value, "blocks");
-                    }
+            
+            
 
-                });
-
-                if (hasOrphanedParentIds) {
-                    logger.log("Orphaned objects " + orphanedParentIds, 1);
-                }
-            }
-            checkJsonIds();
         }
 
     }
