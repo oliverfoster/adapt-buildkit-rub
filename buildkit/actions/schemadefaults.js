@@ -104,7 +104,7 @@ var copy = new Action({
             var modifiedCourseJson = _.deepExtend(defaultsObject, currentCourseJson);
 
             //write modified course json to build
-            fs.writeFileSync(options.dest, JSON.stringify(modifiedCourseJson));
+            fs.writeFileSync(options.dest, JSON.stringify(modifiedCourseJson, null, "    "));
 
         }
 

@@ -47,7 +47,7 @@
 		},
 		{
 			"@name": "schemadefaults",
-			"@displayName": "Collating schema defaults...",
+			"@displayName": "Adding schema defaults...",
 			"@action": "schemadefaults",
 			"@onlyOnSwitches": [
                 "build"
@@ -69,12 +69,12 @@
 		},
 		{
 			"@name": "schemadefaults",
-			"@displayName": "Collating schema defaults...",
+			"@displayName": "Adding schema defaults...",
 			"@action": "schemadefaults",
 			"@onlyOnSwitches": [
                 "build"
             ],
-            "@types": [ "src/courses/course" ],
+            "@types": [ "builds/courses/course", "src/courses/course" ],
             "@when": "preFinish",
 			"src": "src",
 			"globs": [
