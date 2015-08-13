@@ -40,7 +40,7 @@ var pub = module.exports = {
 
     	function urlStat(URL) {
 		    var urlParse = url.parse(URL);
-		    var fileName = path.join(process.cwd(), options.outputDest, urlParse.path);
+		    var fileName = path.join(process.cwd(), options.outputDest, urlParse.pathname);
 		    if (!fs.existsSync(fileName)) {
 		       	return urlParse;
 		    }
