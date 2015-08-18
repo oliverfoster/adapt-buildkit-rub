@@ -88,7 +88,7 @@ var javascriptbundle = new Action({
 			}
 		}
 
-		output+="require(";
+		output+="define(";
 		if (options.requires) {
 			output+=JSON.stringify(_.values(options.requires), null, "\t")+",";
 		}
