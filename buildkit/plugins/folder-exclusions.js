@@ -54,6 +54,7 @@ module.exports = new Plugin({
 			if (options.course == '' || !options.buildConfig.excludes[options.course]) return;
 
 			var excludes = options.buildConfig.excludes[options.course].folderNames;
+			var globalExcludes = options.buildConfig.excludes.folderNames;
 			if (excludes && excludes instanceof Array && excludes.length > 0) {
 
 				if (globalExcludes && globalExcludes instanceof Array && globalExcludes.length > 0) {
