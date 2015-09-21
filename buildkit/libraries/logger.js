@@ -1,6 +1,8 @@
 var chalk = require("chalk");
 var _ = require("underscore");
 
+var errorqueue = [];
+
 var pub = {
 
 	file: function(path, text, overwrite) {
@@ -15,8 +17,20 @@ var pub = {
 		}
 	},
 
+	holdErrors: false,
+
+	flushErrors: function() {
+		while (errorqueue.length > 0) {
+			pub.log(errorqueue.shift(), -1);
+		}
+	},
+
 	error: function(text) {
-		pub.log(text, -1);
+		if (pub.holdErrors) {
+			errorqueue.push(text);
+		} else {
+			pub.log(text, -1);
+		}
 	},
 
 	log: function(text, level) {
