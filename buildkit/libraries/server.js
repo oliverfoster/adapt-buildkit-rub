@@ -32,11 +32,25 @@ var pub = module.exports = {
 
     	var http = require("http");
     	var port = opts.switches.port;
-    	http.createServer(request).listen(port);
+    	
+    	createListener();
 
-    	logger.log("Opening http://127.0.0.1:"+port+"...", 2)
+    	function createListener() {
+    		http.createServer(request).listen(port).on('error', errored).on("listening", listening);
+    	}
 
-    	open('http://127.0.0.1:'+port);
+    	function errored(err) {
+    		if (err.code == "EADDRINUSE") {
+    			port++;
+    			createListener();
+    		}
+    	}
+
+    	function listening() {
+    		logger.log("Opening http://127.0.0.1:"+port+"...", 2)
+
+    		open('http://127.0.0.1:'+port);
+    	}
 
     	function urlStat(URL) {
 		    var urlParse = url.parse(URL);
