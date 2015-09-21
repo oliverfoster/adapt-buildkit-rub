@@ -72,7 +72,7 @@ var combinejson = new Action({
                         var srcAsJSON = JSON.parse(srcAsString);
                         var destAsJSON = JSON.parse(destAsString);
 
-                        srcAsJSON = _.deepExtend(destAsJSON, srcAsJSON)
+                        srcAsJSON = _.deepExtend(srcAsJSON, destAsJSON)
 
 
                         fs.writeFileSync(options.dest, JSON.stringify(srcAsJSON, null, 4));
