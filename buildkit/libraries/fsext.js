@@ -231,6 +231,10 @@ var pub = {
 			return paths;
 		}
 	},
+	
+	resetGlobCache: function() {
+		this._globListCache = {};
+	},
 
 	copy: function(from, to, copyGlobs, callback, that) {
 
