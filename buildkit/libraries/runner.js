@@ -85,12 +85,14 @@ var pub =  _.extend(eventEmitter, {
 
 		function thenWaitForExit() {
 			taskqueue.defer(function() {
+					logger.flushErrors();
 					process.exit(0);
 				}, pub);
 		}
 
 		function thenWaitForEnd() {
 			taskqueue.defer(function() {
+					logger.flushErrors();
 					console.log('Press any key to exit');
 
 					process.stdin.setRawMode(true);
@@ -332,6 +334,8 @@ var pub =  _.extend(eventEmitter, {
 	},
 
 	startBuildOperations: function(actions) {
+		logger.holdErrors = true;
+		
 		taskqueue.reset();
 
 		switch(pub._terminalOptions.switches.type) {
@@ -458,6 +462,7 @@ var pub =  _.extend(eventEmitter, {
 	},
 
 	thenWatchForChanges: function () {
+		logger.flushErrors();
 		logger.log("Watching for changes...\n",1);
 
 		selectWatches(pub._terminalOptions);
@@ -610,7 +615,8 @@ var pub =  _.extend(eventEmitter, {
 				}
 
 				pub.emit("actions:wait");
-
+				
+				logger.flushErrors();
 				logger.log("Watching for changes...\n", 1);
 
 				fswatch.resume();
