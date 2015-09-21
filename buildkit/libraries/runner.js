@@ -600,6 +600,7 @@ var pub =  _.extend(eventEmitter, {
 			}
 
 			fswatch.pause();
+			fsext.resetGlobCache();
 
 			taskqueue.defer(endMe, pub);
 
