@@ -107,6 +107,7 @@ var pub = {
         case "dev":
             // rub dev
             terminalOptions.courses.shift();
+            terminalOptions.switches.forceall = true;
             terminalOptions.switches.debug = true;
             terminalOptions.switches.watch = true;
             terminalOptions.command = command;
