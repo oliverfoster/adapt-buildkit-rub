@@ -101,4 +101,18 @@ For Adapt and the builder configurations.
 It is now possible to define video and audio codec, bitrate, framerate & dimensions checks in the ``rubconfig.json`` file. The output of these checks appears in the ``rub-check.log`` file.
 
 ###Exclusions
-Folder exclusions are now possible in the ``rubconfig.json`` file.
+Folder exclusions are now possible in the ``rubconfig.json`` file. For example, if you wanted to exclude boxMenu and spoor from a course with ID ``m05``, you would set up rubconfig.json like this:
+```
+{
+  "excludes": {
+    "m05": {
+      "folderNames": [
+        "adapt-contrib-spoor",
+        "adapt-contrib-boxMenu"
+      ]
+    },
+    "folderNames": []
+  },
+  "clearLogs": true
+}
+```
