@@ -81,8 +81,12 @@ this buildkit: ~110mb installed (including node_modules and [ffprobe](https://ww
 ###Builds only when necessary
 As the tasks/actions performed by the buildkit are all custom written, the buildkit can decide if a source update has occured which requires the build to be updated. A second run of the buildkit on an unchanged course will be much faster than when using gulp or grunt. A second run on a changed course will rebuild only what is necessary.
 
-###Course asset duplication
-This buildkit can compile three types of src content structure. Adapt Learning's single course structure, ``src/course``, Kineo's ``src/courses`` structure and a new ``build/courses`` structure (thanks to Matt Leathes). This means that instead of having course assets in the src and build folders, it is now possible have the course assets in the build folder only, halving the storage requirements.
+###Support for different project structures
+This buildkit can compile three types of project folder structure. Firstly there's the standard Adapt Learning single course structure where all your JSON and assets are stored in ``src/course`` and built to the ``build`` folder.  
+
+Then there's Kineo's 'multiple courses from the same src' style - where all your JSON and assets are stored in subfolders of ``src/courses/`` and built to subfolders of a ``builds`` folder.  
+
+Finally, RUB introduces a new project structure where, instead of having course assets in the src **and** build folders, it is now possible to have just the core code, theme, menu(s), components and extensions in the ``src`` folder, keeping the JSON and assets in the builds/*courseid*/course/ folder only - thereby halving the storage requirements and removing the requirement to run a task every time the JSON or assets are changed.
 
 ###Improved compatibility
 This builder will work with Adapt Learning's v1.1.1 and v2 frameworks, as well as Kineo's interim framework.  
@@ -98,7 +102,3 @@ It is now possible to define video and audio codec, bitrate, framerate & dimensi
 
 ###Exclusions
 Folder exclusions are now possible in the ``rubconfig.json`` file.
-
-
-
-
