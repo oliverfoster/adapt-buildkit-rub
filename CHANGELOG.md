@@ -8,4 +8,4 @@
 
 [unreleased]: https://github.com/cgkineo/adapt-buildkit-rub/compare/v0.0.56...HEAD
 [0.0.56]: https://github.com/cgkineo/adapt-buildkit-rub/compare/v0.0.55...v0.0.56
-[0.0.55]: https://github.com/cgkineo/adapt-buildkit-rub/compare/v0.0.55
+[0.0.55]: https://github.com/cgkineo/adapt-buildkit-rub/releases/tag/v0.0.55
