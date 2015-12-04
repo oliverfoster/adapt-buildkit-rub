@@ -13,7 +13,7 @@
 			"globs": [
                 "**/theme/**/theme.json"
             ],
-            "dest": "{{outputDest}}/{{course}}/course/**/course.json"
+            "dest": "{{outputDest}}/{{course}}/course/**/config.json"
 		},
 		{
 			"@name": "themejson",
@@ -28,7 +28,7 @@
 			"globs": [
                 "**/theme/**/theme.json"
             ],
-            "dest": "{{outputDest}}/{{course}}/course/**/course.json"
+            "dest": "{{outputDest}}/{{course}}/course/**/config.json"
 		},
 		{
 			"@name": "themejson",
@@ -43,7 +43,7 @@
 			"globs": [
 				"**/theme/**/theme.json"
 			],
-            "dest": "{{outputDest}}/course/**/course.json"
+            "dest": "{{outputDest}}/course/**/config.json"
 		},
 		{
 			"@name": "schemadefaults",
