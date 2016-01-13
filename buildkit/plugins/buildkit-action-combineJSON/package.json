@@ -1,0 +1,4 @@
+{
+	"pluginName": "combinejson",
+	"pluginMain": "js/index.js"
+}

@@ -1,0 +1,4 @@
+{
+	"pluginName": "clearlogs",
+	"pluginMain": "js/index.js"
+}

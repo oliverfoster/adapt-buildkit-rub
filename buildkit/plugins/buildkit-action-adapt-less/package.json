@@ -1,0 +1,8 @@
+{
+	"pluginName": "less",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		"less": "less",
+		"sourcemaps": "source-map"
+	}
+}

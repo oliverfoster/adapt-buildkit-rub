@@ -1,0 +1,7 @@
+{
+  "pluginName": "buildkit-logger",
+  "pluginMain": "js/index.js",
+  "pluginDependencies": {
+    "chalk": "chalk"
+  }
+}

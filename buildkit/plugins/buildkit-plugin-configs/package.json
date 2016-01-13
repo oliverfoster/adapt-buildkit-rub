@@ -1,0 +1,7 @@
+{
+	"pluginName": "BuildKitConfigs",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		"jsonlint": "json-lint"
+	}
+}

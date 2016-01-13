@@ -1,0 +1,58 @@
+{
+	"actions": [
+		{
+			"@name": "assetrequired",
+			"@displayName": "Checking assets...",
+			"@action": "assetrequired",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
+            "@when": "finish",
+			"@types": [ "builds/courses/course", "src/courses/course" ],
+			"jsonRoot": "{{outputDest}}/{{course}}", 
+			"jsonSrc": "course",
+			"jsonAssetGlobs": [
+				"!**/adapt/css/assets/**/*",
+				"**/assets/**/*",
+				"**/course/**/images/**/*",
+				"**/course/**/pdf/**/*",
+				"**/course/**/video/**/*"
+			],
+			"jsonAssetRegex": "((\\\\\"|\"|'){1}([^\"']*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf|\\.svg)+)|.{0})(\\\\\"|\"|'){1})",
+			"cssRoot": "{{outputDest}}/{{course}}/adapt/css",
+			"cssSrc": "adapt.css",
+			"cssAssetRegex": "((url\\(){1}([^\\)]*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf|\\.svg)+)|.{0})(\\)){1})",
+			"logPath": "rub-check.log"
+		},
+		{
+			"@name": "assetrequired",
+			"@displayName": "Checking assets...",
+			"@action": "assetrequired",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@excludeOnSwitches": [
+                "quick"
+            ],
+            "@when": "finish",
+			"@types": [ "src/course" ],
+			"jsonRoot": "{{outputDest}}",
+			"jsonSrc": "course",
+			"jsonAssetGlobs": [
+				"!**/adapt/css/assets/**/*",
+				"**/assets/**/*",
+				"**/course/**/images/**/*",
+				"**/course/**/pdf/**/*",
+				"**/course/**/video/**/*"
+			],
+			"jsonAssetRegex": "((\\\\\"|\"|'){1}([^\"']*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf|\\.svg)+)|.{0})(\\\\\"|\"|'){1})",
+			"cssRoot": "{{outputDest}}/adapt/css",
+			"cssSrc": "adapt.css",
+			"cssAssetRegex": "((url\\(){1}([^\\)]*((\\.png|\\.gif|\\.jpg|\\.jpeg|\\.mp4|\\.ogv|\\.mp3|\\.ogg|\\.pdf|\\.svg)+)|.{0})(\\)){1})",
+			"logPath": "rub-check.log"
+		}
+	]
+}

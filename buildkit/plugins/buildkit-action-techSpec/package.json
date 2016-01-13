@@ -1,0 +1,7 @@
+{
+	"pluginName": "techspec",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		"imagesize": "image-size-big-max-buffer"
+	}
+}

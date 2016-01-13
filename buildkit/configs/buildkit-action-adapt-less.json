@@ -1,0 +1,32 @@
+{
+	"actions": [
+		{
+			"@name": "plugins-less",
+			"@displayName": "Building plugin less...",
+			"@action": "less",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+			"@when": "build",
+			"@serverReloadType": "css",
+			"less": {
+				"compress": true,
+				"sourceMap": {
+					"sourceMapFileInline": false,	
+					"sourceMapBasepath": "src",
+					"outputSourceFiles": true,
+					"sourceMapURL": "adapt.css.map"
+				}
+			},
+			"src": "src",
+			"globs":  [ 
+				"src/core/less/*.less",
+				"src/core/less/**/*.less",
+				"src/*/*/less/*.less",
+				"src/*/*/less/**/*.less"
+			],
+			"sourceMapRelocate": "../../../src/",
+			"dest": "{{outputDest}}/{{course}}/adapt/css/adapt.css"
+		}
+	]
+}

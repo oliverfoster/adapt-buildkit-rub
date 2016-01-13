@@ -1,0 +1,8 @@
+{
+	"pluginName": "javascript",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		"requirejs": "requirejs",
+		"sourcemaps": "source-map"
+	}
+}

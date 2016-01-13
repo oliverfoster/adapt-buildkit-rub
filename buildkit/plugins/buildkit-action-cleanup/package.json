@@ -1,0 +1,4 @@
+{
+	"pluginName": "cleanup",
+	"pluginMain": "js/index.js"
+}

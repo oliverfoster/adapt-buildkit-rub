@@ -1,0 +1,7 @@
+{
+	"pluginName": "terminal",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		"JSONLint": "json-lint"
+	}
+}

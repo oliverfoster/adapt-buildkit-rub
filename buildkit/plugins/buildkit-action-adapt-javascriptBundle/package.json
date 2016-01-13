@@ -1,0 +1,4 @@
+{
+	"pluginName": "javascriptbundle",
+	"pluginMain": "js/index.js"
+}

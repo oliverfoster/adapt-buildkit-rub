@@ -1,0 +1,87 @@
+{
+	"actions": [
+		{
+			"@name": "bundles-required-folder",
+			"@displayName": "Synching plugin required folders...",
+			"@action": "collate",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "build",
+			"on": "required",
+			"src": "src",
+			"globs": [
+				"src/*/*/required/**"
+			],
+			"diffGlobs": [
+				"!{{dest}}/adapt/**",
+				"!{{dest}}/adapt",
+				"!{{dest}}/assets/**",
+				"!{{dest}}/assets",
+				"!{{dest}}/course/**",
+				"!{{dest}}/course",
+				"!{{dest}}/libraries/**",
+				"!{{dest}}/libraries",
+				"!{{dest}}/index.html",
+				"**"
+			],
+			"dest": "{{outputDest}}/{{course}}"
+		},
+		{
+			"@name": "bundles-assets-folder",
+			"@displayName": "Synching plugin asset folders...",
+			"@action": "collate",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "build",
+			"on": "assets",
+			"src": "src",
+			"globs": [
+				"src/components/*/assets/**",
+				"src/extensions/*/assets/**",
+				"src/menu/*/assets/**"
+			],
+			"diffGlobs": [
+				"**"
+			],
+			"dest": "{{outputDest}}/{{course}}/assets"
+		},
+		{
+			"@name": "bundles-fonts-folder",
+			"@displayName": "Synching font folders...",
+			"@action": "collate",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "build",
+			"on": "fonts",
+			"src": "src",
+			"globs": [
+				"src/*/*/fonts/**"
+			],
+			"diffGlobs": [
+				"**"
+			],
+			"dest": "{{outputDest}}/{{course}}/adapt/css/fonts"
+		},
+		{
+			"@name": "theme-assets-folder",
+			"@displayName": "Synching theme asset folders...",
+			"@action": "collate",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "build",
+			"on": "assets",
+			"src": "src",
+			"globs": [
+				"src/theme/*/assets/**"
+			],
+			"diffGlobs": [
+				"**"
+			],
+			"dest": "{{outputDest}}/{{course}}/adapt/css/assets"
+		}
+	]
+}

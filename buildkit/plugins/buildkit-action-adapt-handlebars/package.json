@@ -1,0 +1,5 @@
+{
+	"pluginName": "handlebars",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {}
+}

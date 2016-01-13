@@ -1,0 +1,7 @@
+{
+	"pluginName": "BuildKitTerminal",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		"commander": "commander"
+	}
+}

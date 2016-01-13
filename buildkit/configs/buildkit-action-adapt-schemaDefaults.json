@@ -1,0 +1,48 @@
+{
+	"actions": [
+		{
+			"@name": "schemadefaults",
+			"@displayName": "Adding schema defaults...",
+			"@action": "schemadefaults",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@types": [ "src/course" ],
+            "@when": "clean",
+			"src": "src",
+			"globs": [
+				"**/src/extensions",
+				"**/src/components",
+				"**/src/menu",
+				"**/src/theme",
+				"**/src/extensions/**",
+				"**/src/components/**",
+				"**/src/menu/**",
+				"**/src/theme/**"
+			],
+			"dest": "{{outputDest}}/course/**/course.json"
+		},
+		{
+			"@name": "schemadefaults",
+			"@displayName": "Adding schema defaults...",
+			"@action": "schemadefaults",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@types": [ "builds/courses/course", "src/courses/course" ],
+            "@when": "clean",
+			"src": "src",
+			"globs": [
+				"**/src/extensions",
+				"**/src/components",
+				"**/src/menu",
+				"**/src/theme",
+				"**/src/extensions/**",
+				"**/src/components/**",
+				"**/src/menu/**",
+				"**/src/theme/**"
+			],
+			"dest": "{{outputDest}}/{{course}}/course/**/course.json"
+		}
+	]
+}

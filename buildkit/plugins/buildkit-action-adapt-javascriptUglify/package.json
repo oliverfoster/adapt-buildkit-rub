@@ -1,0 +1,7 @@
+{
+	"pluginName": "javascriptUglify",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		 "UglifyJS": "uglify-js"
+	}
+}

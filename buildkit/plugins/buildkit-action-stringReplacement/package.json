@@ -1,0 +1,7 @@
+{
+	"pluginName": "terminal",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		"handlebars": "handlebars"
+	}
+}

@@ -8,7 +8,7 @@ Please make sure [adapt-buildkits](https://github.com/cgkineo/adapt-buildkits) i
 
 Run this command in your build folder:
 ```
-adapt-buildkit install rub
+adapt-buildkit install rub2
 ```
 
 ##Usage

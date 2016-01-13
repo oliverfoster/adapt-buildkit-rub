@@ -1,31 +1,32 @@
 {
+  "name": "buildkit-rub2",
+  "commonName": "rub2",
   "name": "adapt-buildkit-rub",
-  "version": "0.0.56",
+  "version": "0.1.0",
   "custom": false,
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},
   "author": "AdaptLearning",
   "license": "GPL-3.0",
-  "devDependencies": {},
+  "repository": "https://github.com/cgkineo/adapt-buildkit-rub",
   "dependencies": {
-    "chalk": "^1.0.0",
+    "buildkit-globber": "^0.1.1",
+    "buildkit-plugins": "^0.1.1",
+    "chalk": "^1.1.1",
     "commander": "^2.8.1",
-    "handlebars": "2.0.0",
+    "handlebars": "^4.0.5",
     "image-size-big-max-buffer": "^0.3.5",
     "json-lint": "^0.1.0",
     "less": "^2.5.0",
-    "minimatch": "^2.0.4",
     "node-native-zip-compression": "^1.0.1",
     "open": "0.0.5",
-    "osenv": "^0.1.0",
     "requirejs": "^2.1.17",
+    "semver": "^4.3.3",
     "serve-index": "^1.6.3",
     "source-map": "^0.4.4",
     "uglify-js": "^2.4.23",
     "underscore": "~1.6.0",
     "underscore-deep-extend": "0.0.5",
-    "util-ffprobe": "0.0.3",
-    "semver": "^4.3.3"
-  },
-  "repository": "https://github.com/oliverfoster/adapt-buildkit-rub"
+    "util-ffprobe": "0.0.3"
+  }
 }

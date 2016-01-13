@@ -1,0 +1,4 @@
+{
+	"pluginName": "BuildKitServer",
+	"pluginMain": "js/index.js"
+}

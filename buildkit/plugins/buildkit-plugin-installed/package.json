@@ -1,0 +1,5 @@
+{
+	"pluginName": "BuildKitInstalled",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {}
+}

@@ -1,0 +1,4 @@
+{
+	"pluginName": "javascriptBlank",
+	"pluginMain": "js/index.js"
+}

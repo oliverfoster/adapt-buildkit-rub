@@ -1,0 +1,7 @@
+{
+	"pluginName": "zip",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		"zipLibrary": "node-native-zip-compression"
+	}
+}

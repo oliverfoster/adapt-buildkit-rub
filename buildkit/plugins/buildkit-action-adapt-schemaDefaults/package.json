@@ -1,0 +1,4 @@
+{
+	"pluginName": "terminal",
+	"pluginMain": "js/index.js"
+}

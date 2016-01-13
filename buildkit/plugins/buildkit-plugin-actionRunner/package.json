@@ -1,0 +1,5 @@
+{
+	"pluginName": "BuildKitTaskRunner",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {}
+}

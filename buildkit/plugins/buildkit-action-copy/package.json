@@ -1,0 +1,4 @@
+{
+	"pluginName": "copy",
+	"pluginMain": "js/index.js"
+}

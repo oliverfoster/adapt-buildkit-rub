@@ -1,0 +1,8 @@
+{
+	"pluginName": "BuildKitUpdate",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		"semver": "semver",
+		"https": "https"
+	}
+}
