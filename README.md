@@ -125,8 +125,8 @@ For Adapt Framework and the buildkit configurations.
 ###Course asset checking
 It is possible to define video and audio codec, bitrate, framerate & dimensions checks in the ``buildkit-config.json`` file. The output of these checks appears in the ``rub-check.log`` file.
 
-###Exclusions
-Folder exclusions are now possible in the ``buildkit-config.json`` file. If you wanted to exclude boxMenu and spoor from a course with ID ``m05``, you would set up rubconfig.json like this:
+###Plugin Exclusions
+Folder exclusions are now possible in the ``buildkit-config.json`` file. If you wanted to exclude boxMenu and spoor from a course with ID ``m05``, you would set up buildkit-config.json like this:
 ```
 {
   "folderexclusions": {
@@ -138,7 +138,77 @@ Folder exclusions are now possible in the ``buildkit-config.json`` file. If you 
         },
         "global": [
         ]
-    },
-  "clearLogs": true
+  }
 }
 ```
+
+###File Extensions
+You can tell rub to expect txt files instead of json files (as some server admins don't like json) by adding the following to your ``buildkit-config.json`` file:
+```
+{
+  "fileextensions": {
+        "global": {
+          "json": "txt
+        }
+  }
+}
+```
+This won't modify the framework. So go to the your [src/core/js/app.js](https://github.com/adaptlearning/adapt_framework/blob/master/src/core/js/app.js) and change all occurances of ``.json`` to ``.txt``
+
+###Asset Checking
+You can define media/file asset file size, dimension, bitrate and codecs in your ``buildkit-config.json``:
+```
+    "techspec": {
+        "extensions": {
+            "png": {
+                "size": "1.5MB",
+                "width": 2500,
+                "height": 2500
+            },
+            "jpg": {
+                "size": "1.5MB",
+                "width": 2500,
+                "height": 2500
+            },
+            "jpeg": {
+                "size": "1.5MB",
+                "width": 2500,
+                "height": 2500
+            },
+            "gif": {
+                "size": "1.5MB",
+                "width": 2500,
+                "height": 2500
+            },
+            "mp4": {
+                "size": "10MB",
+                "width": 1440,
+                "height": 810,
+                "ratio": "16/8",
+                "audio_bitrate": "128kb/s",
+                "audio_codec": "aac",
+                "audio_channel_layout": "mono",
+                "video_bitrate": "1.5mb/s",
+                "video_fps": 25,
+                "video_codec": "h264"
+            },
+            "mp3": {
+                "size": "10MB",
+                "audio_bitrate": "128kb/s"
+            },
+            "ogv": {
+                "size": "10MB",
+                "width": 1440,
+                "height": 810,
+                "audio_bitrate": "128kb/s",
+                "audio_codec": "vorbis",
+                "video_bitrate": "1.5mb/s",
+                "video_fps": 25,
+                "video_codec": "theora"
+            }
+        },
+        "totalSize": "100MB",
+        "fileSize": "15MB",
+        "restrictedExtensions": [ "log" ]
+    }
+```    
