@@ -14,6 +14,11 @@ class Plugin {
 
 		options.src = Location.contextReplace(options.src, options);
 		options.dest = Location.contextReplace(options.dest, options);
+		options.globs = Location.contextReplace(options.globs, options);
+
+		if (options.folderexclusions) {
+			options.globs = options.globs.concat(options.folderexclusions);
+		}
 
 		start();
 

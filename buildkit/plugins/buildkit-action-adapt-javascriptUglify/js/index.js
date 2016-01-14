@@ -7,12 +7,7 @@ class Plugin {
 	}
 
 	setupEventListeners() {
-		events.on("plugins:initialized", () => { this.onPluginsInitialized(); });
 		events.on("action:run:javascriptuglify", (options, start, end) => { this.onActionRun(options, start, end); });
-	}
-
-	onPluginsInitialized() {
-		
 	}
 
 	onActionRun(options, start, end) {

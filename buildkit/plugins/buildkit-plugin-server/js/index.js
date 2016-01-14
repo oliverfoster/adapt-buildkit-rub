@@ -4,6 +4,7 @@ class Plugin {
 
 	constructor() {
 		this.init();
+		this.setupEventListeners();
 	}
 
 	init() {
@@ -12,9 +13,17 @@ class Plugin {
 			_mimeTypesByExtension: {},
 		    _isStarted: false,
 		    _reloadItems: [],
+		    http: null,
+		    port: null,
+		    options: null,
+		    index: null
 		});
 		this._expandMimeTypes();
-		GLOBAL.server = this;
+	}
+
+	setupEventListeners() {
+		events.on("server:start", (options) => { this.start(options); });
+		events.on("server:reload", (type) => { this.reload(type); });
 	}
 
     _expandMimeTypes() {
@@ -29,146 +38,188 @@ class Plugin {
 		return this._isStarted;
 	}
 
-    start(opts) {
-    	console.log("starting server");
+    start(options) {
     	this._isStarted = true;
         var serveIndex = require('serve-index');
-        var options = opts;
-        var index = serveIndex( options.outputDest, {'icons': true});
+        this.options = options;
+        this.index = serveIndex( this.options.outputDest, {'icons': true});
+    	this.http = require("http");
+    	this.port = this.options.switches.port;
+    	this.createListener();
+    }
 
-    	var http = require("http");
-    	var port = opts.switches.port;
-    	
-    	createListener();
+    createListener() {
+		this.http
+			.createServer((req,res) => { this.request(req,res); })
+			.listen(this.port)
+			.on('error', (err) => { this.errored(err); })
+			.on("listening", () => { this.listening(); });
+	}
 
-    	function createListener() {
-    		http.createServer(request).listen(port).on('error', errored).on("listening", listening);
-    	}
-
-    	function errored(err) {
-    		if (err.code == "EADDRINUSE") {
-    			port++;
-    			createListener();
-    		}
-    	}
-
-    	function listening() {
-    		logger.log("Opening http://127.0.0.1:"+port+"...", 2)
-
-    		open('http://127.0.0.1:'+port);
-    	}
-
-    	function urlStat(URL) {
-		    var urlParse = url.parse(URL);
-		    var fileName = path.join(process.cwd(), options.outputDest, urlParse.pathname);
-		    if (!fs.existsSync(fileName)) {
-		       	return urlParse;
-		    }
-		    var stat = fs.statSync(fileName);
-		    stat.filename = fileName;
-		    _.extend(stat, urlParse);
-		    return stat;
+	errored(err) {
+		if (err.code == "EADDRINUSE") {
+			this.port++;
+			this.createListener();
 		}
+	}
 
-		function injectScript(req, res) {
-			var fileString = fs.readFileSync(req.stat.filename).toString();
+	listening() {
+		logger.notice("Opening http://127.0.0.1:"+this.port+"...")
 
-			var start = fileString.toLowerCase().indexOf("<head>");
-			if (start > -1) {
-				var begin = fileString.substr(0, start);
-				var end = fileString.substr(start+6);
-				var js = '\n<script id="server-sync" src="/__server__/sync.js" type="text/javascript" data-lastevent="'+ (new Date()).getTime() + '"></script>\n';
-				fileString = begin+js+end;
+		open('http://127.0.0.1:'+this.port);
+	}
 
-			}
-		    res.end(fileString);
+	urlStat(URL) {
+	    var urlParse = url.parse(URL);
+	    var fileName = path.join(process.cwd(), this.options.outputDest, urlParse.pathname);
+	    if (!fs.existsSync(fileName)) {
+	       	return urlParse;
+	    }
+	    var stat = fs.statSync(fileName);
+	    stat.filename = fileName;
+	    _.extend(stat, urlParse);
+	    return stat;
+	}
+
+	injectScript(req, res) {
+		var fileString = fs.readFileSync(req.stat.filename).toString();
+
+		var start = fileString.toLowerCase().indexOf("<head>");
+		if (start > -1) {
+			var begin = fileString.substr(0, start);
+			var end = fileString.substr(start+6);
+			var js = '\n<script id="server-sync" src="/__server__/sync.js" type="text/javascript" data-lastevent="'+ (new Date()).getTime() + '"></script>\n';
+			fileString = begin+js+end;
+
 		}
+	    res.end(fileString);
+	}
 
 
-		function next(req, res) {
-			var mimeType = this._mimeTypesByExtension[path.extname(req.stat.filename).split(".")[1]];
-		    if (!mimeType) {
-		        res.writeHead(404, {"Content-Type": "text/plain"});
-		        res.write("404 MimeType not supported\n");
+	next(req, res) {
+
+		var mimeType = this._mimeTypesByExtension[path.extname(req.stat.filename).split(".")[1]];
+	    if (!mimeType) {
+	        res.writeHead(404, {"Content-Type": "text/plain"});
+	        res.write("404 MimeType not supported\n");
+	        res.end();
+	        return;
+	    }
+
+	    if (mimeType === "text/html") {
+	    	res.writeHead(200, {"Content-Type": mimeType});
+
+	    	if (req.headers.referer !== undefined) {
+	    		var stat = this.urlStat(req.headers.referer);
+	    		if (stat.isDirectory() && req.stat.filename.indexOf(stat.filename) > -1) {
+	    			return this.injectScript(req, res);
+	    		} else if (stat.filename === req.stat.filename) {
+	    			return this.injectScript(req, res);
+	    		}
+	    	} else return this.injectScript(req, res);
+
+	    } else if ((mimeType === "video/mp4" || mimeType === "video/ogg" || mimeType === "video/webm") && req.headers.range) {
+
+	    	var range = req.headers.range;
+            var positions = range.replace(/bytes=/, "").split("-");
+            var start = parseInt(positions[0], 10);
+            var max = 524288;
+
+            if (!positions[1]) positions[1] = start+max;
+            var end = parseInt(positions[1], 10);
+
+            if (end > start+max) end = start+max;
+            if (end > req.stat.size-1) end = req.stat.size-1;
+            if (start > req.stat.size-1) start = req.stat.size-1;
+
+            var chunksize = (end-start);
+
+            if (chunksize === 0) {
+            	res.writeHead(404, {"Content-Type": "text/plain"});
+		        res.write("404 Not Found\n");
 		        res.end();
-		        return;
-		    }
+	        	return;
+            }
+            
+            var movieBuffer = new Buffer(chunksize);
+            var fd = fs.openSync(req.stat.filename, "r");
+            fs.read(fd, movieBuffer, 0, chunksize, start, function(err, bytesread, buffer) {
+            	var headers = { "Content-Range": "bytes " + start + "-" + (end-1) + "/" + (req.stat.size-1), 
+                                     "Accept-Ranges": "bytes",
+                                     "Content-Length": chunksize,
+                                     "Content-Type":mimeType
+                              }
+           		res.writeHead(206, headers);
+            	res.end(movieBuffer, "binary");
+            	fs.closeSync(fd);
+            });
+       
 
-		    res.writeHead(200, {"Content-Type": mimeType});
-
-		    if (mimeType === "text/html") {
-		    	if (req.headers.referer !== undefined) {
-		    		var stat = urlStat(req.headers.referer);
-		    		if (stat.isDirectory() && req.stat.filename.indexOf(stat.filename) > -1) {
-		    			return injectScript(req, res);
-		    		} else if (stat.filename === req.stat.filename) {
-		    			return injectScript(req, res);
-		    		}
-		    	} else return injectScript(req, res);
-		    }
-
+            return;
+	    } else {
+	    	res.writeHead(200, {"Content-Type": mimeType});
 		    var fileStream = fs.createReadStream(req.stat.filename);
 		    fileStream.pipe(res);
 		}
+	}
 
-		function request(req, res) {
-		   
-		    var stat = urlStat(req.url);
-		    if (path.dirname(stat.path) === "/__server__/poll") {
-		    	if (stat.search) {
-		    		var timestamp = parseInt(stat.search.substr(1));
-		    		if (!isNaN(timestamp)) {
-		    			for (var i = 0; i < this._reloadItems.length; i++) {
-		    				if (this._reloadItems[i].lastEvent > timestamp) {
-		    					res.writeHead(200, {"Content-Type": "text/json"});
-						        res.write(JSON.stringify(this._reloadItems[i]));
-						        res.end();
-						        return;
-		    				}
-		    			}
-		    		}
-		    	}
-		    	res.writeHead(200, {"Content-Type": "text/plain"});
-		        res.write("200 Not Found");
-		        res.end();
-		        return;
-		    } else if (path.dirname(stat.path) === "/__server__") {
-		    	var filename = path.join(__dirname, stat.path);
+	request(req, res) {
+	   
+	    var stat = this.urlStat(req.url);
+	    if (path.dirname(stat.path) === "/__server__/poll") {
+	    	if (stat.search) {
+	    		var timestamp = parseInt(stat.search.substr(1));
+	    		if (!isNaN(timestamp)) {
+	    			for (var i = 0; i < this._reloadItems.length; i++) {
+	    				if (this._reloadItems[i].lastEvent > timestamp) {
+	    					res.writeHead(200, {"Content-Type": "text/json"});
+					        res.write(JSON.stringify(this._reloadItems[i]));
+					        res.end();
+					        return;
+	    				}
+	    			}
+	    		}
+	    	}
+	    	res.writeHead(200, {"Content-Type": "text/plain"});
+	        res.write("200 Not Found");
+	        res.end();
+	        return;
+	    } else if (path.dirname(stat.path) === "/__server__") {
+	    	var filename = path.join(__dirname, "..", stat.path);
 
-		    	if (!fs.existsSync(filename)) {
-		    		res.writeHead(404, {"Content-Type": "text/plain"});
-			        res.write("404 Not Found\n");
-			        res.end();
-			        return;
-		    	}
-
-		    	var mimeType = this._mimeTypesByExtension[path.extname(filename).split(".")[1]];
-		    	res.writeHead(200, mimeType);
-		        var fileStream = fs.createReadStream( filename );
-		    	fileStream.pipe(res);
-		        return;
-		    }
-		    if (!stat.filename) {
-		        res.writeHead(404, {"Content-Type": "text/plain"});
+	    	if (!fs.existsSync(filename)) {
+	    		res.writeHead(404, {"Content-Type": "text/plain"});
 		        res.write("404 Not Found\n");
 		        res.end();
 		        return;
-		    }
+	    	}
 
-		    req.stat = stat;
+	    	var mimeType = this._mimeTypesByExtension[path.extname(filename).split(".")[1]];
+	    	res.writeHead(200, mimeType);
+	        var fileStream = fs.createReadStream( filename );
+	    	fileStream.pipe(res);
+	        return;
+	    }
+	    if (!stat.filename) {
+	        res.writeHead(404, {"Content-Type": "text/plain"});
+	        res.write("404 Not Found\n");
+	        res.end();
+	        return;
+	    }
+
+	    req.stat = stat;
 
 
 
-		    if (stat.isDirectory()) return index(req, res, next);
-		    next(req,res );
-		    
+	    if (stat.isDirectory()) return this.index(req, res, this.next);
+	    this.next(req,res );
+	    
 
-		}
-    }
+	}
 
     reload(type) {
     	if (!this._isStarted) return;
-    	logger.log("Server sending client action '"+type+"'", 2)
+    	logger.notice("Server sending client reload action '"+type+"'")
     	this._reloadItems.push({
     		type: type,
     		lastEvent: (new Date()).getTime()

@@ -7,12 +7,7 @@ class Plugin {
 	}
 
 	setupEventListeners() {
-		events.on("plugins:initialized", () => { this.onPluginsInitialized(); });
 		events.on("action:run:combinejson", (options, start, end) => { this.onActionRun(options, start, end); });
-	}
-
-	onPluginsInitialized() {
-		
 	}
 
 	onActionRun(options, start, end) {
@@ -33,7 +28,8 @@ class Plugin {
             var glob = options.dest.slice(globIndex);
 
             var tree = treecontext.Tree(base, ".");
-            var globs = new GlobCollection(glob);
+            glob = Location.contextReplace(glob, options);
+            var globs = new GlobCollection(glob, options.folderexclusions);
             var results = tree.mapGlobs(globs).files;
 
             //var results = fsext.glob(base, glob, {dirs:true, files:true});
@@ -57,7 +53,8 @@ class Plugin {
             if (fs.existsSync(srcPath)) {
 
                 var tree = treecontext.Tree(srcPath, ".");
-	            var globs = new GlobCollection(options.globs);
+                options.globs = Location.contextReplace(options.globs, options);
+	            var globs = new GlobCollection(options.globs, options.folderexclusions);
 	            var list = tree.mapGlobs(globs).files;
 
                 for (var i = 0, pathItem; pathItem = list[i++];) {
@@ -75,7 +72,6 @@ class Plugin {
                         srcAsJSON = _.deepExtend(srcAsJSON, destAsJSON)
 
                         fs.writeFileSync(options.dest, JSON.stringify(srcAsJSON, null, 4));
-
                     }
                 }
             }

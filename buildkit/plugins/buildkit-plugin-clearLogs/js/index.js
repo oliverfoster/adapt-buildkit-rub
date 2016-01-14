@@ -18,6 +18,8 @@ class Plugin {
 	onConfigReady(config) {
 		this.config = config;
 
+		if (this.config.clearLogs === false) return;
+
 		logger.noticeThrough("Clearing logs...");
 
 		this._logsCleared = {};

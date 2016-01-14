@@ -1,0 +1,5 @@
+{
+	"pluginName": "fileextensions",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {}
+}

@@ -7,12 +7,7 @@ class Plugin {
 	}
 
 	setupEventListeners() {
-		events.on("plugins:initialized", () => { this.onPluginsInitialized(); });
 		events.on("action:run:less", (options, start, end) => { this.onActionRun(options, start, end); });
-	}
-
-	onPluginsInitialized() {
-		
 	}
 
 	onActionRun(options, start, end) {
@@ -29,7 +24,8 @@ class Plugin {
 		var output = "";
 
 		var tree = treecontext.Tree(options.src, ".");
-		var globs = new GlobCollection(globs);
+		globs = Location.contextReplace(globs, options);
+		globs = new GlobCollection(globs, options.folderexclusions);
 		var files = tree.mapGlobs(globs).files;
 
 		if (fs.existsSync(options.dest) && options.switches.force !== true && !options.switches.forceall) {

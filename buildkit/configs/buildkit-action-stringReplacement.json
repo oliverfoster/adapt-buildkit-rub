@@ -14,7 +14,7 @@
                 "src/extensions/adapt-contrib-spoor/required/imsmanifest.xml"
             ],
             "dest": "{{outputDest}}/{{course}}/imsmanifest.xml",
-            "context": "{{outputDest}}/{{course}}/course/en/course.json"
+            "context": "{{outputDest}}/{{course}}/course/en/course.{{fileextensions.json}}"
 		},
 		{
 			"@name": "stringreplacement",
@@ -30,7 +30,7 @@
 				"src/extensions/adapt-contrib-spoor/required/imsmanifest.xml"
 			],
             "dest": "{{outputDest}}/imsmanifest.xml",
-            "context": "{{outputDest}}/course/en/course.json"
+            "context": "{{outputDest}}/course/en/course.{{fileextensions.json}}"
 		}
 	]
 }

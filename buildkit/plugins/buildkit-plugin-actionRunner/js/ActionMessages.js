@@ -20,7 +20,7 @@ class ActionMessages {
 	static remove(id) {
 		var index = ActionMessages.getIndex(id);
 		if (index < 0) return;
-		return messages.splice(i, 1);
+		return messages.splice(index, 1);
 	}
 
 	static getIndex(id) {

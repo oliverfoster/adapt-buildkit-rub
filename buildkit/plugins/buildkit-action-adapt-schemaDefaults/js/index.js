@@ -7,12 +7,7 @@ class Plugin {
 	}
 
 	setupEventListeners() {
-		events.on("plugins:initialized", () => { this.onPluginsInitialized(); });
 		events.on("action:run:schemadefaults", (options, start, end) => { this.onActionRun(options, start, end); });
-	}
-
-	onPluginsInitialized() {
-		
 	}
 
 	onActionRun(options, start, end) {
@@ -28,7 +23,8 @@ class Plugin {
             var glob = options.dest.slice(globIndex);
 
             var tree = treecontext.Tree(base, ".");
-            var globs = new GlobCollection(glob);
+            glob = Location.contextReplace(glob, options);
+            var globs = new GlobCollection(glob, options.folderexclusions);
             var results = tree.mapGlobs(globs).files;
 
             //var results = fsext.glob(base, glob, {dirs:true, files:true});
@@ -70,7 +66,8 @@ class Plugin {
                 var paths = tree.dirs;
                 paths = _.pluck(paths, "relativeLocation");
                 if (options.exclusionGlobs) {
-                    paths = new GlobCollection(["**"].concat(options.exclusionGlobs)).filter(path);
+                    var globs = Location.contextReplace(["**"].concat(options.exclusionGlobs), options);
+                    paths = new GlobCollection(globs).filter(path);
                 }
 
                 //iterate through plugins in plugin type folder

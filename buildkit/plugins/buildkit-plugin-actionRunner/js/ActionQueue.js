@@ -102,13 +102,10 @@ class ActionQueue extends EventEmitter {
 	}
 
 	actionDone(action, err) {
-		if (err) {
-			logger.error(err);
-			if (action.error) {
-				action.error(err);
-			}
+		if (err && action.error) {
+			action.error(err, _.bind(this.endLoop, this));
 		}
-		if (this.end) {
+		if (action.end) {
 			action.end();
 		}
 		delete this.runningActions[action.uid];

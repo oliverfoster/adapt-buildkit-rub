@@ -1,4 +1,4 @@
 {
-	"pluginName": "terminal",
+	"pluginName": "folderExclusions",
 	"pluginMain": "js/index.js"
 }

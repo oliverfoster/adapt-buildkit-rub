@@ -3,11 +3,21 @@
 class Plugin {
 
 	constructor() {
+		this.init();
 		this.setupEventListeners();
 	}
 
+	init() {
+		this.config = null;
+	}
+
 	setupEventListeners() {
+		events.on("config:ready", (config) => { this.onConfigReady(config); });
 		events.on("watches:expand", (watches) => { this.onWatchesExpand(watches); });
+	}
+
+	onConfigReady(config) {
+		this.config = config;
 	}
 
 	onWatchesExpand(watches) {
@@ -17,19 +27,19 @@ class Plugin {
 		watches = _.filter(watches, (item) => {
 			if (item.expand) {
 				if (courses.length === 0) {
-					var cloned = _.deepExtend({}, item);
-					var options = _.deepExtend({}, this.config.terminal);
-					options.course = "";
-					cloned.path = Location.contextReplace(cloned.path, options);
-					cloned.globs = Location.contextReplace(cloned.globs, options);
+					var cloned = _.deepExtend({}, this.config.terminal, item);
+					cloned.course = "";
+					events.emit("watch:prep", cloned);
+					cloned.path = Location.contextReplace(cloned.path, cloned);
+					cloned.globs = Location.contextReplace(cloned.globs, cloned);
 					expanded.push(cloned);
 				} else {
 					for (var i = 0, l = courses.length; i < l; i++) {
-						var cloned = _.deepExtend({}, item);
-						var options = _.deepExtend({}, this.config.terminal);
-						options.course = courses[i];
-						cloned.path = Location.contextReplace(cloned.path, options);
-						cloned.globs = Location.contextReplace(cloned.globs, options);
+						var cloned = _.deepExtend({}, this.config.terminal, item);
+						cloned.course = courses[i];
+						events.emit("watch:prep", cloned);
+						cloned.path = Location.contextReplace(cloned.path, cloned);
+						cloned.globs = Location.contextReplace(cloned.globs, cloned);
 						expanded.push(cloned);
 					}
 				}

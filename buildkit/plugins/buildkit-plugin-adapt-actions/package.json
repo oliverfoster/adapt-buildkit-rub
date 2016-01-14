@@ -1,5 +1,5 @@
 {
-	"pluginName": "BuildKitInstalled",
+	"pluginName": "actions",
 	"pluginMain": "js/index.js",
 	"pluginDependencies": {}
 }

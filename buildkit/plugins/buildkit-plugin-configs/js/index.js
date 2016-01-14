@@ -75,7 +75,7 @@ class Plugin {
 					return;
 				}
 
-				this._terminalOptions.buildConfig = JSON.parse(fileString);
+				this.config = _.deepExtend(this.config, JSON.parse(fileString));
 
 			} catch (e) {
 				logger.error("buildkit-config.json is corrupt");

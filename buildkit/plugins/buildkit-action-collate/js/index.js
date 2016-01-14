@@ -18,6 +18,10 @@ class Plugin {
 		var diffGlobs = Location.contextReplace(options.diffGlobs, options);
 		var globs = Location.contextReplace(options.globs, options);
 
+		if (options.folderexclusions) {
+			globs = globs.concat(options.folderexclusions);
+		}
+
 		start();
 
 		FileSystem.collate(options.src, options.dest, options.on, globs, diffGlobs, function() {

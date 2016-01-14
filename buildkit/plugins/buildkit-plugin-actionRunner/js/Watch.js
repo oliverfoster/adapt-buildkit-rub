@@ -16,7 +16,7 @@ class Watch {
 			watches: new WatchCollection(),
 			fileChangeActionQueue: [],
 			fileChangeQueue: [],
-			serverReloadType: "window"
+			serverReloadType: null
 		});
 		this.setupEventListeners();
 	}
@@ -55,11 +55,13 @@ class Watch {
 			var tree, watch;
 			if (!data.globs) {
 				tree = treecontext.Tree(".", ".");
-				var globs = new GlobCollection([data.path]);
+				var globs = Location.contextReplace([data.path], this.config);
+				globs = new GlobCollection(globs);
 				watch = tree.watchGlobs(globs);
 			} else {
 				tree = treecontext.Tree(data.path, ".");
-				var globs = new GlobCollection(data.globs);
+				var globs = Location.contextReplace(data.globs, this.config);
+				globs = new GlobCollection(globs);
 				watch = tree.watchGlobs(globs);
 			}
 			watch.data = data;
@@ -71,13 +73,9 @@ class Watch {
 		}
 
 		actionqueue.defer(() => {
-			//start server
-			//this._server = require("./server.js");
-			if (this.config.terminal.switches['server'] && !server.isStarted()) {
-				server.start(this.config.terminal);
-				console.log("should start server here");
+			if (this.config.terminal.switches['server']) {
+				events.emit("server:start", this.config.terminal);
 			}
-
 		});
 
 		events.emit("actions:wait");
@@ -124,6 +122,7 @@ class Watch {
 
 		});
 
+		events.emit("watches:prep", this.selectedWatches);
 		events.emit("watches:expand", this.selectedWatches);
 
 	}
@@ -169,6 +168,11 @@ class Watch {
 				logger.error("Action not found: " + actionName);
 				continue;
 			}
+			if (this.serverReloadType !== "window") {
+				if (this.indexedActions[actionName]['@serverReloadType']) {
+					this.serverReloadType = this.indexedActions[actionName]['@serverReloadType'];
+				}
+			}
 			var actionConfig = this.indexedActions[actionName];
 			var isActionInList = _.where(this.fileChangeActionQueue, { "@name": actionConfig["@name"] });
 			if (isActionInList.length === 0) {
@@ -194,7 +198,6 @@ class Watch {
 		if (this.fileChangeActionQueue.length > 0) {
 
 			this.watches.stop();
-			treecontext.recache();
 
 			events.emit("actions:ready",  this.fileChangeActionQueue);
 			events.emit("build:start", this.config.terminal, this.fileChangeActionQueue);
@@ -205,11 +208,13 @@ class Watch {
 		}
 
 		actionqueue.defer(() => {
-			if (server.isStarted()) {
-				server.reload(this.serverReloadType);
-			}
+			events.emit("server:reload", this.serverReloadType || "window");
 
+			this.serverReloadType = null;
+
+			this.watches.clearCache();
 			this.watches.start();
+			events.emit("actions:reset");
 			events.emit("watch:start");
 		});
 	}

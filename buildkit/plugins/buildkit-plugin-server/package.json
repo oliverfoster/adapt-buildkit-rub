@@ -1,4 +1,7 @@
 {
 	"pluginName": "BuildKitServer",
-	"pluginMain": "js/index.js"
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {
+		"open": "open"
+	}
 }

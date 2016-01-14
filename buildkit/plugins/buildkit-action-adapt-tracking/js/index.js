@@ -7,12 +7,7 @@ class Plugin {
 	}
 
 	setupEventListeners() {
-		events.on("plugins:initialized", () => { this.onPluginsInitialized(); });
 		events.on("action:run:tracking", (options, start, end) => { this.onActionRun(options, start, end); });
-	}
-
-	onPluginsInitialized() {
-		
 	}
 
 	onActionRun(options, start, end) {
@@ -23,10 +18,12 @@ class Plugin {
 		options.blocksPath.src = Location.contextReplace(options.blocksPath.src, options);
 
 		var coursePathTree = treecontext.Tree(options.coursePath.src, ".");
+        options.coursePath.glob = Location.contextReplace(options.coursePath.glob, options);
 		var coursePathTreeGlobs = new GlobCollection(options.coursePath.glob);
 		options.coursePath = coursePathTree.mapGlobs(coursePathTreeGlobs).files[0].location;
 
         var blocksPathTree = treecontext.Tree(options.blocksPath.src, ".");
+        options.blocksPath.glob = Location.contextReplace(options.blocksPath.glob, options);
 		var blocksPathTreeGlobs = new GlobCollection(options.blocksPath.glob);
 		options.blocksPath = blocksPathTree.mapGlobs(blocksPathTreeGlobs).files[0].location;
 

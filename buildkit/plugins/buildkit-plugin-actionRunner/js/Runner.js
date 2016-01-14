@@ -8,19 +8,14 @@ class Plugin {
 	}
 
 	init() {
-		_.extend(this, {
-			selectedActions: null,
-			_serverReloadType: null,
-			_configuration: {},
-			_fileChangeActionQueue: [],
-			config: null
-		});
+		this.selectedActions = null;
+		this.config = null;
 	}
 
 	setupEventListeners() {
 		events.once("config:ready", (config) => { this.onConfigReady(config); });
 		events.once("actions:ready", (selectedActions) => { this.onActionsReady(selectedActions); });
-		process.on('SIGINT', this.onConsoleExit);
+		process.on('SIGINT', () => { this.onConsoleExit(); });
 	}
 
 	onConfigReady(config) {
@@ -56,6 +51,7 @@ class Plugin {
 	}
 
 	runAllActions() {
+		events.emit("build:prep", this.config.terminal, this.selectedActions);
 		events.emit("build:start", this.config.terminal, this.selectedActions);
 		this.watchWaitOrEnd();
 	}
@@ -94,27 +90,20 @@ class Plugin {
 
 	onConsoleExit() {
 		console.log();
+	
+		events.emit("server:reload", "close");
 
-		var isServerRunning = (server && server.isStarted());
-		if (isServerRunning) {
-			
-			this._serverReloadType = "close";
-			server.reload(this._serverReloadType);
+		return _.delay(() => {
 
-			return _.delay(() => {
+			var shouldWait = this.config.terminal.switches.wait;
+			if (shouldWait) {
+				return this.waitForEnd();
+			}
 
-				var shouldWait = this.config.terminal.switches.wait;
-				if (shouldWait) {
-					return this.waitForEnd();
-				}
+			process.exit(0);
 
-				process.exit(0);
+		}, 2000);
 
-			}, 2000);
-
-		}
-		
-		process.exit(0);
 	}
 
 }

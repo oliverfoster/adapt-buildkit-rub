@@ -5,7 +5,7 @@
 	},
 	"watches": [
 		{
-			"@name": "bundles-templates",
+			"@name": "plugins-templates",
 			"path": "src",
 			"globs": [
 				"src/*/*/templates/*.hbs", 
@@ -19,17 +19,17 @@
 				"!src/core"
 			],
 			"actions": [
-				"bundles-handlebars",
-				"bundles-fonts-folder",
-				"bundles-required-folder",
-				"bundles-assets-folder",
+				"plugins-handlebars",
+				"plugins-fonts-folder",
+				"plugins-required-folder",
+				"plugins-assets-folder",
 				"stringreplacement",
 				"assetrequired",
 				"techspec"
 			]
 		},
 		{
-			"@name": "bundles-javascript",
+			"@name": "plugins-javascript",
 			"path": "src",
 			"globs": [
 				"src/*/*/js/*.js",
@@ -37,11 +37,11 @@
 				"!src/core"
 			],
 			"actions": [
-				"bundles-bundle",
-				"bundles-javascript",
-				"bundles-fonts-folder",
-				"bundles-required-folder",
-				"bundles-assets-folder",
+				"plugins-bundle",
+				"plugins-javascript",
+				"plugins-fonts-folder",
+				"plugins-required-folder",
+				"plugins-assets-folder",
 				"stringreplacement",
 				"assetrequired",
 				"techspec"
@@ -76,7 +76,7 @@
 			]
 		},
 		{
-			"@name": "bundles-less",
+			"@name": "plugins-less",
 			"path": "src",
 			"globs": [
 				"src/core/less/*.less",
@@ -85,7 +85,7 @@
 				"src/*/*/less/**/*.less"
 			],
 			"actions": [
-				"bundles-less",
+				"plugins-less",
 				"stringreplacement"
 			]
 		},
@@ -104,38 +104,38 @@
 			]
 		},
 		{
-			"@name": "bundles-fonts-folder",
+			"@name": "plugins-fonts-folder",
 			"path": "src",
 			"globs": [
 				"src/*/*/fonts/**"
 			],
 			"actions": [
-				"bundles-fonts-folder",
+				"plugins-fonts-folder",
 				"assetrequired",
 				"techspec"
 			]
 		},
 		{
-			"@name": "bundles-required",
+			"@name": "plugins-required",
 			"path": "src",
 			"globs": [
 				"src/*/*/required/**"
 			],
 			"actions": [
-				"bundles-required-folder",
+				"plugins-required-folder",
 				"assetrequired",
 				"techspec",
 				"stringreplacement"
 			]
 		},
 		{
-			"@name": "bundles-assets-folder",
+			"@name": "plugins-assets-folder",
 			"path": "src",
 			"globs": [
 				"src/*/*/assets/**"
 			],
 			"actions": [
-				"bundles-assets-folder",
+				"plugins-assets-folder",
 				"assetrequired",
 				"techspec",
 				"stringreplacement"
@@ -161,7 +161,7 @@
 			"expand": true,
 			"globs": [
 				"src/course/**",
-				"!**/*.json"
+				"!**/*.{{fileextensions.json}}"
 			],
 			"actions": [
 				"course-folder",
@@ -177,7 +177,7 @@
 			"expand": true,
 			"globs": [
 				"src/courses/{{course}}/**",
-				"!**/*.json"
+				"!**/*.{{fileextensions.json}}"
 			],
 			"actions": [
 				"course-folder",
@@ -199,7 +199,7 @@
 			"expand": true,
 			"globs": [
 				"builds/{{course}}/course/**",
-				"!**/*.json"
+				"!**/*.{{fileextensions.json}}"
 			],
 			"actions": [
 				"assetrequired",
@@ -213,8 +213,8 @@
 			"path": "src/course",
 			"expand": false,
 			"globs": [
-				"src/course/*.json",
-				"src/course/**/*.json"
+				"src/course/*.{{fileextensions.json}}",
+				"src/course/**/*.{{fileextensions.json}}"
 			],
 			"actions": [
 				"course-folder",
@@ -232,8 +232,8 @@
 			"path": "src/courses/{{course}}",
 			"expand": true,
 			"globs": [
-				"src/courses/{{course}}/*.json",
-				"src/courses/{{course}}/**/*.json"
+				"src/courses/{{course}}/*.{{fileextensions.json}}",
+				"src/courses/{{course}}/**/*.{{fileextensions.json}}"
 			],
 			"actions": [
 				"course-folder",
@@ -251,8 +251,8 @@
 			"path": "builds/{{course}}",
 			"expand": true,
 			"globs": [
-				"builds/{{course}}/course/*.json",
-				"builds/{{course}}/course/**/*.json"
+				"builds/{{course}}/course/*.{{fileextensions.json}}",
+				"builds/{{course}}/course/**/*.{{fileextensions.json}}"
 			],
 			"actions": [
 				"json-lint",

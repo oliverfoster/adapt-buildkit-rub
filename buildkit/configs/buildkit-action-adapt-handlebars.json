@@ -1,7 +1,7 @@
 {
 	"actions": [
 		{
-			"@name": "bundles-handlebars",
+			"@name": "plugins-handlebars",
 			"@displayName": "Building plugin templates...",
 			"@action": "handlebars",
 			"@onlyOnSwitches": [

@@ -42,8 +42,8 @@ class Action {
 		events.emit("action:end", this);
 	}
 
-	error(error) {
-		events.emit("action:error", error, this);
+	error(error, terminateQueue) {
+		events.emit("action:error", this, error, terminateQueue);
 	}
 }
 

@@ -15,7 +15,7 @@
 				"!*.zip",
 				"**"
 			],
-			"contextGlob": "**/course.json",
+			"contextGlob": "**/course.{{fileextensions.json}}",
 			"dest": "~/Desktop/scos/{{scoDate}}{{#if _projectCode}}_{{_projectCode}}{{/if}}_{{course}}.zip"
 		},
 		{
@@ -33,7 +33,7 @@
 				"!*.zip",
 				"**"
 			],
-			"contextGlob": "**/course.json",
+			"contextGlob": "**/course.{{fileextensions.json}}",
 			"dest": "~/Desktop/scos/{{scoDate}}{{#if _projectCode}}_{{_projectCode}}{{/if}}_{{course}}.zip"
 		}
 	]

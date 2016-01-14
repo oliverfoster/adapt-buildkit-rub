@@ -1,0 +1,5 @@
+{
+	"pluginName": "techspec",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {}
+}

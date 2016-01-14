@@ -20,7 +20,7 @@
 				"**/src/menu/**",
 				"**/src/theme/**"
 			],
-			"dest": "{{outputDest}}/course/**/course.json"
+			"dest": "{{outputDest}}/course/**/course.{{fileextensions.json}}"
 		},
 		{
 			"@name": "schemadefaults",
@@ -42,7 +42,7 @@
 				"**/src/menu/**",
 				"**/src/theme/**"
 			],
-			"dest": "{{outputDest}}/{{course}}/course/**/course.json"
+			"dest": "{{outputDest}}/{{course}}/course/**/course.{{fileextensions.json}}"
 		}
 	]
 }

@@ -188,6 +188,7 @@ class Plugin {
 
 
                 var tree = treecontext.Tree(options.jsonRoot, ".");
+                options.jsonAssetGlobs = Location.contextReplace(options.jsonAssetGlobs, options);
                 var globs = new GlobCollection(options.jsonAssetGlobs);
                 var assets = tree.mapGlobs(globs).files;
 

@@ -10,10 +10,10 @@
             "@excludeOnSwitches": [
                 "quick"
             ],
-            "@when": "clean",
+            "@when": "prep",
 			"@types": [ "builds/courses/course", "src/courses/course" ],
 			"src": "{{outputDest}}/{{course}}/course",
-			"globs": "**/*.json"
+			"globs": "**/*.{{fileextensions.json}}"
 		},
 		{
 			"@name": "json-lint",
@@ -25,10 +25,10 @@
             "@excludeOnSwitches": [
                 "quick"
             ],
-            "@when": "clean",
+            "@when": "prep",
 			"@types": [ "src/course" ],
 			"src": "{{outputDest}}/course",
-			"globs": "**/*.json"
+			"globs": "**/*.{{fileextensions.json}}"
 		}
 	]
 }

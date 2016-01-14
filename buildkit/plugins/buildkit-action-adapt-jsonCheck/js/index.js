@@ -30,6 +30,7 @@ class Plugin {
             if (!tree) return end("JSONCheck: dir not found " + base)
 
             var results = tree.dirs;
+            glob = Location.contextReplace(glob, options);
             results = (new GlobCollection(glob)).filter(results);
 
             for (var i = 0, l = results.length; i < l; i++) {

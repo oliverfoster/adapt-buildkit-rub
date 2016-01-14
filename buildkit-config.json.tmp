@@ -1,16 +1,28 @@
 {
-	"excludes": {
-		"p101": {
-			"folderNames": [
-				
-			]
-		},
-		"folderNames": [
-			
-		]
-	},
+    "folderexclusions": {
+"example": {
+        "course": {
+            "wp_p101": [
+                "adapt-cheat",
+                "adapt-contrib-bookmarking"
+
+            ]
+        },
+        "global": [
+            "adapt-forceLoad"
+        ]
+}
+    },
+    "fileextensions": {
+"example": {
+        "global": {
+            "json": "json"
+        }
+}
+    },
     "clearLogs": true,
-	"techspec": {
+    "techspec": {
+"example": {
         "extensions": {
             "png": {
                 "size": "1.5MB",
@@ -62,5 +74,6 @@
         "totalSize": "100MB",
         "fileSize": "15MB",
         "restrictedExtensions": [ "log" ]
+}
     }
 }

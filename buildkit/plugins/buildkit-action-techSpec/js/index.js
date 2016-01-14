@@ -42,6 +42,7 @@ class Plugin {
         var cwd = process.cwd();
 
         var tree = treecontext.Tree(options.src, ".");
+        options.globs = Location.contextReplace(options.globs, options);
         var globs = new GlobCollection(options.globs);
         var list = tree.mapGlobs(globs).files;
 

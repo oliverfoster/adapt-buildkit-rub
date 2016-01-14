@@ -8,11 +8,16 @@ class Plugin {
 	}
 
 	init() {
-		this._outputCache = {};
+		this.onActionsReset();
 	}
 
 	setupEventListeners() {
+		events.on("actions:reset", () => { this.onActionsReset(); });
 		events.on("action:run:javascriptbundle", (options, start, end) => { this.onActionRun(options, start, end); });
+	}
+
+	onActionsReset() {
+		this._outputCache = {};
 	}
 
 	onActionRun(options, start, end) {
@@ -36,7 +41,8 @@ class Plugin {
 			}
 
 			var tree = treecontext.Tree(options.src, ".");
-			var globs = new GlobCollection(globs);
+			globs = Location.contextReplace(globs, options);
+			globs = new GlobCollection(globs, options.folderexclusions);
 			var bowerFiles = tree.mapGlobs(globs).files;
 
 			options.requires = [];

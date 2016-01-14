@@ -7,12 +7,7 @@ class Plugin {
 	}
 
 	setupEventListeners() {
-		events.on("plugins:initialized", () => { this.onPluginsInitialized(); });
 		events.on("action:run:jsonlint", (options, start, end) => { this.onActionRun(options, start, end); });
-	}
-
-	onPluginsInitialized() {
-		
 	}
 
 	onActionRun(options, start, end) {
@@ -24,6 +19,7 @@ class Plugin {
 		options.src = Location.toAbsolute(options.src);
 
 		var tree = treecontext.Tree(options.src, ".");
+		options.globs = Location.contextReplace(options.globs, options);
 		var globs = new GlobCollection(options.globs);
 		var list = tree.mapGlobs(globs).files;
 
@@ -32,7 +28,7 @@ class Plugin {
 			var jsonstring = fs.readFileSync(list[i].location).toString();
 			var lint = JSONLint(jsonstring);
 			if (lint.error) {
-				errors+="\nFile: " +list[i]+ "\nError: " + lint.error + "\nLine: " + lint.line + "\nCharacter: " + lint.character+"\n";
+				errors+="\nFile: " +list[i].relativeLocation+ "\nError: " + lint.error + "\nLine: " + lint.line + "\nCharacter: " + lint.character+"\n";
 			}
 		}
 		

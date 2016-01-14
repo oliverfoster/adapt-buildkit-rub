@@ -8,18 +8,12 @@ class Plugin {
 	}
 
 	init() {
-		this._outputCache = {};
-        this._waitingForBuildOnce = {};
+		this.onActionsReset();
 	}
 
 	setupEventListeners() {
-		events.on("plugins:initialized", () => { this.onPluginsInitialized(); });
-		events.on("action:reset", () => { this.onActionsReset(); });
+		events.on("actions:reset", () => { this.onActionsReset(); });
 		events.on("action:run:javascript", (options, start, end) => { this.onActionRun(options, start, end); });
-	}
-
-	onPluginsInitialized() {
-		
 	}
 
 	onActionsReset() {
@@ -37,6 +31,7 @@ class Plugin {
         if (fs.existsSync(options.dest) && options.switches.force !== true && options.changes) {
 
             var tree = treecontext.Tree(options.changes.src, ".");
+            options.changes.globs = Location.contextReplace(options.changes.globs, options);
             var globs = new GlobCollection(options.changes.globs);
             var files = tree.mapGlobs(globs).files;
 
@@ -98,6 +93,7 @@ class Plugin {
 
                     var fromPath = path.join(options.requirejs.baseUrl, atPath);
                     var tree = treecontext.Tree(fromPath, ".");
+                    options.includes[prefix][atPath] = Location.contextReplace(options.includes[prefix][atPath], options);
                     var globs = new GlobCollection(options.includes[prefix][atPath]);
                     var files = tree.mapGlobs(globs).files;
 
@@ -145,6 +141,7 @@ class Plugin {
                 for (var atPath in options.empties[prefix]) {
                     var fromPath = path.join(options.requirejs.baseUrl, atPath);
                     var tree = treecontext.Tree(fromPath, ".");
+                    options.empties[prefix][atPath] = Location.contextReplace(options.empties[prefix][atPath], options);
                     var globs = new GlobCollection(options.empties[prefix][atPath] );
                     var files = tree.mapGlobs(globs).files;
 

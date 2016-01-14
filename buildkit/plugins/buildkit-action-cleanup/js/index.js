@@ -12,12 +12,7 @@ class Plugin {
 	}
 
 	setupEventListeners() {
-		events.on("plugins:initialized", () => { this.onPluginsInitialized(); });
 		events.on("action:run:cleanup", (options, start, end) => { this.onActionRun(options, start, end); });
-	}
-
-	onPluginsInitialized() {
-		
 	}
 
 	onActionRun(options, start, end) {
@@ -32,6 +27,7 @@ class Plugin {
 		var output = "";
 
 	    var tree = treecontext.Tree(options.src, ".");
+	    options.globs = Location.contextReplace(options.globs, options);
 	    var globs = new GlobCollection(options.globs);
 	    var list = tree.mapGlobs(globs);
 

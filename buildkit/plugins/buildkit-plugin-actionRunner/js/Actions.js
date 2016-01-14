@@ -104,15 +104,8 @@ class Actions {
 	}
 
 	runAction(action) {
-
-		this._serverReloadType = "window";
-		if (action["@serverReloadType"]) {
-			this._serverReloadType = action["@serverReloadType"];	
-		}
-
 		var action = new Action(action);
 		actionqueue.add(action);
-
 	}
 
 }

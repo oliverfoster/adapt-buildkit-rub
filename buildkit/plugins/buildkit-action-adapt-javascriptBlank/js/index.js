@@ -8,20 +8,16 @@ class Plugin {
 	}
 
 	init() {
-		this.hasBuilt = {};
+		this.onActionsReset();
 	}
 
 	setupEventListeners() {
-		events.on("plugins:initialized", () => { this.onPluginsInitialized(); });
+		events.on("actions:reset", () => { this.onActionsReset(); });
 		events.on("action:run:javascriptblank", (options, start, end) => { this.onActionRun(options, start, end); });
 	}
 
-	onPluginsInitialized() {
-		
-	}
-
 	onActionsReset() {
-
+		this.hasBuilt = {};
 	}
 
 	onActionRun(options, start, end) {

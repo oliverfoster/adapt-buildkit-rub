@@ -8,7 +8,7 @@ class Plugin {
 	}
 
 	init() {
-		this.loadHandlebarsCompiler();
+		this.onActionsReset();
 	}
 
 	loadHandlebarsCompiler() {
@@ -30,12 +30,12 @@ class Plugin {
 	}
 
 	setupEventListeners() {
-		events.on("plugins:initialized", () => { this.onPluginsInitialized(); });
+		events.on("actions:reset", () => { this.onActionsReset(); });
 		events.on("action:run:handlebars", (options, start, end) => { this.onActionRun(options, start, end); });
 	}
 
-	onPluginsInitialized() {
-		
+	onActionsReset() {
+		this.loadHandlebarsCompiler();
 	}
 
 	onActionRun(options, start, end) {
@@ -49,7 +49,8 @@ class Plugin {
 		}
 
 		var tree = treecontext.Tree(options.src, ".");
-        var globs = new GlobCollection(options.globs);
+		options.globs = Location.contextReplace(options.globs, options);
+        var globs = new GlobCollection(options.globs, options.folderexclusions);
         var files = tree.mapGlobs(globs).files;
 		
 		if (fs.existsSync(options.dest) && options.switches.force !== true) {
@@ -92,6 +93,7 @@ class Plugin {
 		output+=(options.precontext ? options.precontext+spacer : "");
 		output+=options.context+"={};"+spacer;
 
+		options.partialGlobs = Location.contextReplace(options.paritalGlobs, options);
 		var paritalGlobs = new GlobCollection(options.paritalGlobs);
 
 		for (var i = 0, l = files.length; i < l; i++) {

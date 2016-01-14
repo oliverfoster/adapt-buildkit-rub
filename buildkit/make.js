@@ -77,6 +77,6 @@ try {
 	console.log("Note: You may need to install adapt-buildkits.")
 	console.log("If so, please run 'sudo npm install -g adapt-buildkits'.");
 	console.log();
-	console.log(e);
+	throw e;
 
 }
