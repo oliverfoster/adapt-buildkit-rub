@@ -7,7 +7,7 @@
 			"@onlyOnSwitches": [
                 "build"
             ],
-            "@when": "build",
+            "@when": "clean",
 			"on": "required",
 			"src": "src",
 			"globs": [
