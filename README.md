@@ -39,7 +39,7 @@ adapt-buildkit install rub
 
 ```
 #####--wait 
-Has few use-cases. When double-clicking on rub.bat from windows, this feature is useful in that the command prompt down not exit immediately.
+Has few use-cases. When double-clicking on rub.bat from windows, this feature is useful in that the command prompt will not exit immediately.
 
 #####--tracking*
 Currently requires that you specify a module id ``./rub --trackinginsert p101`` but there are plans to allow ``./rub --trackinginsert`` to do all modules.
