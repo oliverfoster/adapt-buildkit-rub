@@ -38,25 +38,25 @@ adapt-buildkit install rub
 
 
 ```
-####--wait 
+#####--wait 
 Has few use-cases. When double-clicking on rub.bat from windows, this feature is useful in that the command prompt down not exit immediately.
 
-####--tracking*
+#####--tracking*
 Currently requires that you specify a module id ``./rub --trackinginsert p101`` but there are plans to allow ``./rub --trackinginsert`` to do all modules.
 
-####--force
+#####--force
 Recompiles all handlebars, javascript and less from source instead of checking for source changes. This is useful if you've just installed a plugin which is older than the current build.
 
-####--forceall
+#####--forceall
 Same as --force. Resynchs all assets from src also.
 
-####--clean
+#####--clean
 Clears the build folder leaving the course folder alone, i.e. if you want to build from scratch.
 
-####--quick
+#####--quick
 If you want the javascript and less compilation to fly, this will stop both compilers generating sourcemaps or performing minification, both of which are really costly in time.
 
-####--zip
+#####--zip
 Will output a folder called "scos" to your desktop containing the zipped output.
 
 
