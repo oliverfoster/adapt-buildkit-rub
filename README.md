@@ -1,6 +1,6 @@
 # adapt-buildkit-rub
 (Rapid-Unified-Builder)  
-Native Buildkit (alternative to gulp and grunt)
+Native Buildkit (alternative to grunt)
 
 ##Installation / Update / Repair
 
@@ -63,45 +63,48 @@ Rub also support legacy style commands:
 #Advantages
 
 ###Node native
-None of the modules used in this buildkit require compilation for different operating systems. This makes it possible to transport the buildkit to different systems without having to run extra 'npm install' commands.
+None of the modules used in this buildkit require compilation for different operating systems. You can transport the buildkit to different systems without having to run extra 'npm install' commands.
 
 ###Inbuilt task manager
-Rather than using gulp / grunt as a task runner, the buildkit has its own custom task runner. This means that there is much finer granularity over tasks, whether asynchronous or synchronous, they are divided into four major subsections - "prep", "build", "amend" and "finish". So, for example, all tracking changes can be performed in the "prep" subsection, all file synchronisation and compilation can happen in the "build" subsection, json linting and asset checking can happen in the "amend" subsection and SCO zips can be made in the "finish" subsection.  
-Having a custom task runner is also useful for throttling task execution to accomodate OSX open-file limits and system resource utilizations across systems.  
-The inbuilt task manager has a 'plugin' style architecture making adding new build tasks a much simpler endeavour. Each task and its configuration are distinct and separate, meaning that targeting bugs and updating becomes much easier.
+Rather than using gulp / grunt as a task runner, the buildkit has its own custom task runner. There is much finer granularity over tasks (asynchronous or synchronous) they are divided into five major subsections - "prep", "build", "clean", "finish" and "package". 
+ 
+All tracking changes, json linting, javascript bundling and cleaning are performed in the "prep" subsection, all file synchronisation and compilation happen in the "build" subsection, schema defaults and string replacement happen in the "clean" subsection, in the "finish" subsection comes asset checking, javascript minification and json checking, SCO zips are made in the "package" subsection.  
+  
+Having a custom task runner is useful for throttling task execution to accomodate OSX open-file limits and system resource utilizations across systems.  
+  
+The inbuilt task manager has a plugin-style architecture making adding new build tasks as simple as possible. Each task and associated configuration are separate.
 
 ###Reduced footprint
-Due to the low utilisation of third-party libraries and node-native only third-party libraries, the resultant buildkit packs more punch than the alternatives.
+As there are few third-party libraries and no compiled libraries this buildkit contains more functionality in a smaller space.
 
-Adapt Leanring's gruntfile: ~90mb installed (including node_modules)  
-Kineo's gruntfile: ~90mb installed (including node_modules)  
-Kineo's gulpfile: ~201mb installed (including node_modules)  
-this buildkit: ~110mb installed (including node_modules and [ffprobe](https://www.ffmpeg.org/download.html) for linux, mac and windows ~110mb)
+Adapt Learning's gruntfile: ~90mb installed (including node_modules)  
+Rub Buildkit: ~110mb installed (1mb, plus node_modules ~15mb, plus [ffprobe](https://www.ffmpeg.org/download.html) for linux, mac and windows ~96mb)
 
 ###Builds only when necessary
-As the tasks/actions performed by the buildkit are all custom written, the buildkit can decide if a source update has occured which requires the build to be updated. A second run of the buildkit on an unchanged course will be much faster than when using gulp or grunt. A second run on a changed course will rebuild only what is necessary.
+As the tasks and taskrunner in the buildkit are custom written it can access if the source was updated and needs the build updating. A second run of the buildkit on an unchanged course will be much faster than when using grunt. A second run on a changed course will rebuild only the necessary bits. The build divisions are "core", "libraries", "plugins", "less", "handlebars", "json", "assets", "fonts", "required" (+ a few others), each can be built independently.
 
 ###Support for different project structures
-This buildkit can compile three types of project folder structure. Firstly there's the standard Adapt Learning single course structure where all your JSON and assets are stored in ``src/course`` and built to the ``build`` folder.  
+The buildkit can compile three types of project folder structure:
 
-Then there's Kineo's 'multiple courses from the same src' style - where all your JSON and assets are stored in subfolders of ``src/courses/`` and built to subfolders of a ``builds`` folder.  
+Standard Adapt Learning, single course structure, where all your JSON and assets are stored in ``src/course`` and built to the ``build`` folder.  
 
-Finally, RUB introduces a new project structure where, instead of having course assets in the src **and** build folders, it is now possible to have just the core code, theme, menu(s), components and extensions in the ``src`` folder, keeping the JSON and assets in the builds/*courseid*/course/ folder only - thereby halving the storage requirements and removing the requirement to run a task every time the JSON or assets are changed.
+Kineo's multiple courses from the same src structure - where all your JSON and assets are stored in subfolders of ``src/courses/`` and built to subfolders of a ``builds`` folder, such as ``src/courses/p101``, ``src/courses/m05`` etc.  
+
+Builds only. Instead of having course assets in the src **and** build folders, it is possible to have just the core code, theme, menu(s), components and extensions in the ``src`` folder and keeping the JSON and assets in the builds/*courseid*/course/ folder only - this halves the storage requirements and removes the requirement to run a task every time the JSON or assets are changed.
 
 ###Improved compatibility
-This builder will work with Adapt Learning's v1.1.1 and v2 frameworks, as well as Kineo's interim framework.  
+It will work with Adapt Learning's v1.1.1 and v2 frameworks, as well as Kineo's interim framework.  
 It allows the three types of src content structure to be used regardless of the underlying framework.  
 It backports dynamic jquery selection to v1.1.1
 
 ###JSON linting and LESS sourcemaps
-Yes.
-For Adapt and the builder configurations.
+For Adapt Framework and the buildkit configurations.
 
 ###Course asset checking
-It is now possible to define video and audio codec, bitrate, framerate & dimensions checks in the ``rubconfig.json`` file. The output of these checks appears in the ``rub-check.log`` file.
+It is possible to define video and audio codec, bitrate, framerate & dimensions checks in the ``buildkit-config.json`` file. The output of these checks appears in the ``rub-check.log`` file.
 
 ###Exclusions
-Folder exclusions are now possible in the ``rubconfig.json`` file. For example, if you wanted to exclude boxMenu and spoor from a course with ID ``m05``, you would set up rubconfig.json like this:
+Folder exclusions are now possible in the ``buildkit-config.json`` file. If you wanted to exclude boxMenu and spoor from a course with ID ``m05``, you would set up rubconfig.json like this:
 ```
 {
   "folderexclusions": {
