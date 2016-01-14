@@ -8,7 +8,7 @@ Please make sure [adapt-buildkits](https://github.com/cgkineo/adapt-buildkits) i
 
 Run this command in your build folder:
 ```
-adapt-buildkit install rub2
+adapt-buildkit install rub
 ```
 
 ##Usage
@@ -104,15 +104,16 @@ It is now possible to define video and audio codec, bitrate, framerate & dimensi
 Folder exclusions are now possible in the ``rubconfig.json`` file. For example, if you wanted to exclude boxMenu and spoor from a course with ID ``m05``, you would set up rubconfig.json like this:
 ```
 {
-  "excludes": {
-    "m05": {
-      "folderNames": [
-        "adapt-contrib-spoor",
-        "adapt-contrib-boxMenu"
-      ]
+  "folderexclusions": {
+        "course": {
+            "m05": [
+                "adapt-contrib-spoor",
+                "adapt-contrib-boxMenu"
+            ]
+        },
+        "global": [
+        ]
     },
-    "folderNames": []
-  },
   "clearLogs": true
 }
 ```
