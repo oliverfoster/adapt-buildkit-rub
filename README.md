@@ -48,7 +48,7 @@ Currently requires that you specify a module id ``./rub --trackinginsert p101`` 
 Recompiles all handlebars, javascript and less from source instead of checking for source changes. This is useful if you've just installed a plugin which is older than the current build.
 
 #####--forceall
-Same as --force. Resynchs all assets from src also.
+Same as --force. 'Resyncs' (deletes missing, overwrites changed and copies new) assets from src also.
 
 #####--clean
 Clears the build folder leaving the course folder alone, i.e. if you want to build from scratch.
