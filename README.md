@@ -36,6 +36,7 @@ adapt-buildkit install rub
     -q, --quick       skip minification and sourcemapping (assumes: -b)
     -c, --clean       clean build folder (assumes: not -b)
     -z, --zip         create sco zips (assumes: -b)
+    --verbose         extra console output
 
 
 ```
@@ -70,7 +71,7 @@ Rub also support legacy style commands:
 
     
     ./rub dev p101
-    ./rub -dw p101
+    ./rub -dfw p101
 
 
     ./rub build p101
@@ -82,6 +83,11 @@ Rub also support legacy style commands:
 
 
 ```
+##Recommend Commands
+| Command | Use | Description |
+| --- | --- | --- |
+| ``./rub -ds p101`` | Product development, content changes | Runs a quick-rebuild, with sourcemapping and a server instance on the module p101 |
+| ``./rub`` | Production | Runs a build on all modules with no sourcemapping and minification turned on
 
 #Advantages
 
