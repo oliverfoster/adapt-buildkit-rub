@@ -13,6 +13,8 @@ class Plugin {
 	}
 
 	onActionRun(options, start, end) {
+
+        if (!options.isEnabled) return end();
 		
 		start();
 

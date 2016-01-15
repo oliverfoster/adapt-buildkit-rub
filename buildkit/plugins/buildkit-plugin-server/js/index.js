@@ -41,7 +41,9 @@ class Plugin {
     start(options) {
     	this._isStarted = true;
         var serveIndex = require('serve-index');
+        var serveStatic = require('serve-static');
         this.options = options;
+        this.serveStatic = serveStatic( this.options.outputDest );
         this.index = serveIndex( this.options.outputDest, {'icons': true});
     	this.http = require("http");
     	this.port = this.options.switches.port;
@@ -118,49 +120,9 @@ class Plugin {
 	    		}
 	    	} else return this.injectScript(req, res);
 
-	    } else if ((mimeType === "video/mp4" || mimeType === "video/ogg" || mimeType === "video/webm") && req.headers.range) {
+	    	}
 
-	    	var range = req.headers.range;
-            var positions = range.replace(/bytes=/, "").split("-");
-            var start = parseInt(positions[0], 10);
-            var max = 524288;
-
-            if (!positions[1]) positions[1] = start+max;
-            var end = parseInt(positions[1], 10);
-
-            if (end > start+max) end = start+max;
-            if (end > req.stat.size-1) end = req.stat.size-1;
-            if (start > req.stat.size-1) start = req.stat.size-1;
-
-            var chunksize = (end-start);
-
-            if (chunksize === 0) {
-            	res.writeHead(404, {"Content-Type": "text/plain"});
-		        res.write("404 Not Found\n");
-		        res.end();
-	        	return;
-            }
-            
-            var movieBuffer = new Buffer(chunksize);
-            var fd = fs.openSync(req.stat.filename, "r");
-            fs.read(fd, movieBuffer, 0, chunksize, start, function(err, bytesread, buffer) {
-            	var headers = { "Content-Range": "bytes " + start + "-" + (end-1) + "/" + (req.stat.size-1), 
-                                     "Accept-Ranges": "bytes",
-                                     "Content-Length": chunksize,
-                                     "Content-Type":mimeType
-                              }
-           		res.writeHead(206, headers);
-            	res.end(movieBuffer, "binary");
-            	fs.closeSync(fd);
-            });
-       
-
-            return;
-	    } else {
-	    	res.writeHead(200, {"Content-Type": mimeType});
-		    var fileStream = fs.createReadStream(req.stat.filename);
-		    fileStream.pipe(res);
-		}
+	    return this.serveStatic(req, res, this.next);
 	}
 
 	request(req, res) {
