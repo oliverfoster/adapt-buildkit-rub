@@ -133,6 +133,7 @@ For Adapt Framework and the buildkit configurations.
 It is possible to define video and audio codec, bitrate, framerate & dimensions checks in the ``buildkit-config.json`` file. The output of these checks appears in the ``rub-check.log`` file.
 
 ###Plugin Exclusions
+Make sure you rename ``buildkit-config.json.example`` to ``buildkit-config.json`` before you begin.
 Folder exclusions are now possible in the ``buildkit-config.json`` file. If you wanted to exclude boxMenu and spoor from a course with ID ``m05``, you would set up buildkit-config.json like this:
 ```
 {
@@ -150,6 +151,7 @@ Folder exclusions are now possible in the ``buildkit-config.json`` file. If you 
 ```
 
 ###File Extensions
+Make sure you rename ``buildkit-config.json.example`` to ``buildkit-config.json`` before you begin.
 You can tell rub to expect txt files instead of json files (as some server admins don't like json) by adding the following to your ``buildkit-config.json`` file:
 ```
 {
@@ -163,6 +165,7 @@ You can tell rub to expect txt files instead of json files (as some server admin
 This won't modify the framework. So go to the your [src/core/js/app.js](https://github.com/adaptlearning/adapt_framework/blob/master/src/core/js/app.js) and change all occurances of ``.json`` to ``.txt``
 
 ###Asset Checking
+Make sure you rename ``buildkit-config.json.example`` to ``buildkit-config.json`` before you begin.
 You can define media/file asset file size, dimension, bitrate and codecs in your ``buildkit-config.json``:
 ```
     "techspec": {
