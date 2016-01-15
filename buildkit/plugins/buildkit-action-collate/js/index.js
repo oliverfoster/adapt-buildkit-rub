@@ -22,7 +22,7 @@ class Plugin {
 			globs = globs.concat(options.folderexclusions);
 		}
 
-		if (options.switches.force) options.force = true;
+		if (options.switches.forceall) options.force = true;
 
 		start();
 

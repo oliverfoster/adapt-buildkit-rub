@@ -68,9 +68,10 @@ class Watch {
 			watch.on("change", (watcher, files, dirs) => {
 				this.onFilesChangedProgress(files, watcher.data);
 			});
-			watch.start();
 			this.watches.push(watch);
 		}
+		this.watches.clearCache();
+		this.watches.start();
 
 		actionqueue.defer(() => {
 			if (this.config.terminal.switches['server']) {

@@ -20,7 +20,7 @@ class Plugin {
 			options.globs = options.globs.concat(options.folderexclusions);
 		}
 
-		if (options.switches.force) options.force = true;
+		if (options.switches.forceall) options.force = true;
 
 		start();
 
