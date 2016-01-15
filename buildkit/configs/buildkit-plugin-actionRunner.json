@@ -1,6 +1,6 @@
 {
 	"actionrunner": {
-		"runningLimit": 20,
+		"runningLimit": 10,
 		"actionTimeout": 60000
 	},
 	"watches": [

@@ -70,6 +70,18 @@ class Logger {
 		return this;
 	}
 
+	verbose() {
+		var args = [].slice.call(arguments,0);
+		this._output("green", args);
+		return this;
+	}
+
+	verboseThrough() {
+		var args = [].slice.call(arguments,0);
+		console.log(chalk["green"](args.join(" ")));
+		return this;
+	}
+
 	warn() {
 		var args = [].slice.call(arguments,0);
 		this._output("red", args);

@@ -67,6 +67,7 @@ class Plugin {
 	        .option('-q, --quick', "skip minification and sourcemapping (assumes: -b)")
 	        .option('-c, --clean', "clean build folder (assumes: not -b)")
 	        .option('-z, --zip', "create sco zips (assumes: -b)")
+	        .option('--verbose', "extra console output")
 	        .action(function (c) {
 	            program.courses = c;
 	        });
