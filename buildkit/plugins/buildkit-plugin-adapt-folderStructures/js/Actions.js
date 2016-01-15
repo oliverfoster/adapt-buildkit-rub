@@ -47,7 +47,7 @@ class Plugin {
 	}
 
 	buildSrcCoursesFolders(terminalOptions, actions) {
-		var tree = treecontext.Tree(Location.toAbsolute(terminalOptions.outputDest));
+		var tree = treecontext.Tree(Location.toAbsolute(terminalOptions.srcCoursesPath));
 		var dirs = _.pluck(tree.populate().dirs, "filename");
 
 		var shouldPopuplateCourses = terminalOptions.courses.length === 0;
