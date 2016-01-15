@@ -22,11 +22,13 @@ class Plugin {
 			globs = globs.concat(options.folderexclusions);
 		}
 
+		if (options.switches.force) options.force = true;
+
 		start();
 
 		FileSystem.collate(options.src, options.dest, options.on, globs, diffGlobs, function() {
 			end();
-		});
+		}, options);
 	}
 	
 }

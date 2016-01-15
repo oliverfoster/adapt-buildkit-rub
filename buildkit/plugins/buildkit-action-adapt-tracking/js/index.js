@@ -20,11 +20,19 @@ class Plugin {
 		var coursePathTree = treecontext.Tree(options.coursePath.src, ".");
         options.coursePath.glob = Location.contextReplace(options.coursePath.glob, options);
 		var coursePathTreeGlobs = new GlobCollection(options.coursePath.glob);
-		options.coursePath = coursePathTree.mapGlobs(coursePathTreeGlobs).files[0].location;
+        var coursePathTreeResults = coursePathTree.mapGlobs(coursePathTreeGlobs);
+        if (coursePathTreeResults.files.length === 0) {
+            return end("Cannot find "+ options.coursePath.glob );
+        }
+		options.coursePath = coursePathTreeResults.files[0].location;
 
         var blocksPathTree = treecontext.Tree(options.blocksPath.src, ".");
         options.blocksPath.glob = Location.contextReplace(options.blocksPath.glob, options);
 		var blocksPathTreeGlobs = new GlobCollection(options.blocksPath.glob);
+        var blocksPathTreeResults = blocksPathTree.mapGlobs(blocksPathTreeGlobs)
+        if (blocksPathTreeResults.files.length === 0) {
+            return end("Cannot find "+ options.blocksPath.glob );
+        }
 		options.blocksPath = blocksPathTree.mapGlobs(blocksPathTreeGlobs).files[0].location;
 
 		options.blocksPath = blocksPathTree.mapGlobs(blocksPathTreeGlobs).files[0].location;

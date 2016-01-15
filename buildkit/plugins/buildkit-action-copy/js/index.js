@@ -20,11 +20,13 @@ class Plugin {
 			options.globs = options.globs.concat(options.folderexclusions);
 		}
 
+		if (options.switches.force) options.force = true;
+
 		start();
 
 		FileSystem.copy(options.src, options.dest, options.globs, function() {
 			end();
-		});
+		}, options);
 	}
 	
 }

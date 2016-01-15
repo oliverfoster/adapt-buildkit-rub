@@ -7,7 +7,7 @@
 			"@onlyOnSwitches": [
 				"trackinginsert"
 			],
-			"@when": "prep",
+			"@when": "build",
 			"@types": [ "src/course" ],
 			"blocksPath": {
 				"src": "src/course",
@@ -25,7 +25,7 @@
 			"@onlyOnSwitches": [
 				"trackinginsert"
 			],
-			"@when": "prep",
+			"@when": "build",
 			"@types": [ "src/courses/course" ],
 			"blocksPath": {
 				"src": "src/courses/{{course}}",
@@ -43,7 +43,7 @@
 			"@onlyOnSwitches": [
 				"trackinginsert"
 			],
-			"@when": "prep",
+			"@when": "build",
 			"@types": [ "builds/courses/course" ],
 			"blocksPath": {
 				"src": "{{outputDest}}/{{course}}/course",
@@ -61,7 +61,7 @@
 			"@onlyOnSwitches": [
 				"trackingdelete"
 			],
-			"@when": "prep",
+			"@when": "build",
 			"@types": [ "src/course" ],
 			"blocksPath": {
 				"src": "{{outputDest}}/{{course}}/course",
@@ -79,7 +79,7 @@
 			"@onlyOnSwitches": [
 				"trackingdelete"
 			],
-			"@when": "prep",
+			"@when": "build",
 			"@types": [ "src/courses/course" ],
 			"blocksPath": {
 				"src": "src/courses/{{course}}",
@@ -97,7 +97,7 @@
 			"@onlyOnSwitches": [
 				"trackingdelete"
 			],
-			"@when": "prep",
+			"@when": "build",
 			"@types": [ "builds/courses/course" ],
 			"blocksPath": {
 				"src": "{{outputDest}}/{{course}}/course",
@@ -115,7 +115,7 @@
 			"@onlyOnSwitches": [
 				"trackingreset"
 			],
-			"@when": "prep",
+			"@when": "build",
 			"@types": [ "src/course" ],
 			"blocksPath": {
 				"src": "src/course",
@@ -133,7 +133,7 @@
 			"@onlyOnSwitches": [
 				"trackingreset"
 			],
-			"@when": "prep",
+			"@when": "build",
 			"@types": [ "src/courses/course" ],
 			"blocksPath": {
 				"src": "src/courses/{{course}}",
@@ -151,7 +151,7 @@
 			"@onlyOnSwitches": [
 				"trackingreset"
 			],
-			"@when": "prep",
+			"@when": "build",
 			"@types": [ "builds/courses/course" ],
 			"blocksPath": {
 				"src": "{{outputDest}}/{{course}}/course",
