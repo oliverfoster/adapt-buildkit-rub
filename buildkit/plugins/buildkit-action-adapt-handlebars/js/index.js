@@ -43,11 +43,6 @@ class Plugin {
 		
 		options.dest = Location.contextReplace(options.dest, options);
 
-		var globs = [].concat(options.globs);
-		if (options.exclusionGlobs) {
-			globs = globs.concat(options.exclusionGlobs);
-		}
-
 		var tree = treecontext.Tree(options.src, ".");
 		options.globs = Location.contextReplace(options.globs, options);
         var globs = new GlobCollection(options.globs, options.folderexclusions);
@@ -65,7 +60,7 @@ class Plugin {
 	        }
 
 		    if (!changed) {
-	        	return end();;
+	        	return end();
 	        }
 		}
 
