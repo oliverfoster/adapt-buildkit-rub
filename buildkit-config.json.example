@@ -1,28 +1,22 @@
 {
     "folderexclusions": {
-"example": {
         "course": {
-            "wp_p101": [
-                "adapt-cheat",
-                "adapt-contrib-bookmarking"
-
+            "ex05": [
+                "adapt-example"
             ]
         },
         "global": [
-            "adapt-forceLoad"
+            "adapt-example"
         ]
-}
     },
     "fileextensions": {
-"example": {
         "global": {
             "json": "json"
         }
-}
     },
     "clearLogs": true,
     "techspec": {
-"example": {
+        "isEnabled": false,
         "extensions": {
             "png": {
                 "size": "1.5MB",
@@ -74,6 +68,5 @@
         "totalSize": "100MB",
         "fileSize": "15MB",
         "restrictedExtensions": [ "log" ]
-}
     }
 }
