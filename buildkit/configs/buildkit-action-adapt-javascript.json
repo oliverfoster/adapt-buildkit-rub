@@ -32,7 +32,7 @@
 	    		"generateSourceMaps": true,
 			    "preserveLicenseComments": false,
 			    "useSourceUrl": false,
-			    "wrapShim": true,
+			    "wrapShim": false,
 				"paths": {
 					"libraries": "core/js/libraries/libraries",
 					"jquery": "empty:"
@@ -195,7 +195,7 @@
 					"coreHelpers": "empty:",
 					"coreJS/libraries/bowser": "empty:"
 				},
-				"wrapShim": true
+				"wrapShim": false
 			},
 			"empties": {
 				"*": {
