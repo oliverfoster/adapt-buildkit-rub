@@ -211,7 +211,7 @@
 			"@name": "course-json",
 			"@types": [ "src/course" ],
 			"path": "src/course",
-			"expand": false,
+			"expand": true,
 			"globs": [
 				"src/course/*.{{fileextensions.json}}",
 				"src/course/**/*.{{fileextensions.json}}"
