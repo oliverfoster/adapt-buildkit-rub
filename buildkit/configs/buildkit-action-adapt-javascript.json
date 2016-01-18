@@ -1,261 +1,276 @@
 {
-	"actions": [
-		{
-			"@name": "libraries-javascript-blank",
-			"@displayName": "Creating foundation libraries module...",
-			"@action": "javascriptblank",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "prep",
-			"@buildOnce": true,
-			"name": "libraries",
-			"dest": "src/core/js/libraries/libraries.js"
-		},
-		{
-			"@name": "libraries-javascript",
-			"@displayName": "Building foundation libraries...",
-			"@action": "javascript",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "build",
-			"@buildOnce": true, 
-			"changes": {
-				"src": "src",
-				"globs": [ "src/core/js/libraries/*.js" ]
-			},
-			"requirejs": {
-				"name": "libraries",
-				"baseUrl": "src",
-				"optimize": "uglify2",
-	    		"generateSourceMaps": true,
-			    "preserveLicenseComments": false,
-			    "useSourceUrl": false,
-			    "wrapShim": false,
-				"paths": {
-					"libraries": "core/js/libraries/libraries",
-					"jquery": "empty:"
-				},
-				"shim": {
-					"backbone": {
-						"exports": "Backbone",
-						"deps": [
-							"underscore",
-							"jquery"
-						]
-					},
-					"handlebars": {
-						"exports": "Handlebars"
-					},
-					"underscore": {
-						"exports": "_"
-					},
-					"inview": [ "jquery" ],
-					"scrollTo": [ "jquery" ],
-					"imageReady": [ "jquery" ],
-					"velocity": [ "jquery" ]
-				},
-				"out": null
-			},
-			"includes": {
-				"*": {
-					"core/js": [
-						"src/core/js/libraries/**",
-						"!src/core/js/libraries/libraries.js",
-						"!src/core/js/libraries/modernizr.js",
-						"!src/core/js/libraries/json2.js",
-						"!src/core/js/libraries/swfObject.js",
-						"!src/core/js/libraries/consoles.js",
-						"!src/core/js/libraries/require.js",
-						"!src/core/js/libraries/jquery.js",
-						"!src/core/js/libraries/jquery.v2.js",
-						"!src/core/js/libraries/backbone-lib.js"
-					]
-				}
-			},
-			"sourceMapRelocate": "../../../src/",
-			"dest": "{{outputDest}}/{{course}}/adapt/js/libraries.js"
-		},
-		{
-			"@name": "core-javascript",
-			"@displayName": "Building framework javascript...",
-			"@action": "javascript",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "build",
-			"@buildOnce": true,
-			"changes": {
-				"src": "src",
-				"globs": [ 
-					"src/core/js/*.js",
-					"src/core/js/**/*.js"
-				]
-			},
-			"requirejs": {
-				"name": "app",
-				"baseUrl": "src",
-				"optimize": "uglify2",
-	    		"generateSourceMaps": true,
-	    		"preserveLicenseComments": false,
-			    "useSourceUrl": false,
-				"map": {
-					"*": {
-						"a11y": "jquery.a11y"
-					}
-				},
-				"paths": {
-					"app": "core/js/app",
-					"coreHelpers": "core/js/helpers",
-					"coreJS/libraries/bowser": "empty:",
-					"templates": "empty:",
-					"components": "empty:",
-					"extensions": "empty:",
-					"menu": "empty:",
-					"theme": "empty:"
-				}
-			},
-			"empties": {
-				"*": {
-					"core/js/libraries/": "src/core/js/libraries/*.js"
-				}
-			},
-			"includes": {
-				"coreJS" : {
-					"core/js/": [
-						"src/core/js/*.js",
-						"!src/core/js/app.js",
-						"!src/core/js/helpers.js",
-						"!src/core/js/libraries/",
-						"!src/core/js/scriptLoader.js"
-					]
-				},
-				"coreModels": {
-					"core/js/models/": "src/core/js/models/*.js"
-				},
-				"coreViews": {
-					"core/js/views/": "src/core/js/views/*.js"
-				}
-			},
-			"sourceMapRelocate": "../../../src/core/js/",
-			"dest": "{{outputDest}}/{{course}}/adapt/js/core.js"
-		},
-		{
-			"@name": "plugins-javascript-blank",
-			"@displayName": "Creating plugin module...",
-			"@action": "javascriptblank",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "prep",
-			"@buildOnce": true,
-			"name": "plugins",
-			"dest": "src/plugins.js"
-		},
-		{
-			"@name": "plugins-bundle",
-			"@displayName": "Gathering plugin javascript...",
-			"@action": "javascriptbundle",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "build",
-            "bundleName": "plugins",
-			"src": "src",
-			"globs": [
-				"src/*/*/bower.json"
-			],
-			"dest": "{{outputDest}}/{{course}}/adapt/js/plugins.js"
-		},
-		{
-			"@name": "plugins-javascript",
-			"@displayName": "Building plugin javascript",
-			"@action": "javascript",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "build",
-			"changes": {
-				"src": "src",
-				"globs": [
-					"src/*/*/js/**/*.js",
-					"src/*/*/js/*.js",
-					"!src/core"
-				]
-			},
-			"requirejs": {
-				"name": "plugins",
-				"baseUrl": "src",
-				"optimize": "uglify2",
-	    		"generateSourceMaps": true,
-	    		"preserveLicenseComments": false,
-			    "useSourceUrl": false,
-				"paths": {
-					"coreHelpers": "empty:",
-					"coreJS/libraries/bowser": "empty:"
-				},
-				"wrapShim": false
-			},
-			"empties": {
-				"*": {
-					"core/js/libraries/": "src/core/js/libraries/*.js"
-				},
-				"coreJS" : {
-					"core/js/": "src/core/js/*.js"
-				},
-				"coreModels": {
-					"core/js/models/": "src/core/js/models/*.js"
-				},
-				"coreViews": {
-					"core/js/views/": "src/core/js/views/*.js"
-				}
-			},
-			"includeBundles": [
-				"plugins"
-			],
-			"sourceMapRelocate": "../../../src/",
-			"dest": "{{outputDest}}/{{course}}/adapt/js/plugins.js"
-		},
-		{
-			"@name": "javascript-uglify",
-			"@displayName": "Minifying javascript...",
-			"@action": "javascriptuglify",
-			"@excludeOnSwitches": [
-                "debug",
-                "quick"
-            ],
-            "@onlyOnSwitches": [
-                "build"
-            ],
-            "@types": [ "builds/courses/course", "src/courses/course" ],
-            "@when": "finish",
-			"src": "{{outputDest}}/{{course}}/adapt/js",
-			"globs": [
-				"{{outputDest}}/{{course}}/adapt/js/adapt.min.js",
-				"{{outputDest}}/{{course}}/adapt/js/templates.js",
-				"{{outputDest}}/{{course}}/adapt/js/scriptLoader.js"
-			]
-		},
-		{
-			"@name": "javascript-uglify",
-			"@displayName": "Minifying javascript...",
-			"@action": "javascriptuglify",
-			"@excludeOnSwitches": [
-                "debug",
-                "quick"
-            ],
-            "@onlyOnSwitches": [
-                "build"
-            ],
-            "@types": [ "src/course" ],
-            "@when": "finish",
-			"src": "{{outputDest}}/adapt/js",
-			"globs": [
-				"{{outputDest}}/{{course}}/adapt/js/adapt.min.js",
-				"{{outputDest}}/{{course}}/adapt/js/templates.js",
-				"{{outputDest}}/{{course}}/adapt/js/scriptLoader.js"
-			]
-		}
-	]
+  "actions": [
+    {
+      "@name": "libraries-javascript-blank",
+      "@displayName": "Creating foundation libraries module...",
+      "@action": "javascriptblank",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "prep",
+      "@buildOnce": true,
+      "name": "libraries",
+      "dest": "src/core/js/libraries/libraries.js"
+    },
+    {
+      "@name": "libraries-javascript",
+      "@displayName": "Building foundation libraries...",
+      "@action": "javascript",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "build",
+      "@buildOnce": true,
+      "changes": {
+        "src": "src",
+        "globs": [
+          "src/core/js/libraries/*.js"
+        ]
+      },
+      "requirejs": {
+        "name": "libraries",
+        "baseUrl": "src",
+        "optimize": "uglify2",
+        "generateSourceMaps": true,
+        "preserveLicenseComments": false,
+        "useSourceUrl": false,
+        "wrapShim": false,
+        "paths": {
+          "libraries": "core/js/libraries/libraries",
+          "jquery": "empty:"
+        },
+        "shim": {
+          "backbone": {
+            "exports": "Backbone",
+            "deps": [
+              "underscore",
+              "jquery"
+            ]
+          },
+          "handlebars": {
+            "exports": "Handlebars"
+          },
+          "underscore": {
+            "exports": "_"
+          },
+          "inview": [
+            "jquery"
+          ],
+          "scrollTo": [
+            "jquery"
+          ],
+          "imageReady": [
+            "jquery"
+          ],
+          "velocity": [
+            "jquery"
+          ]
+        },
+        "out": null
+      },
+      "includes": {
+        "*": {
+          "core/js": [
+            "src/core/js/libraries/**",
+            "!src/core/js/libraries/libraries.js",
+            "!src/core/js/libraries/modernizr.js",
+            "!src/core/js/libraries/json2.js",
+            "!src/core/js/libraries/swfObject.js",
+            "!src/core/js/libraries/consoles.js",
+            "!src/core/js/libraries/require.js",
+            "!src/core/js/libraries/jquery.js",
+            "!src/core/js/libraries/jquery.v2.js",
+            "!src/core/js/libraries/backbone-lib.js"
+          ]
+        }
+      },
+      "sourceMapRelocate": "../../../src/",
+      "dest": "{{outputDest}}/{{course}}/adapt/js/libraries.js"
+    },
+    {
+      "@name": "core-javascript",
+      "@displayName": "Building framework javascript...",
+      "@action": "javascript",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "build",
+      "@buildOnce": true,
+      "changes": {
+        "src": "src",
+        "globs": [
+          "src/core/js/*.js",
+          "src/core/js/**/*.js"
+        ]
+      },
+      "requirejs": {
+        "name": "app",
+        "baseUrl": "src",
+        "optimize": "uglify2",
+        "generateSourceMaps": true,
+        "preserveLicenseComments": false,
+        "useSourceUrl": false,
+        "map": {
+          "*": {
+            "a11y": "jquery.a11y"
+          }
+        },
+        "paths": {
+          "app": "core/js/app",
+          "coreHelpers": "core/js/helpers",
+          "coreJS/libraries/bowser": "empty:",
+          "templates": "empty:",
+          "components": "empty:",
+          "extensions": "empty:",
+          "menu": "empty:",
+          "theme": "empty:"
+        }
+      },
+      "empties": {
+        "*": {
+          "core/js/libraries/": "src/core/js/libraries/*.js"
+        }
+      },
+      "includes": {
+        "coreJS": {
+          "core/js/": [
+            "src/core/js/*.js",
+            "!src/core/js/app.js",
+            "!src/core/js/helpers.js",
+            "!src/core/js/libraries/",
+            "!src/core/js/scriptLoader.js"
+          ]
+        },
+        "coreModels": {
+          "core/js/models/": "src/core/js/models/*.js"
+        },
+        "coreViews": {
+          "core/js/views/": "src/core/js/views/*.js"
+        }
+      },
+      "sourceMapRelocate": "../../../src/core/js/",
+      "dest": "{{outputDest}}/{{course}}/adapt/js/core.js"
+    },
+    {
+      "@name": "plugins-javascript-blank",
+      "@displayName": "Creating plugin module...",
+      "@action": "javascriptblank",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "prep",
+      "@buildOnce": true,
+      "name": "plugins",
+      "dest": "src/plugins.js"
+    },
+    {
+      "@name": "plugins-bundle",
+      "@displayName": "Gathering plugin javascript...",
+      "@action": "javascriptbundle",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "build",
+      "bundleName": "plugins",
+      "src": "src",
+      "globs": [
+        "src/*/*/bower.json"
+      ],
+      "dest": "{{outputDest}}/{{course}}/adapt/js/plugins.js"
+    },
+    {
+      "@name": "plugins-javascript",
+      "@displayName": "Building plugin javascript",
+      "@action": "javascript",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "build",
+      "changes": {
+        "src": "src",
+        "globs": [
+          "src/*/*/js/**/*.js",
+          "src/*/*/js/*.js",
+          "!src/core"
+        ]
+      },
+      "requirejs": {
+        "name": "plugins",
+        "baseUrl": "src",
+        "optimize": "uglify2",
+        "generateSourceMaps": true,
+        "preserveLicenseComments": false,
+        "useSourceUrl": false,
+        "paths": {
+          "coreHelpers": "empty:",
+          "coreJS/libraries/bowser": "empty:"
+        },
+        "wrapShim": false
+      },
+      "empties": {
+        "*": {
+          "core/js/libraries/": "src/core/js/libraries/*.js"
+        },
+        "coreJS": {
+          "core/js/": "src/core/js/*.js"
+        },
+        "coreModels": {
+          "core/js/models/": "src/core/js/models/*.js"
+        },
+        "coreViews": {
+          "core/js/views/": "src/core/js/views/*.js"
+        }
+      },
+      "includeBundles": [
+        "plugins"
+      ],
+      "sourceMapRelocate": "../../../src/",
+      "dest": "{{outputDest}}/{{course}}/adapt/js/plugins.js"
+    },
+    {
+      "@name": "javascript-uglify",
+      "@displayName": "Minifying javascript...",
+      "@action": "javascriptuglify",
+      "@excludeOnSwitches": [
+        "debug",
+        "quick"
+      ],
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@types": [
+        "builds/courses/course",
+        "src/courses/course"
+      ],
+      "@when": "finish",
+      "src": "{{outputDest}}/{{course}}/adapt/js",
+      "globs": [
+        "{{outputDest}}/{{course}}/adapt/js/adapt.min.js",
+        "{{outputDest}}/{{course}}/adapt/js/templates.js",
+        "{{outputDest}}/{{course}}/adapt/js/scriptLoader.js"
+      ]
+    },
+    {
+      "@name": "javascript-uglify",
+      "@displayName": "Minifying javascript...",
+      "@action": "javascriptuglify",
+      "@excludeOnSwitches": [
+        "debug",
+        "quick"
+      ],
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@types": [
+        "src/course"
+      ],
+      "@when": "finish",
+      "src": "{{outputDest}}/adapt/js",
+      "globs": [
+        "{{outputDest}}/{{course}}/adapt/js/adapt.min.js",
+        "{{outputDest}}/{{course}}/adapt/js/templates.js",
+        "{{outputDest}}/{{course}}/adapt/js/scriptLoader.js"
+      ]
+    }
+  ]
 }

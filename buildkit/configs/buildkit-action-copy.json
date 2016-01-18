@@ -1,96 +1,100 @@
 {
-	"actions": [
-		{
-			"@name": "foundation-libraries",
-			"@displayName": "Synching external libraries...",
-			"@action": "copy",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "build",
-			"src": "src/core/js/libraries",
-			"globs": [
-				"src/core/js/libraries/jquery.v2.js",
-				"src/core/js/libraries/jquery.js",
-				"src/core/js/libraries/require.js",
-				"src/core/js/libraries/modernizr.js",
-				"src/core/js/libraries/consoles.js",
-				"src/core/js/libraries/json2.js"
-			],
-			"dest": "{{outputDest}}/{{course}}/libraries"
-		},
-		{
-			"@name": "foundation-scriptLoader",
-			"@displayName": "Synching script loader...",
-			"@action": "copy",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "build",
-			"src": "src/core/js/",
-			"globs": [
-				"src/core/js/scriptLoader.js"
-			],
-			"dest": "{{outputDest}}/{{course}}/adapt/js"
-		},
-		{
-			"@name": "loader",
-			"@displayName": "Synching buildkit resources...",
-			"@action": "copy",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "build",
-            "force": true,
-			"src": "buildkit/resources/",
-			"globs": [
-				"**"
-			],
-			"dest": "{{outputDest}}/{{course}}"
-		},
-		{
-			"@name": "foundation-index.html",
-			"@displayName": "Synching index.html",
-			"@action": "copy",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "build",
-			"src": "src",
-			"globs": [
-				"src/index.html"				
-			],
-			"dest": "{{outputDest}}/{{course}}"
-		},
-		{
-			"@name": "course-folder",
-			"@displayName": "Synching course folder...",
-			"@action": "copy",
-			"@types": [ "src/course" ],
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "build",
-			"src": "src/course",
-			"globs": [
-				"**"
-			],
-			"dest": "{{outputDest}}/course"
-		},
-		{
-			"@name": "course-folder",
-			"@displayName": "Synching course folder...",
-			"@action": "copy",
-			"@types": [ "src/courses/course" ],
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "build",
-			"src": "src/courses/{{course}}/",
-			"globs": [
-				"**"
-			],
-			"dest": "{{outputDest}}/{{course}}/course"
-		}
-	]
+  "actions": [
+    {
+      "@name": "foundation-libraries",
+      "@displayName": "Synching external libraries...",
+      "@action": "copy",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "build",
+      "src": "src/core/js/libraries",
+      "globs": [
+        "src/core/js/libraries/jquery.v2.js",
+        "src/core/js/libraries/jquery.js",
+        "src/core/js/libraries/require.js",
+        "src/core/js/libraries/modernizr.js",
+        "src/core/js/libraries/consoles.js",
+        "src/core/js/libraries/json2.js"
+      ],
+      "dest": "{{outputDest}}/{{course}}/libraries"
+    },
+    {
+      "@name": "foundation-scriptLoader",
+      "@displayName": "Synching script loader...",
+      "@action": "copy",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "build",
+      "src": "src/core/js/",
+      "globs": [
+        "src/core/js/scriptLoader.js"
+      ],
+      "dest": "{{outputDest}}/{{course}}/adapt/js"
+    },
+    {
+      "@name": "loader",
+      "@displayName": "Synching buildkit resources...",
+      "@action": "copy",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "build",
+      "force": true,
+      "src": "buildkit/resources/",
+      "globs": [
+        "**"
+      ],
+      "dest": "{{outputDest}}/{{course}}"
+    },
+    {
+      "@name": "foundation-index.html",
+      "@displayName": "Synching index.html",
+      "@action": "copy",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "build",
+      "src": "src",
+      "globs": [
+        "src/index.html"
+      ],
+      "dest": "{{outputDest}}/{{course}}"
+    },
+    {
+      "@name": "course-folder",
+      "@displayName": "Synching course folder...",
+      "@action": "copy",
+      "@types": [
+        "src/course"
+      ],
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "build",
+      "src": "src/course",
+      "globs": [
+        "**"
+      ],
+      "dest": "{{outputDest}}/course"
+    },
+    {
+      "@name": "course-folder",
+      "@displayName": "Synching course folder...",
+      "@action": "copy",
+      "@types": [
+        "src/courses/course"
+      ],
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "build",
+      "src": "src/courses/{{course}}/",
+      "globs": [
+        "**"
+      ],
+      "dest": "{{outputDest}}/{{course}}/course"
+    }
+  ]
 }

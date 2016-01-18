@@ -1,72 +1,78 @@
 {
-	"actions": [
-		{
-			"@name": "build-cleanup",
-			"@displayName": "Cleaning build folder...",
-			"@action": "cleanup",
-            "@onlyOnSwitches": [
-                "clean"
-            ],
-            "@types": [ "builds/courses/course" ],
-            "@when": "prep",
-			"src": "{{outputDest}}/{{course}}",
-			"deleteRoot": false,
-			"globs": [
-				"!**/course/**",
-				"!**/course",
-				"**"
-			]
-		},
-		{
-			"@name": "build-cleanup",
-			"@displayName": "Cleaning build folder...",
-			"@action": "cleanup",
-            "@onlyOnSwitches": [
-                "clean"
-            ],
-            "@types": [ "src/courses/course" ],
-            "@when": "prep",
-            "deleteRoot": true,
-			"src": "{{outputDest}}/{{course}}",
-			"globs": [
-				"**"
-			]
-		},
-		{
-			"@name": "build-cleanup",
-			"@displayName": "Cleaning build folder...",
-			"@action": "cleanup",
-            "@onlyOnSwitches": [
-                "clean"
-            ],
-            "@types": [ "src/course" ],
-            "@when": "prep",
-            "deleteRoot": true,
-			"src": "{{outputDest}}/",
-			"globs": [
-				"**"
-			]
-		},
-		{
-			"@name": "build-cleanup-blanks",
-			"@displayName": "Cleaning build files from src...",
-			"@action": "cleanup",
-            "@onlyOnSwitches": [
-                "clean"
-            ],
-            "@buildOnce": true,
-            "@when": "prep",
-			"src": "src",
-			"globs": [
-				"src/core/js/libraries/libraries.js",
-				"src/plugins.js",
-				"src/less",
-				"src/templates",
-				"src/extensions/extensions.js",
-				"src/components/components.js",
-				"src/theme/menu.js",
-				"src/theme/theme.js"
-			]
-		}
-	]
+  "actions": [
+    {
+      "@name": "build-cleanup",
+      "@displayName": "Cleaning build folder...",
+      "@action": "cleanup",
+      "@onlyOnSwitches": [
+        "clean"
+      ],
+      "@types": [
+        "builds/courses/course"
+      ],
+      "@when": "prep",
+      "src": "{{outputDest}}/{{course}}",
+      "deleteRoot": false,
+      "globs": [
+        "!**/course/**",
+        "!**/course",
+        "**"
+      ]
+    },
+    {
+      "@name": "build-cleanup",
+      "@displayName": "Cleaning build folder...",
+      "@action": "cleanup",
+      "@onlyOnSwitches": [
+        "clean"
+      ],
+      "@types": [
+        "src/courses/course"
+      ],
+      "@when": "prep",
+      "deleteRoot": true,
+      "src": "{{outputDest}}/{{course}}",
+      "globs": [
+        "**"
+      ]
+    },
+    {
+      "@name": "build-cleanup",
+      "@displayName": "Cleaning build folder...",
+      "@action": "cleanup",
+      "@onlyOnSwitches": [
+        "clean"
+      ],
+      "@types": [
+        "src/course"
+      ],
+      "@when": "prep",
+      "deleteRoot": true,
+      "src": "{{outputDest}}/",
+      "globs": [
+        "**"
+      ]
+    },
+    {
+      "@name": "build-cleanup-blanks",
+      "@displayName": "Cleaning build files from src...",
+      "@action": "cleanup",
+      "@onlyOnSwitches": [
+        "clean"
+      ],
+      "@buildOnce": true,
+      "@when": "prep",
+      "src": "src",
+      "globs": [
+        "src/core/js/libraries/libraries.js",
+        "src/plugins.js",
+        "src/less",
+        "src/templates",
+        "src/extensions/extensions.js",
+        "src/components/components.js",
+        "src/theme/menu.js",
+        "src/theme/theme.js"
+      ]
+    }
+  ]
 }

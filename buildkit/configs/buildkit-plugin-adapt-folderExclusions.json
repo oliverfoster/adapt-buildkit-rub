@@ -1,8 +1,6 @@
 {
-	"folderexclusions": {
-		"course": {
-		},
-		"global": [
-		]
-	}
+  "folderexclusions": {
+    "course": {},
+    "global": []
+  }
 }

@@ -1,40 +1,45 @@
 {
-	"actions": [
-		{
-			"@name": "zip",
-			"@displayName": "Creating sco zip",
-			"@action": "zip",
-			"@onlyOnSwitches": [
-				"zip"
-			],
-			"@when": "package",
-			"@types": [ "builds/courses/course", "src/courses/course" ],
-			"root": "{{outputDest}}/{{course}}",
-			"src": "",
-			"globs": [
-				"!*.zip",
-				"**"
-			],
-			"contextGlob": "**/course.{{fileextensions.json}}",
-			"dest": "~/Desktop/scos/{{scoDate}}{{#if _projectCode}}_{{_projectCode}}{{/if}}_{{course}}.zip"
-		},
-		{
-			"@name": "zip",
-			"@displayName": "Creating sco zip",
-			"@action": "zip",
-			"@onlyOnSwitches": [
-				"zip"
-			],
-			"@when": "package",
-			"@types": [ "src/course" ],
-			"root": "{{outputDest}}",
-			"src": "",
-			"globs": [
-				"!*.zip",
-				"**"
-			],
-			"contextGlob": "**/course.{{fileextensions.json}}",
-			"dest": "~/Desktop/scos/{{scoDate}}{{#if _projectCode}}_{{_projectCode}}{{/if}}_{{course}}.zip"
-		}
-	]
+  "actions": [
+    {
+      "@name": "zip",
+      "@displayName": "Creating sco zip",
+      "@action": "zip",
+      "@onlyOnSwitches": [
+        "zip"
+      ],
+      "@when": "package",
+      "@types": [
+        "builds/courses/course",
+        "src/courses/course"
+      ],
+      "root": "{{outputDest}}/{{course}}",
+      "src": "",
+      "globs": [
+        "!*.zip",
+        "**"
+      ],
+      "contextGlob": "**/course.{{fileextensions.json}}",
+      "dest": "~/Desktop/scos/{{scoDate}}{{#if _projectCode}}_{{_projectCode}}{{/if}}_{{course}}.zip"
+    },
+    {
+      "@name": "zip",
+      "@displayName": "Creating sco zip",
+      "@action": "zip",
+      "@onlyOnSwitches": [
+        "zip"
+      ],
+      "@when": "package",
+      "@types": [
+        "src/course"
+      ],
+      "root": "{{outputDest}}",
+      "src": "",
+      "globs": [
+        "!*.zip",
+        "**"
+      ],
+      "contextGlob": "**/course.{{fileextensions.json}}",
+      "dest": "~/Desktop/scos/{{scoDate}}{{#if _projectCode}}_{{_projectCode}}{{/if}}_{{course}}.zip"
+    }
+  ]
 }

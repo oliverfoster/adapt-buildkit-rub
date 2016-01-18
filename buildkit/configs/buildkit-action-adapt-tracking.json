@@ -1,166 +1,184 @@
 {
-	"actions": [
-		{
-			"@name": "trackinginsert",
-			"@displayName": "Inserting tracking ids...",
-			"@action": "tracking",
-			"@onlyOnSwitches": [
-				"trackinginsert"
-			],
-			"@when": "build",
-			"@types": [ "src/course" ],
-			"blocksPath": {
-				"src": "src/course",
-				"glob": "**/blocks.{{fileextensions.json}}"
-			},
-			"coursePath": {
-				"src": "src/course",
-				"glob": "**/course.{{fileextensions.json}}"
-			}
-		},
-		{
-			"@name": "trackinginsert",
-			"@displayName": "Inserting tracking ids...",
-			"@action": "tracking",
-			"@onlyOnSwitches": [
-				"trackinginsert"
-			],
-			"@when": "build",
-			"@types": [ "src/courses/course" ],
-			"blocksPath": {
-				"src": "src/courses/{{course}}",
-				"glob": "**/blocks.{{fileextensions.json}}"
-			},
-			"coursePath": {
-				"src": "src/courses/{{course}}",
-				"glob": "**/course.{{fileextensions.json}}"
-			}
-		},
-		{
-			"@name": "trackinginsert",
-			"@displayName": "Inserting tracking ids...",
-			"@action": "tracking",
-			"@onlyOnSwitches": [
-				"trackinginsert"
-			],
-			"@when": "build",
-			"@types": [ "builds/courses/course" ],
-			"blocksPath": {
-				"src": "{{outputDest}}/{{course}}/course",
-				"glob": "**/blocks.{{fileextensions.json}}"
-			},
-			"coursePath": {
-				"src": "{{outputDest}}/{{course}}/course",
-				"glob": "**/course.{{fileextensions.json}}"
-			}
-		},
-		{
-			"@name": "trackingdelete",
-			"@displayName": "Deleting tracking ids...",
-			"@action": "tracking",
-			"@onlyOnSwitches": [
-				"trackingdelete"
-			],
-			"@when": "build",
-			"@types": [ "src/course" ],
-			"blocksPath": {
-				"src": "{{outputDest}}/{{course}}/course",
-				"glob": "**/blocks.{{fileextensions.json}}"
-			},
-			"coursePath": {
-				"src": "{{outputDest}}/{{course}}/course",
-				"glob": "**/course.{{fileextensions.json}}"
-			}
-		},
-		{
-			"@name": "trackingdelete",
-			"@displayName": "Deleting tracking ids...",
-			"@action": "tracking",
-			"@onlyOnSwitches": [
-				"trackingdelete"
-			],
-			"@when": "build",
-			"@types": [ "src/courses/course" ],
-			"blocksPath": {
-				"src": "src/courses/{{course}}",
-				"glob": "**/blocks.{{fileextensions.json}}"
-			},
-			"coursePath": {
-				"src": "src/courses/{{course}}",
-				"glob": "**/course.{{fileextensions.json}}"
-			}
-		},
-		{
-			"@name": "trackingdelete",
-			"@displayName": "Deleting tracking ids...",
-			"@action": "tracking",
-			"@onlyOnSwitches": [
-				"trackingdelete"
-			],
-			"@when": "build",
-			"@types": [ "builds/courses/course" ],
-			"blocksPath": {
-				"src": "{{outputDest}}/{{course}}/course",
-				"glob": "**/blocks.{{fileextensions.json}}"
-			},
-			"coursePath": {
-				"src": "{{outputDest}}/{{course}}/course",
-				"glob": "**/course.{{fileextensions.json}}"
-			}
-		},
-		{
-			"@name": "trackingreset",
-			"@displayName": "Resetting tracking ids...",
-			"@action": "tracking",
-			"@onlyOnSwitches": [
-				"trackingreset"
-			],
-			"@when": "build",
-			"@types": [ "src/course" ],
-			"blocksPath": {
-				"src": "src/course",
-				"glob": "**/blocks.{{fileextensions.json}}"
-			},
-			"coursePath": {
-				"src": "src/course",
-				"glob": "**/course.{{fileextensions.json}}"
-			}
-		},
-		{
-			"@name": "trackingreset",
-			"@displayName": "Resetting tracking ids...",
-			"@action": "tracking",
-			"@onlyOnSwitches": [
-				"trackingreset"
-			],
-			"@when": "build",
-			"@types": [ "src/courses/course" ],
-			"blocksPath": {
-				"src": "src/courses/{{course}}",
-				"glob": "**/blocks.{{fileextensions.json}}"
-			},
-			"coursePath": {
-				"src": "{{outputDest}}/{{course}}/course",
-				"glob": "**/course.{{fileextensions.json}}"
-			}
-		},
-		{
-			"@name": "trackingreset",
-			"@displayName": "Resetting tracking ids...",
-			"@action": "tracking",
-			"@onlyOnSwitches": [
-				"trackingreset"
-			],
-			"@when": "build",
-			"@types": [ "builds/courses/course" ],
-			"blocksPath": {
-				"src": "{{outputDest}}/{{course}}/course",
-				"glob": "**/blocks.{{fileextensions.json}}"
-			},
-			"coursePath": {
-				"src": "{{outputDest}}/{{course}}/course",
-				"glob": "**/course.{{fileextensions.json}}"
-			}
-		}
-	]
+  "actions": [
+    {
+      "@name": "trackinginsert",
+      "@displayName": "Inserting tracking ids...",
+      "@action": "tracking",
+      "@onlyOnSwitches": [
+        "trackinginsert"
+      ],
+      "@when": "build",
+      "@types": [
+        "src/course"
+      ],
+      "blocksPath": {
+        "src": "src/course",
+        "glob": "**/blocks.{{fileextensions.json}}"
+      },
+      "coursePath": {
+        "src": "src/course",
+        "glob": "**/course.{{fileextensions.json}}"
+      }
+    },
+    {
+      "@name": "trackinginsert",
+      "@displayName": "Inserting tracking ids...",
+      "@action": "tracking",
+      "@onlyOnSwitches": [
+        "trackinginsert"
+      ],
+      "@when": "build",
+      "@types": [
+        "src/courses/course"
+      ],
+      "blocksPath": {
+        "src": "src/courses/{{course}}",
+        "glob": "**/blocks.{{fileextensions.json}}"
+      },
+      "coursePath": {
+        "src": "src/courses/{{course}}",
+        "glob": "**/course.{{fileextensions.json}}"
+      }
+    },
+    {
+      "@name": "trackinginsert",
+      "@displayName": "Inserting tracking ids...",
+      "@action": "tracking",
+      "@onlyOnSwitches": [
+        "trackinginsert"
+      ],
+      "@when": "build",
+      "@types": [
+        "builds/courses/course"
+      ],
+      "blocksPath": {
+        "src": "{{outputDest}}/{{course}}/course",
+        "glob": "**/blocks.{{fileextensions.json}}"
+      },
+      "coursePath": {
+        "src": "{{outputDest}}/{{course}}/course",
+        "glob": "**/course.{{fileextensions.json}}"
+      }
+    },
+    {
+      "@name": "trackingdelete",
+      "@displayName": "Deleting tracking ids...",
+      "@action": "tracking",
+      "@onlyOnSwitches": [
+        "trackingdelete"
+      ],
+      "@when": "build",
+      "@types": [
+        "src/course"
+      ],
+      "blocksPath": {
+        "src": "{{outputDest}}/{{course}}/course",
+        "glob": "**/blocks.{{fileextensions.json}}"
+      },
+      "coursePath": {
+        "src": "{{outputDest}}/{{course}}/course",
+        "glob": "**/course.{{fileextensions.json}}"
+      }
+    },
+    {
+      "@name": "trackingdelete",
+      "@displayName": "Deleting tracking ids...",
+      "@action": "tracking",
+      "@onlyOnSwitches": [
+        "trackingdelete"
+      ],
+      "@when": "build",
+      "@types": [
+        "src/courses/course"
+      ],
+      "blocksPath": {
+        "src": "src/courses/{{course}}",
+        "glob": "**/blocks.{{fileextensions.json}}"
+      },
+      "coursePath": {
+        "src": "src/courses/{{course}}",
+        "glob": "**/course.{{fileextensions.json}}"
+      }
+    },
+    {
+      "@name": "trackingdelete",
+      "@displayName": "Deleting tracking ids...",
+      "@action": "tracking",
+      "@onlyOnSwitches": [
+        "trackingdelete"
+      ],
+      "@when": "build",
+      "@types": [
+        "builds/courses/course"
+      ],
+      "blocksPath": {
+        "src": "{{outputDest}}/{{course}}/course",
+        "glob": "**/blocks.{{fileextensions.json}}"
+      },
+      "coursePath": {
+        "src": "{{outputDest}}/{{course}}/course",
+        "glob": "**/course.{{fileextensions.json}}"
+      }
+    },
+    {
+      "@name": "trackingreset",
+      "@displayName": "Resetting tracking ids...",
+      "@action": "tracking",
+      "@onlyOnSwitches": [
+        "trackingreset"
+      ],
+      "@when": "build",
+      "@types": [
+        "src/course"
+      ],
+      "blocksPath": {
+        "src": "src/course",
+        "glob": "**/blocks.{{fileextensions.json}}"
+      },
+      "coursePath": {
+        "src": "src/course",
+        "glob": "**/course.{{fileextensions.json}}"
+      }
+    },
+    {
+      "@name": "trackingreset",
+      "@displayName": "Resetting tracking ids...",
+      "@action": "tracking",
+      "@onlyOnSwitches": [
+        "trackingreset"
+      ],
+      "@when": "build",
+      "@types": [
+        "src/courses/course"
+      ],
+      "blocksPath": {
+        "src": "src/courses/{{course}}",
+        "glob": "**/blocks.{{fileextensions.json}}"
+      },
+      "coursePath": {
+        "src": "{{outputDest}}/{{course}}/course",
+        "glob": "**/course.{{fileextensions.json}}"
+      }
+    },
+    {
+      "@name": "trackingreset",
+      "@displayName": "Resetting tracking ids...",
+      "@action": "tracking",
+      "@onlyOnSwitches": [
+        "trackingreset"
+      ],
+      "@when": "build",
+      "@types": [
+        "builds/courses/course"
+      ],
+      "blocksPath": {
+        "src": "{{outputDest}}/{{course}}/course",
+        "glob": "**/blocks.{{fileextensions.json}}"
+      },
+      "coursePath": {
+        "src": "{{outputDest}}/{{course}}/course",
+        "glob": "**/course.{{fileextensions.json}}"
+      }
+    }
+  ]
 }

@@ -1,267 +1,279 @@
 {
-	"actionrunner": {
-		"runningLimit": 20,
-		"actionTimeout": 60000
-	},
-	"watches": [
-		{
-			"@name": "plugins-templates",
-			"path": "src",
-			"globs": [
-				"src/*/*/templates/*.hbs", 
-				"src/*/*/templates/*.html", 
-				"src/*/*/templates/*.handlebars", 
-				"src/*/*/templates/*.htm",
-				"src/*/*/templates/**/*.hbs", 
-				"src/*/*/templates/**/*.html", 
-				"src/*/*/templates/**/*.handlebars", 
-				"src/*/*/templates/**/*.htm",
-				"!src/core"
-			],
-			"actions": [
-				"plugins-handlebars",
-				"plugins-fonts-folder",
-				"plugins-required-folder",
-				"plugins-assets-folder",
-				"stringreplacement",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "plugins-javascript",
-			"path": "src",
-			"globs": [
-				"src/*/*/js/*.js",
-				"src/*/*/js/**/*.js",
-				"!src/core"
-			],
-			"actions": [
-				"plugins-bundle",
-				"plugins-javascript",
-				"plugins-fonts-folder",
-				"plugins-required-folder",
-				"plugins-assets-folder",
-				"stringreplacement",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "libraries-javascript",
-			"path": "src",
-			"globs": [
-				"src/core/js/libraries/*.js",
-				"src/core/js/libraries/**/*.js",
-				"!src/core/js/libraries/libraries.js"
-			],
-			"actions": [
-				"libraries-bundle",
-				"libraries-javascript",
-				"foundation-libraries"
-			]
-		},
-		{
-			"@name": "core-javascript",
-			"path": "src",
-			"globs": [
-				"src/core/js/*.js",
-				"src/core/js/views/*.js",
-				"src/core/js/models/*.js",
-				"!src/core/js/scriptLoader.js",
-				"!src/core/js/libraries"
-			],
-			"actions": [
-				"core-javascript"
-			]
-		},
-		{
-			"@name": "plugins-less",
-			"path": "src",
-			"globs": [
-				"src/core/less/*.less",
-				"src/core/less/**/*.less",
-				"src/*/*/less/*.less",
-				"src/*/*/less/**/*.less"
-			],
-			"actions": [
-				"plugins-less",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "foundation-scriptLoader",
-			"path": "src/core/js/scriptLoader.js",
-			"actions": [
-				"foundation-scriptLoader"
-			]
-		},
-		{
-			"@name": "foundation-index",
-			"path": "src/index.html",
-			"actions": [
-				"foundation-index.html"
-			]
-		},
-		{
-			"@name": "plugins-fonts-folder",
-			"path": "src",
-			"globs": [
-				"src/*/*/fonts/**"
-			],
-			"actions": [
-				"plugins-fonts-folder",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "plugins-required",
-			"path": "src",
-			"globs": [
-				"src/*/*/required/**"
-			],
-			"actions": [
-				"plugins-required-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "plugins-assets-folder",
-			"path": "src",
-			"globs": [
-				"src/*/*/assets/**"
-			],
-			"actions": [
-				"plugins-assets-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "theme-json",
-			"path": "src/theme",
-			"globs": [
-				"src/theme/*/theme.json"
-			],
-			"actions": [
-				"json-lint",
-				"json-check",
-				"themejson",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-folder",
-			"@types": [ "src/course" ],
-			"path": "src/course",
-			"expand": true,
-			"globs": [
-				"src/course/**",
-				"!**/*.{{fileextensions.json}}"
-			],
-			"actions": [
-				"course-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-folder",
-			"@types": [ "src/courses/course" ],
-			"path": "src/courses/{{course}}",
-			"expand": true,
-			"globs": [
-				"src/courses/{{course}}/**",
-				"!**/*.{{fileextensions.json}}"
-			],
-			"actions": [
-				"course-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-folder",
-			"@types": [ "builds/courses/course" ],
-			"@onlyOnSwitches": [
-                "debug"
-            ],
-            "@excludeOnSwitches": [
-                "quick"
-            ],
-			"path": "builds/{{course}}",
-			"expand": true,
-			"globs": [
-				"builds/{{course}}/course/**",
-				"!**/*.{{fileextensions.json}}"
-			],
-			"actions": [
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-json",
-			"@types": [ "src/course" ],
-			"path": "src/course",
-			"expand": true,
-			"globs": [
-				"src/course/*.{{fileextensions.json}}",
-				"src/course/**/*.{{fileextensions.json}}"
-			],
-			"actions": [
-				"course-folder",
-				"json-lint",
-				"json-check",
-				"assetrequired",
-				"techspec",
-				"themejson",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-json",
-			"@types": [ "src/courses/course" ],
-			"path": "src/courses/{{course}}",
-			"expand": true,
-			"globs": [
-				"src/courses/{{course}}/*.{{fileextensions.json}}",
-				"src/courses/{{course}}/**/*.{{fileextensions.json}}"
-			],
-			"actions": [
-				"course-folder",
-				"json-lint",
-				"json-check",
-				"assetrequired",
-				"techspec",
-				"themejson",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-json",
-			"@types": [ "builds/courses/course" ],
-			"path": "builds/{{course}}",
-			"expand": true,
-			"globs": [
-				"builds/{{course}}/course/*.{{fileextensions.json}}",
-				"builds/{{course}}/course/**/*.{{fileextensions.json}}"
-			],
-			"actions": [
-				"json-lint",
-				"json-check",
-				"assetrequired",
-				"techspec",
-				"themejson",
-				"stringreplacement"
-			]
-		}
-	]
+  "actionrunner": {
+    "runningLimit": 20,
+    "actionTimeout": 60000
+  },
+  "watches": [
+    {
+      "@name": "plugins-templates",
+      "path": "src",
+      "globs": [
+        "src/*/*/templates/*.hbs",
+        "src/*/*/templates/*.html",
+        "src/*/*/templates/*.handlebars",
+        "src/*/*/templates/*.htm",
+        "src/*/*/templates/**/*.hbs",
+        "src/*/*/templates/**/*.html",
+        "src/*/*/templates/**/*.handlebars",
+        "src/*/*/templates/**/*.htm",
+        "!src/core"
+      ],
+      "actions": [
+        "plugins-handlebars",
+        "plugins-fonts-folder",
+        "plugins-required-folder",
+        "plugins-assets-folder",
+        "stringreplacement",
+        "assetrequired",
+        "techspec"
+      ]
+    },
+    {
+      "@name": "plugins-javascript",
+      "path": "src",
+      "globs": [
+        "src/*/*/js/*.js",
+        "src/*/*/js/**/*.js",
+        "!src/core"
+      ],
+      "actions": [
+        "plugins-bundle",
+        "plugins-javascript",
+        "plugins-fonts-folder",
+        "plugins-required-folder",
+        "plugins-assets-folder",
+        "stringreplacement",
+        "assetrequired",
+        "techspec"
+      ]
+    },
+    {
+      "@name": "libraries-javascript",
+      "path": "src",
+      "globs": [
+        "src/core/js/libraries/*.js",
+        "src/core/js/libraries/**/*.js",
+        "!src/core/js/libraries/libraries.js"
+      ],
+      "actions": [
+        "libraries-bundle",
+        "libraries-javascript",
+        "foundation-libraries"
+      ]
+    },
+    {
+      "@name": "core-javascript",
+      "path": "src",
+      "globs": [
+        "src/core/js/*.js",
+        "src/core/js/views/*.js",
+        "src/core/js/models/*.js",
+        "!src/core/js/scriptLoader.js",
+        "!src/core/js/libraries"
+      ],
+      "actions": [
+        "core-javascript"
+      ]
+    },
+    {
+      "@name": "plugins-less",
+      "path": "src",
+      "globs": [
+        "src/core/less/*.less",
+        "src/core/less/**/*.less",
+        "src/*/*/less/*.less",
+        "src/*/*/less/**/*.less"
+      ],
+      "actions": [
+        "plugins-less",
+        "stringreplacement"
+      ]
+    },
+    {
+      "@name": "foundation-scriptLoader",
+      "path": "src/core/js/scriptLoader.js",
+      "actions": [
+        "foundation-scriptLoader"
+      ]
+    },
+    {
+      "@name": "foundation-index",
+      "path": "src/index.html",
+      "actions": [
+        "foundation-index.html"
+      ]
+    },
+    {
+      "@name": "plugins-fonts-folder",
+      "path": "src",
+      "globs": [
+        "src/*/*/fonts/**"
+      ],
+      "actions": [
+        "plugins-fonts-folder",
+        "assetrequired",
+        "techspec"
+      ]
+    },
+    {
+      "@name": "plugins-required",
+      "path": "src",
+      "globs": [
+        "src/*/*/required/**"
+      ],
+      "actions": [
+        "plugins-required-folder",
+        "assetrequired",
+        "techspec",
+        "stringreplacement"
+      ]
+    },
+    {
+      "@name": "plugins-assets-folder",
+      "path": "src",
+      "globs": [
+        "src/*/*/assets/**"
+      ],
+      "actions": [
+        "plugins-assets-folder",
+        "assetrequired",
+        "techspec",
+        "stringreplacement"
+      ]
+    },
+    {
+      "@name": "theme-json",
+      "path": "src/theme",
+      "globs": [
+        "src/theme/*/theme.json"
+      ],
+      "actions": [
+        "json-lint",
+        "json-check",
+        "themejson",
+        "stringreplacement"
+      ]
+    },
+    {
+      "@name": "course-folder",
+      "@types": [
+        "src/course"
+      ],
+      "path": "src/course",
+      "expand": true,
+      "globs": [
+        "src/course/**",
+        "!**/*.{{fileextensions.json}}"
+      ],
+      "actions": [
+        "course-folder",
+        "assetrequired",
+        "techspec",
+        "stringreplacement"
+      ]
+    },
+    {
+      "@name": "course-folder",
+      "@types": [
+        "src/courses/course"
+      ],
+      "path": "src/courses/{{course}}",
+      "expand": true,
+      "globs": [
+        "src/courses/{{course}}/**",
+        "!**/*.{{fileextensions.json}}"
+      ],
+      "actions": [
+        "course-folder",
+        "assetrequired",
+        "techspec",
+        "stringreplacement"
+      ]
+    },
+    {
+      "@name": "course-folder",
+      "@types": [
+        "builds/courses/course"
+      ],
+      "@onlyOnSwitches": [
+        "debug"
+      ],
+      "@excludeOnSwitches": [
+        "quick"
+      ],
+      "path": "builds/{{course}}",
+      "expand": true,
+      "globs": [
+        "builds/{{course}}/course/**",
+        "!**/*.{{fileextensions.json}}"
+      ],
+      "actions": [
+        "assetrequired",
+        "techspec",
+        "stringreplacement"
+      ]
+    },
+    {
+      "@name": "course-json",
+      "@types": [
+        "src/course"
+      ],
+      "path": "src/course",
+      "expand": true,
+      "globs": [
+        "src/course/*.{{fileextensions.json}}",
+        "src/course/**/*.{{fileextensions.json}}"
+      ],
+      "actions": [
+        "course-folder",
+        "json-lint",
+        "json-check",
+        "assetrequired",
+        "techspec",
+        "themejson",
+        "stringreplacement"
+      ]
+    },
+    {
+      "@name": "course-json",
+      "@types": [
+        "src/courses/course"
+      ],
+      "path": "src/courses/{{course}}",
+      "expand": true,
+      "globs": [
+        "src/courses/{{course}}/*.{{fileextensions.json}}",
+        "src/courses/{{course}}/**/*.{{fileextensions.json}}"
+      ],
+      "actions": [
+        "course-folder",
+        "json-lint",
+        "json-check",
+        "assetrequired",
+        "techspec",
+        "themejson",
+        "stringreplacement"
+      ]
+    },
+    {
+      "@name": "course-json",
+      "@types": [
+        "builds/courses/course"
+      ],
+      "path": "builds/{{course}}",
+      "expand": true,
+      "globs": [
+        "builds/{{course}}/course/*.{{fileextensions.json}}",
+        "builds/{{course}}/course/**/*.{{fileextensions.json}}"
+      ],
+      "actions": [
+        "json-lint",
+        "json-check",
+        "assetrequired",
+        "techspec",
+        "themejson",
+        "stringreplacement"
+      ]
+    }
+  ]
 }

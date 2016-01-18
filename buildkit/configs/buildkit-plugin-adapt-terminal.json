@@ -1,116 +1,116 @@
 {
-	"terminal": {
-		"multipleDestPath":  "./builds",
-		"singleDestPath": "./build",
-		"srcCoursesPath": "./src/courses",
-		"switchRules": [
-			{
-				"on": {
-					"trackinginsert": true
-				},
-				"alwaysSet": {
-					"build": false
-				}
-			},
-			{
-				"on": {
-					"trackingdelete": true
-				},
-				"alwaysSet": {
-					"build": false,
-					"trackinginsert": false
-				}
-			},
-			{
-				"on": {
-					"trackingreset": true
-				},
-				"alwaysSet": {
-					"build": false,
-					"trackinginsert": false
-				}
-			},
-			{
-				"on": {
-					"forceall": true
-				},
-				"alwaysSet": {
-					"build": true,
-					"force": true
-				}
-			},
-			{
-				"on": {
-					"debug": true
-				},
-				"alwaysSet": {
-					"build": true,
-					"trackinginsert": true
-				}
-			},
-			{
-				"on": {
-					"zip": true
-				},
-				"alwaysSet": {
-					"build": true
-				}
-			},
-			{
-				"on": {
-					"watch": true
-				},
-				"alwaysSet": {
-					"build": true,
-					"trackinginsert": true
-				}
-			},
-			{
-				"on": {
-					"server": true
-				},
-				"alwaysSet": {
-					"watch": true,
-					"build": true,
-					"trackinginsert": true
-				},
-				"unspecifiedSet": {
-					"port": "3001"
-				}
-			},
-			{
-				"on": {
-					"force": true
-				},
-				"alwaysSet": {
-					"build": true,
-					"trackinginsert": true
-				}
-			},
-			{
-				"on": {
-					"quick": true
-				},
-				"alwaysSet": {
-					"build": true,
-					"trackinginsert": false
-				}
-			},
-			{
-				"on": {
-					"clean": true
-				},
-				"alwaysSet": {
-					"build": false,
-					"trackinginsert": false
-				}
-			},
-			{
-				"unspecifiedSet": {
-					"build": true,
-					"trackinginsert": true
-				}
-			}
-		]
-	}
+  "terminal": {
+    "multipleDestPath": "./builds",
+    "singleDestPath": "./build",
+    "srcCoursesPath": "./src/courses",
+    "switchRules": [
+      {
+        "on": {
+          "trackinginsert": true
+        },
+        "alwaysSet": {
+          "build": false
+        }
+      },
+      {
+        "on": {
+          "trackingdelete": true
+        },
+        "alwaysSet": {
+          "build": false,
+          "trackinginsert": false
+        }
+      },
+      {
+        "on": {
+          "trackingreset": true
+        },
+        "alwaysSet": {
+          "build": false,
+          "trackinginsert": false
+        }
+      },
+      {
+        "on": {
+          "forceall": true
+        },
+        "alwaysSet": {
+          "build": true,
+          "force": true
+        }
+      },
+      {
+        "on": {
+          "debug": true
+        },
+        "alwaysSet": {
+          "build": true,
+          "trackinginsert": true
+        }
+      },
+      {
+        "on": {
+          "zip": true
+        },
+        "alwaysSet": {
+          "build": true
+        }
+      },
+      {
+        "on": {
+          "watch": true
+        },
+        "alwaysSet": {
+          "build": true,
+          "trackinginsert": true
+        }
+      },
+      {
+        "on": {
+          "server": true
+        },
+        "alwaysSet": {
+          "watch": true,
+          "build": true,
+          "trackinginsert": true
+        },
+        "unspecifiedSet": {
+          "port": "3001"
+        }
+      },
+      {
+        "on": {
+          "force": true
+        },
+        "alwaysSet": {
+          "build": true,
+          "trackinginsert": true
+        }
+      },
+      {
+        "on": {
+          "quick": true
+        },
+        "alwaysSet": {
+          "build": true,
+          "trackinginsert": false
+        }
+      },
+      {
+        "on": {
+          "clean": true
+        },
+        "alwaysSet": {
+          "build": false,
+          "trackinginsert": false
+        }
+      },
+      {
+        "unspecifiedSet": {
+          "build": true,
+          "trackinginsert": true
+        }
+      }
+    ]
+  }
 }

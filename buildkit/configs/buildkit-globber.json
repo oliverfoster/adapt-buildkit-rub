@@ -1,18 +1,18 @@
 {
-	"globber": {
-		"globalExclusionGlobs": [
-			"!**/.git",
-			"!**/LICENSE",
-			"!**/.travis.yml",
-			"!**/.gitignore",
-			"!**/.gitattributes",
-			"!**/.bower.json",
-			"!**/.bowerrc",
-			"!**/bower.json",
-			"!**/karma.conf.js",
-			"!**/package.json",
-			"!**/properties.schema",
-			"!**/README.md"
-		]
-	}
+  "globber": {
+    "globalExclusionGlobs": [
+      "!**/.git",
+      "!**/LICENSE",
+      "!**/.travis.yml",
+      "!**/.gitignore",
+      "!**/.gitattributes",
+      "!**/.bower.json",
+      "!**/.bowerrc",
+      "!**/bower.json",
+      "!**/karma.conf.js",
+      "!**/package.json",
+      "!**/properties.schema",
+      "!**/README.md"
+    ]
+  }
 }

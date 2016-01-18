@@ -1,8 +1,6 @@
 {
-	"fileextensions": {
-		"course": {
-		},
-		"global": {
-		}
-	}
+  "fileextensions": {
+    "course": {},
+    "global": {}
+  }
 }

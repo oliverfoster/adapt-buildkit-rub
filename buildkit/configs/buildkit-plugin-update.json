@@ -1,5 +1,5 @@
 {
-	"update": {
-		"versionURL": "https://raw.githubusercontent.com/oliverfoster/adapt-buildkit-rub/master/buildkit/package.json"
-	}
+  "update": {
+    "versionURL": "https://raw.githubusercontent.com/oliverfoster/adapt-buildkit-rub/master/buildkit/package.json"
+  }
 }

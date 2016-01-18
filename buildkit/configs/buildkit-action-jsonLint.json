@@ -1,28 +1,33 @@
 {
-	"actions": [
-		{
-			"@name": "json-lint",
-			"@displayName": "Linting json...",
-			"@action": "jsonlint",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "prep",
-			"@types": [ "builds/courses/course", "src/courses/course" ],
-			"src": "{{outputDest}}/{{course}}/course",
-			"globs": "**/*.{{fileextensions.json}}"
-		},
-		{
-			"@name": "json-lint",
-			"@displayName": "Linting json...",
-			"@action": "jsonlint",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@when": "prep",
-			"@types": [ "src/course" ],
-			"src": "{{outputDest}}/course",
-			"globs": "**/*.{{fileextensions.json}}"
-		}
-	]
+  "actions": [
+    {
+      "@name": "json-lint",
+      "@displayName": "Linting json...",
+      "@action": "jsonlint",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "prep",
+      "@types": [
+        "builds/courses/course",
+        "src/courses/course"
+      ],
+      "src": "{{outputDest}}/{{course}}/course",
+      "globs": "**/*.{{fileextensions.json}}"
+    },
+    {
+      "@name": "json-lint",
+      "@displayName": "Linting json...",
+      "@action": "jsonlint",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "prep",
+      "@types": [
+        "src/course"
+      ],
+      "src": "{{outputDest}}/course",
+      "globs": "**/*.{{fileextensions.json}}"
+    }
+  ]
 }
