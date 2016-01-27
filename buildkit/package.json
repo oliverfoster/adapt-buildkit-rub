@@ -2,7 +2,7 @@
   "name": "buildkit-rub",
   "commonName": "rub-develop",
   "name": "adapt-buildkit-rub",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "custom": false,
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},
