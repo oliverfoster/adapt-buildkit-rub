@@ -56,7 +56,6 @@
         "!src/core/js/libraries/libraries.js"
       ],
       "actions": [
-        "libraries-bundle",
         "libraries-javascript",
         "foundation-libraries"
       ]
