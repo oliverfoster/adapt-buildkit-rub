@@ -199,7 +199,7 @@ class Watch {
 		if (this.fileChangeActionQueue.length > 0) {
 
 			this.watches.stop();
-
+			events.emit("actions:reset");
 			events.emit("actions:ready",  this.fileChangeActionQueue);
 			events.emit("build:start", this.config.terminal, this.fileChangeActionQueue);
 
@@ -215,7 +215,6 @@ class Watch {
 
 			this.watches.clearCache();
 			this.watches.start();
-			events.emit("actions:reset");
 			events.emit("watch:start");
 		});
 	}
