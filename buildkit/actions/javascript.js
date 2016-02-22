@@ -96,9 +96,14 @@ var javascript = new Action({
                         relativePath = relativePath.slice(0, -ext.length);
                         
                         var moduleName = (prefix != "*" ? prefix+"/" : "") + files[f].filename;
-                        options.paths[moduleName] = options.paths[moduleName] || relativePath;
-
+                        if (!options.alwaysUsePath) {
+                            options.paths[moduleName] = options.paths[relativePath] || relativePath;    
                         options.shim[rootName]['deps'].push(moduleName);
+                        } else {
+                            options.shim[rootName]['deps'].push(relativePath.replace(/\\/g, "/"));
+                        }
+
+                        
                     }
                 }
             }
@@ -106,11 +111,24 @@ var javascript = new Action({
         }
 
         if (options.empties) {
+            var cwd = path.join(process.cwd(), options.baseUrl);
             for (var prefix in options.empties) {
                 for (var atPath in options.empties[prefix]) {
                     var files = fsext.glob( atPath, options.empties[prefix][atPath] );
                     for (var f = 0, fl = files.length; f < fl; f++) {
-                        options.paths[(prefix != "*" ? prefix+"/" : "")+files[f].filename] = options.paths[(prefix != "*" ? prefix+"/" : "")+files[f].filename] || "empty:";
+                        if (!options.alwaysUsePath || prefix !== "*") {
+                            options.paths[(prefix != "*" && prefix != "" ? prefix+"/" : "")+files[f].filename] = options.paths[(prefix != "*" ? prefix+"/" : "")+files[f].filename] || "empty:";;
+                        } else {
+                            var relativePath = files[f].path.substr( cwd.length );
+                            if (relativePath.substr(0,1)) relativePath = relativePath.substr(1);
+
+                            var ext = path.extname(relativePath);
+                        
+                            relativePath = relativePath.slice(0, -ext.length);
+
+                            options.paths[relativePath.replace(/\\/g, "/")] = options.paths[(prefix != "*" ? prefix+"/" : "")+files[f].filename] || "empty:";
+                        }
+                       
                     }
                 }
             }
@@ -168,6 +186,7 @@ var javascript = new Action({
             done(options);
 
         }, this), function(error) {
+            if (error) error = options['@name'] + ":" + error;
             done(options, error);
         });
         

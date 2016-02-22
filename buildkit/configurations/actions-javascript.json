@@ -30,6 +30,7 @@
 			"globs": [ "**/core/js/libraries/*.js" ],
 			"baseUrl": "src",
 			"optimize": "uglify2",
+			"alwaysUsePath": false,
     		"generateSourceMaps": true,
 		    "preserveLicenseComments": false,
 		    "useSourceUrl": false,
@@ -86,43 +87,42 @@
 			"src": "src/core/js",
 			"globs": [ "*.js" ],
 			"libraryName": "core",
-			"name": "app",
-			"baseUrl": "src/core/js",
+			"name": "core/js/app",
+			"baseUrl": "src",
+			"alwaysUsePath": true,
 			"optimize": "uglify2",
     		"generateSourceMaps": true,
     		"preserveLicenseComments": false,
 		    "useSourceUrl": false,
-			"sourceMapRelocate": "../../../src/core/js/",
+			"sourceMapRelocate": "../../../src/",
 			"empties": {
-				"*": {
+				"": {
 					"src/core/js/libraries/": "*.js"
 				}
 			},
 			"includes": {
-				"coreJS" : {
+				"*" : {
 					"src/core/js/": [
 						"**/src/core/js/*.js",
 						"!app.js",
-						"!helpers.js",
 						"!libraries/",
 						"!scriptLoader.js"
-					]
-				},
-				"coreModels": {
-					"src/core/js/models/": "**/src/core/js/models/*.js"
-				},
-				"coreViews": {
+					],
+					"src/core/js/models/": "**/src/core/js/models/*.js",
 					"src/core/js/views/": "**/src/core/js/views/*.js"
 				}
 			},
 			"map": {
 				"*": {
-					"a11y": "jquery.a11y"
+					"a11y": "jquery.a11y",
+					"coreJS": "core/js/",
+					"coreModels": "core/js/models/",
+					"coreViews": "core/js/views/",
+					"coreHelpers": "core/js/helpers"
 				}
 			},
 			"paths": {
-				"coreHelpers": "helpers",
-				"coreJS/libraries/bowser": "empty:",
+				"core/js/libraries/bowser": "empty:",
 				"templates": "empty:",
 				"components": "empty:",
 				"extensions": "empty:",
@@ -171,27 +171,32 @@
 			"name": "bundles",
 			"baseUrl": "src",
 			"optimize": "uglify2",
+			"alwaysUsePath": true,
     		"generateSourceMaps": true,
     		"preserveLicenseComments": false,
 		    "useSourceUrl": false,
 			"sourceMapRelocate": "../../../src/",
 			"empties": {
-				"*": {
+				"": {
 					"src/core/js/libraries/": "*.js"
 				},
-				"coreJS" : {
-					"src/core/js/": "*.js"
-				},
-				"coreModels": {
-					"src/core/js/models/": "*.js"
-				},
-				"coreViews": {
-					"src/core/js/views/": "*.js"
+				"*": {
+					"src/core/js/": [
+						"**/*.js",
+						"!**/core/js/libraries/**/*.js"
+					]
+				}
+			},
+			"map": {
+				"*": {
+					"coreJS": "core/js",
+					"coreModels": "core/js/models",
+					"coreViews": "core/js/views"
 				}
 			},
 			"paths": {
 				"coreHelpers": "empty:",
-				"coreJS/libraries/bowser": "empty:",
+				"core/js/libraries/bowser": "empty:",
 				"bundles": "bundles"
 			},
 			"dest": "{{outputDest}}/{{course}}/adapt/js/bundles.js"
