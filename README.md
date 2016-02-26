@@ -14,6 +14,7 @@ And you may also need to reinstall ``adapt-cli``, ``adapt-buildkits`` and ``grun
 
 If you wish not to upgrade, please add the attribute ``"custom": true`` to your ``buildkit/package.json``.  
 Rub version 0.0.58 will no longer be supported once version 0.1.10 is pushed (this will probably be in a week or two from 26-02-2016)  
+This decision has been makde inline with the Adapt Framework community requiring ``adapt-cli`` and the Authoring Tool to have at least node 4.3+  
 
 ##Installation / Update / Repair
 
