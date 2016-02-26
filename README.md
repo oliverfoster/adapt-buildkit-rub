@@ -4,7 +4,7 @@ Native Buildkit (alternative to grunt)
 
 ##Installation / Update / Repair
 
-!!NODE V4.2.4+ ONLY!!
+!!NODE V4.3+ ONLY!!
 Please make sure [adapt-buildkits](https://github.com/cgkineo/adapt-buildkits) is installed.
 
 Run this command in your build folder:
