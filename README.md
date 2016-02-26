@@ -7,7 +7,7 @@ Native Buildkit (alternative to gulp and grunt)
 The next version of rub is going to use a raft of new language extensions, moving rub into ES6.  
 You will need to install [nodejs version 4.3+](https://nodejs.org/en/).  
 You will probably need to restart your computer.  
-And you may also need to reinstall ``adapt-cli``, ``adapt-buildkits`` and ``grunt-cli`` (using ``npm install -g ``)  
+~~And you may also need to reinstall ``adapt-cli``, ``adapt-buildkits`` and ``grunt-cli`` (using ``npm install -g ``)~~  
 
 * rub version 0.0.58 will warn you to upgrade to node 4.3+  
 * rub version 0.1.10+ will require node 4.3+ (version 0.1.10 can be installed using ``adapt-buildkit install rub-develop``) 
