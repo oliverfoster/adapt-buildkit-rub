@@ -123,7 +123,7 @@
         "paths": {
           "app": "core/js/app",
           "coreHelpers": "core/js/helpers",
-          "coreJS/libraries/bowser": "empty:",
+          "core/js/libraries/bowser": "empty:",
           "templates": "empty:",
           "components": "empty:",
           "extensions": "empty:",
@@ -208,7 +208,7 @@
         "useSourceUrl": false,
         "paths": {
           "coreHelpers": "empty:",
-          "coreJS/libraries/bowser": "empty:"
+          "core/js/libraries/bowser": "empty:"
         },
         "map": {
             "*": {
