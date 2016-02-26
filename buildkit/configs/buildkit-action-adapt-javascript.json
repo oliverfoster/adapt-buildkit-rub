@@ -112,7 +112,12 @@
         "useSourceUrl": false,
         "map": {
           "*": {
-            "a11y": "jquery.a11y"
+            "a11y": "jquery.a11y",
+            "coreJS": "core/js",
+            "coreViews": "core/js/views",
+            "coreModels": "core/js/models",
+            "coreCollections": "core/js/collections",
+            "coreHelpers": "core/js/helpers"
           }
         },
         "paths": {
@@ -148,7 +153,7 @@
           "core/js/views/": "src/core/js/views/*.js"
         }
       },
-      "sourceMapRelocate": "../../../src/core/js/",
+      "sourceMapRelocate": "../../../src",
       "dest": "{{outputDest}}/{{course}}/adapt/js/core.js"
     },
     {
@@ -205,19 +210,28 @@
           "coreHelpers": "empty:",
           "coreJS/libraries/bowser": "empty:"
         },
+        "map": {
+            "*": {
+              "coreJS": "core/js",
+              "coreViews": "core/js/views",
+              "coreModels": "core/js/models",
+              "coreCollections": "core/js/collections",
+              "coreHelpers": "core/js/helpers"
+            }
+        },
         "wrapShim": false
       },
       "empties": {
         "*": {
           "core/js/libraries/": "src/core/js/libraries/*.js"
         },
-        "coreJS": {
+        "core/js": {
           "core/js/": "src/core/js/*.js"
         },
-        "coreModels": {
+        "core/js/models": {
           "core/js/models/": "src/core/js/models/*.js"
         },
-        "coreViews": {
+        "core/js/views": {
           "core/js/views/": "src/core/js/views/*.js"
         }
       },
