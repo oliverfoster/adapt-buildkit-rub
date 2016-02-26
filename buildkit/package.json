@@ -1,6 +1,6 @@
 {
   "name": "adapt-buildkit-rub",
-  "version": "0.0.57",
+  "version": "0.0.58",
   "custom": false,
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},
@@ -27,5 +27,7 @@
     "util-ffprobe": "0.0.3",
     "semver": "^4.3.3"
   },
-  "repository": "https://github.com/oliverfoster/adapt-buildkit-rub"
+  "repository": "https://github.com/oliverfoster/adapt-buildkit-rub",
+  "engines" : { "node" : ">=4.3.0" },
+  "custom": false
 }
