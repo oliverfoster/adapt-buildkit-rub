@@ -21,8 +21,10 @@ class Plugin {
 			GLOBAL.hbsCompiler = require("../libs/handlebars.2.0.0.js");
 		} else if (clientCode.match(/handlebars v3/gi)) {
 			GLOBAL.hbsCompiler = require("../libs/handlebars.3.0.3.js");
+		} else if (clientCode.match(/handlebars v4/gi)) {
+			GLOBAL.hbsCompiler = require("../libs/handlebars.4.0.5.js");
 		} else {
-			logger.error("Handlebars version not found");
+			console.log("Handlebars version not found");
 			process.exit(0);
 		}
 		//< FIX FOR HANDLEBARS CLIENT/COMPILER VERSION INCOMPATIBILITY

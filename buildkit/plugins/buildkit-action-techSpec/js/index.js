@@ -247,6 +247,7 @@ class Plugin {
         }
 
         function pluckStream(probeData, codec_type) {
+            if (!probeData) return undefined;
             return _.findWhere(probeData.streams, {codec_type:codec_type});
         }
 
