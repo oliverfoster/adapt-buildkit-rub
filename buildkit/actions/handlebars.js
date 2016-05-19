@@ -23,8 +23,10 @@ var handlebars = new Action({
 				hbs = require("./resources/handlebars.2.0.0.js");
 			} else if (data.match(/handlebars v3/gi)) {
 				hbs = require("./resources/handlebars.3.0.3.js");
+			} else if (data.match(/handlebars v4/gi)) {
+				hbs = require("./resources/handlebars.4.0.5.js");
 			} else {
-				logger.error("Handlebars version not found");
+				console.log("Handlebars version not found");
 				process.exit(0);
 			}
 
