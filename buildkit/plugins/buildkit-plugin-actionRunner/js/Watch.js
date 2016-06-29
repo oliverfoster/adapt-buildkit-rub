@@ -192,7 +192,9 @@ class Watch {
 
 		//find a way to choose terminal options from changed files,
 		//see point XXX above
-
+		
+		Tree.clearCache(); //global cache clear
+		
 		clearTimeout(this.completeTimeoutHandle);
 		this.completeTimeoutHandle = null;
 
