@@ -7,7 +7,7 @@
       "@onlyOnSwitches": [
         "build"
       ],
-      "@when": "clean",
+      "@when": "finish",
       "@types": [
         "builds/courses/course",
         "src/courses/course"
@@ -17,7 +17,10 @@
         "src/extensions/adapt-contrib-spoor/required/imsmanifest.xml"
       ],
       "dest": "{{outputDest}}/{{course}}/imsmanifest.xml",
-      "context": "{{outputDest}}/{{course}}/course/en/course.{{fileextensions.json}}"
+      "contexts": {
+        "config": "{{outputDest}}/{{course}}/course/config.json"
+      },
+      "context": "{{outputDest}}/{{course}}/course/{{config._defaultLanguage}}/course.{{fileextensions.json}}"
     },
     {
       "@name": "stringreplacement",
@@ -29,13 +32,16 @@
       "@types": [
         "src/course"
       ],
-      "@when": "clean",
+      "@when": "finish",
       "src": "src",
       "globs": [
         "src/extensions/adapt-contrib-spoor/required/imsmanifest.xml"
       ],
       "dest": "{{outputDest}}/imsmanifest.xml",
-      "context": "{{outputDest}}/course/en/course.{{fileextensions.json}}"
+      "contexts": {
+        "config": "{{outputDest}}/course/config.json"
+      },
+      "context": "{{outputDest}}/course/{{config._defaultLanguage}}/course.{{fileextensions.json}}"
     }
   ]
 }

@@ -15,8 +15,6 @@ class Plugin {
         
 		options.dest = Location.contextReplace(options.dest, options);
 		options.dest = Location.toAbsolute(options.dest);
-        options.context = Location.contextReplace(options.context, options);
-        options.context = Location.toAbsolute(options.context);
 
 		var srcPath = Location.toAbsolute(options.src);
 
@@ -28,9 +26,19 @@ class Plugin {
             var list = tree.mapGlobs(globs).files;
 
             if (list.length > 0) {
-                var filePath = list[0]+"";
+                var filePath = list[0].location;
                 var isFileExists = fs.existsSync(filePath);
                 if (isFileExists) {
+                
+                    for (var k in options.contexts) {
+                        var contextPath =  Location.contextReplace(options.contexts[k], options);
+                        contextPath = Location.toAbsolute(contextPath);
+                        options[k] = JSON.parse(fs.readFileSync(contextPath).toString());
+                    }
+
+                    options.context = Location.contextReplace(options.context, options);
+                    options.context = Location.toAbsolute(options.context);
+
                     var fileAsString = fs.readFileSync(filePath).toString();
                     var contextAsString = fs.readFileSync(options.context).toString();
                     var contextAsJSON = JSON.parse(contextAsString);
