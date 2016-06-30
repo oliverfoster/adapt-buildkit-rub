@@ -1,0 +1,33 @@
+{
+  "actions": [
+    {
+      "@name": "buildinfo",
+      "@displayName": "Build Info...",
+      "@action": "buildinfo",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@when": "finish",
+      "@types": [
+        "builds/courses/course",
+        "src/courses/course"
+      ],
+      "src": "src",
+      "dest": "{{outputDest}}/{{course}}/buildinfo.json"
+    },
+    {
+      "@name": "buildinfo",
+      "@displayName": "Build Info...",
+      "@action": "buildinfo",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@types": [
+        "src/course"
+      ],
+      "@when": "finish",
+      "src": "src",
+      "dest": "{{outputDest}}/buildinfo.json"
+    }
+  ]
+}

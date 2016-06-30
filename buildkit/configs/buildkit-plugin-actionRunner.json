@@ -25,7 +25,8 @@
         "plugins-assets-folder",
         "stringreplacement",
         "assetrequired",
-        "techspec"
+        "techspec",
+        "buildinfo"
       ]
     },
     {
@@ -44,7 +45,8 @@
         "plugins-assets-folder",
         "stringreplacement",
         "assetrequired",
-        "techspec"
+        "techspec",
+        "buildinfo"
       ]
     },
     {
@@ -57,7 +59,8 @@
       ],
       "actions": [
         "libraries-javascript",
-        "foundation-libraries"
+        "foundation-libraries",
+        "buildinfo"
       ]
     },
     {
@@ -71,7 +74,8 @@
         "!src/core/js/libraries"
       ],
       "actions": [
-        "core-javascript"
+        "core-javascript",
+        "buildinfo"
       ]
     },
     {
@@ -85,21 +89,24 @@
       ],
       "actions": [
         "plugins-less",
-        "stringreplacement"
+        "stringreplacement",
+        "buildinfo"
       ]
     },
     {
       "@name": "foundation-scriptLoader",
       "path": "src/core/js/scriptLoader.js",
       "actions": [
-        "foundation-scriptLoader"
+        "foundation-scriptLoader",
+        "buildinfo"
       ]
     },
     {
       "@name": "foundation-index",
       "path": "src/index.html",
       "actions": [
-        "foundation-index.html"
+        "foundation-index.html",
+        "buildinfo"
       ]
     },
     {
@@ -111,7 +118,8 @@
       "actions": [
         "plugins-fonts-folder",
         "assetrequired",
-        "techspec"
+        "techspec",
+        "buildinfo"
       ]
     },
     {
@@ -124,7 +132,8 @@
         "plugins-required-folder",
         "assetrequired",
         "techspec",
-        "stringreplacement"
+        "stringreplacement",
+        "buildinfo"
       ]
     },
     {
@@ -137,7 +146,8 @@
         "plugins-assets-folder",
         "assetrequired",
         "techspec",
-        "stringreplacement"
+        "stringreplacement",
+        "buildinfo"
       ]
     },
     {
@@ -150,7 +160,8 @@
         "json-lint",
         "json-check",
         "themejson",
-        "stringreplacement"
+        "stringreplacement",
+        "buildinfo"
       ]
     },
     {
@@ -168,7 +179,8 @@
         "course-folder",
         "assetrequired",
         "techspec",
-        "stringreplacement"
+        "stringreplacement",
+        "buildinfo"
       ]
     },
     {
@@ -186,7 +198,8 @@
         "course-folder",
         "assetrequired",
         "techspec",
-        "stringreplacement"
+        "stringreplacement",
+        "buildinfo"
       ]
     },
     {
@@ -209,7 +222,8 @@
       "actions": [
         "assetrequired",
         "techspec",
-        "stringreplacement"
+        "stringreplacement",
+        "buildinfo"
       ]
     },
     {
@@ -230,7 +244,8 @@
         "assetrequired",
         "techspec",
         "themejson",
-        "stringreplacement"
+        "stringreplacement",
+        "buildinfo"
       ]
     },
     {
@@ -251,7 +266,8 @@
         "assetrequired",
         "techspec",
         "themejson",
-        "stringreplacement"
+        "stringreplacement",
+        "buildinfo"
       ]
     },
     {
@@ -271,7 +287,8 @@
         "assetrequired",
         "techspec",
         "themejson",
-        "stringreplacement"
+        "stringreplacement",
+        "buildinfo"
       ]
     }
   ]

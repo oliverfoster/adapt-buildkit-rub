@@ -1,0 +1,5 @@
+{
+	"pluginName": "buildInfo",
+	"pluginMain": "js/index.js",
+	"pluginDependencies": {}
+}
