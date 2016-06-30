@@ -23,15 +23,17 @@ class Plugin {
 
 	setTerminalDirectoryLayout() {
 		//select directory layout
-		if (fs.existsSync("./src/course")) {
+		var Style = this.config.terminal.switches.style;
+		
+		if (fs.existsSync("./src/course") && Style !== '1' && Style !== '2') {
 			this.config.terminal.switches.type = "src/course";
 			this.config.terminal.switches.typeName = "Adapt Learning";
-		} else if (fs.existsSync("./src/courses")) {
+		} else if (fs.existsSync("./src/courses") && Style !== '0' && Style !== '2') {
 			this.config.terminal.switches.type = "src/courses/course"
 			this.config.terminal.switches.typeName = "Kineo src/courses";
 		} else {
 			this.config.terminal.switches.type = "builds/courses/course";
-			this.config.terminal.switches.typeName = "Kineo src/builds";
+			this.config.terminal.switches.typeName = "Kineo builds";
 		}
 	}
 
