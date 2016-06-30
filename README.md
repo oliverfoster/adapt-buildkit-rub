@@ -45,7 +45,6 @@ adapt-buildkit install rub
     -f, --force       force rebuild (assumes: -b)
     -F, --forceall    force rebuild and resync (assumes: -b)
     -s, --server      run server (assumes: -bw --port 3001)
-    --style [value]   build style, 0=src/course 1=src/courses 2=builds
     --port [value]    set server port
     -q, --quick       skip minification and sourcemapping (assumes: -b)
     -c, --clean       clean build folder (assumes: not -b)
