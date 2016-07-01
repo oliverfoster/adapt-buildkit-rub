@@ -122,6 +122,34 @@ Kineo's multiple courses from the same src structure - where all your JSON and a
 
 Builds only. Instead of having course assets in the src **and** build folders, it is possible to have just the core code, theme, menu(s), components and extensions in the ``src`` folder and keeping the JSON and assets in the builds/*courseid*/course/ folder only - this halves the storage requirements and removes the requirement to run a task every time the JSON or assets are changed.
 
+From `src/course`:
+```
+config.json
+en/
+```
+
+From `src/courses`
+```
+p101/
+    config.json
+    en/
+p102/
+    config.json
+    en/
+```
+From `builds`
+```
+builds
+├── p101
+│   └── course
+│       ├── config.json
+│       └── zh-cn
+└── p102
+    └── course
+        ├── config.json
+        └── en
+```
+
 ###Improved compatibility
 It will work with Adapt Learning's v1.1.1 and v2 frameworks, as well as Kineo's interim framework.  
 It allows the three types of src content structure to be used regardless of the underlying framework.  
