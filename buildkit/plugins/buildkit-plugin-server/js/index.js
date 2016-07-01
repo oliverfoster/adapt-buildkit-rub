@@ -122,7 +122,7 @@ class Plugin {
 
 	    	}
 
-	    return this.serveStatic(req, res, this.next);
+	    return this.serveStatic(req, res, (req,res) => { this.next(req,res); });
 	}
 
 	request(req, res) {
@@ -173,7 +173,7 @@ class Plugin {
 
 
 
-	    if (stat.isDirectory()) return this.index(req, res, this.next);
+	    if (stat.isDirectory()) return this.index(req, res, (req,res) => { this.next(req,res); });
 	    this.next(req,res );
 	    
 
