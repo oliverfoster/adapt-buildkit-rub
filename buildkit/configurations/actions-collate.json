@@ -7,7 +7,7 @@
 			"@onlyOnSwitches": [
                 "build"
             ],
-            "@when": "postStart",
+            "@when": "preFinish",
 			"on": "required",
 			"root": "src",
 			"src": "",
