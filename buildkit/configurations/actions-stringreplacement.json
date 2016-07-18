@@ -7,7 +7,7 @@
             "@onlyOnSwitches": [
                 "build"
             ],
-            "@when": "preFinish",
+            "@when": "finish",
 			"@types": [ "builds/courses/course", "src/courses/course" ],
 			"src": "src",
 			"globs": [
@@ -24,7 +24,7 @@
                 "build"
             ],
 			"@types": [ "src/course" ],
-            "@when": "preFinish",
+            "@when": "finish",
 			"src": "src",
 			"globs": [
 				"**/adapt-contrib-spoor/required/imsmanifest.xml"
