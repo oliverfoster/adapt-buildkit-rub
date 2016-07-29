@@ -115,9 +115,9 @@
 			"map": {
 				"*": {
 					"a11y": "jquery.a11y",
-					"coreJS": "core/js/",
-					"coreModels": "core/js/models/",
-					"coreViews": "core/js/views/",
+					"coreJS": "core/js",
+					"coreModels": "core/js/models",
+					"coreViews": "core/js/views",
 					"coreHelpers": "core/js/helpers"
 				}
 			},
