@@ -49,7 +49,7 @@
 				"zip": true
 			},
 			"alwaysSet": {
-				"build": true
+				"build": false
 			}
 		},
 		{
