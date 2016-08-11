@@ -1,5 +1,8 @@
 var Action = require("../libraries/Action.js");
 
+var queue = [];
+var inProgress = false;
+
 var zip = new Action({
 
 	initialize: function() {
@@ -54,17 +57,14 @@ var zip = new Action({
 			);
 		}
 
-		archive.addFiles(zipFiles, function (err) {
-		    if (err) {
-		    	return done(options, "Err while adding files");
-		    }
-		    
-		    archive.toBuffer(function(buff){;
-			    fs.writeFile(options.dest, buff, function () {
-			        done(options);
-			    });
-			});
+		queue.push({
+			zipFiles: zipFiles,
+			options: options,
+			done: done,
+			archive: archive
 		});
+
+		runQueueItem();
 
 		function twoDigit(num) {
 			var snum = ""+num;
@@ -74,5 +74,33 @@ var zip = new Action({
 	}
 
 });
+
+function runQueueItem() {
+	if (inProgress) return;
+
+	inProgress = true;
+	var item = queue.shift();
+	var zipFiles = item.zipFiles;
+	var options = item.options;
+	var done = item.done;
+	var archive = item.archive;
+
+	var runNext = runQueueItem;
+
+	archive.addFiles(zipFiles, function (err) {
+	    if (err) {
+	    	return done(options, "Err while adding files");
+	    }
+	    
+	    archive.toBuffer(function(buff){;
+		    fs.writeFile(options.dest, buff, function () {
+		        done(options);
+		        inProgress = false;
+		        runNext();
+		    });
+		});
+	});
+}
+
 
 module.exports = zip;
