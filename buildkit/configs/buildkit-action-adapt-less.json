@@ -22,8 +22,8 @@
       "globs": [
         "src/core/less/*.less",
         "src/core/less/**/*.less",
-        "src/*/*/less/*.less",
-        "src/*/*/less/**/*.less"
+        "src/**/less/*.less",
+        "src/**/less/**/*.less"
       ],
       "sourceMapRelocate": "../../../src/",
       "dest": "{{outputDest}}/{{course}}/adapt/css/adapt.css"
