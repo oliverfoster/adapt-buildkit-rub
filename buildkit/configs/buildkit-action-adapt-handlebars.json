@@ -16,8 +16,8 @@
       "globs": [
         "src/core/templates/*.hbs",
         "src/core/templates/**/*.hbs",
-        "src/*/*/templates/*.hbs",
-        "src/*/*/templates/**/*.hbs"
+        "src/**/templates/*.hbs",
+        "src/**/templates/**/*.hbs"
       ],
       "defines": "templates",
       "requires": {
