@@ -116,8 +116,10 @@ class Plugin {
 	    		else if (stat.filename === req.stat.filename) injectScript = true;
 	    	} else injectScript = true;
 
-    		res.writeHead(200, {"Content-Type": mimeType});
-    		return this.injectScript(req, res);
+	    	if (injectScript) {
+	    		res.writeHead(200, {"Content-Type": mimeType});
+	    		return this.injectScript(req, res);
+	    	}
 	    }
 
 	    return this.serveStatic(req, res, () => { 
