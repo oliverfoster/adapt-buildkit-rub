@@ -100,7 +100,7 @@ class Plugin {
 
 	next(req, res) {
 
-		var mimeType = this._mimeTypesByExtension[path.extname(req.stat.filename).split(".")[1]];
+	    var mimeType = this._mimeTypesByExtension[path.extname(req.stat.filename).split(".")[1]];
 	    if (!mimeType) {
 	        res.writeHead(404, {"Content-Type": "text/plain"});
 	        res.write("404 MimeType not supported\n");
@@ -109,20 +109,22 @@ class Plugin {
 	    }
 
 	    if (mimeType === "text/html") {
-	    	res.writeHead(200, {"Content-Type": mimeType});
-
+	    	var injectScript = false;
 	    	if (req.headers.referer !== undefined) {
 	    		var stat = this.urlStat(req.headers.referer);
-	    		if (stat.isDirectory() && req.stat.filename.indexOf(stat.filename) > -1) {
-	    			return this.injectScript(req, res);
-	    		} else if (stat.filename === req.stat.filename) {
-	    			return this.injectScript(req, res);
-	    		}
-	    	} else return this.injectScript(req, res);
+	    		if (stat.isDirectory() && req.stat.filename.indexOf(stat.filename) > -1) injectScript = true;
+	    		else if (stat.filename === req.stat.filename) injectScript = true;
+	    	} else injectScript = true;
 
-	    	}
+    		res.writeHead(200, {"Content-Type": mimeType});
+    		return this.injectScript(req, res);
+	    }
 
-	    return this.serveStatic(req, res, (req,res) => { this.next(req,res); });
+	    return this.serveStatic(req, res, () => { 
+	    	res.writeHead(404, {"Content-Type": "text/plain"});
+	        res.write("404 MimeType not supported\n");
+	        res.end();
+	    });
 	}
 
 	request(req, res) {
