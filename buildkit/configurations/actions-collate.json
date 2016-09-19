@@ -26,6 +26,7 @@
 				"!{{dest}}/course",
 				"!{{dest}}/libraries/**",
 				"!{{dest}}/libraries",
+				"!{{dest}}/index.html",
 				"**"
 			],
 			"dest": "{{outputDest}}/{{course}}"
