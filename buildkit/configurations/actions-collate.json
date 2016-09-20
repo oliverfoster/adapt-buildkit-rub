@@ -32,6 +32,30 @@
 			"dest": "{{outputDest}}/{{course}}"
 		},
 		{
+			"@name": "bundles-required-index",
+			"@displayName": "Synching plugin required index.html...",
+			"@action": "collate",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@when": "finish",
+			"on": "required",
+			"root": "src",
+			"src": "",
+			"force": true,
+			"delete": false,
+			"globs": [
+				"**/extensions/**/required/**/index.html",
+				"**/components/**/required/**/index.html",
+				"**/theme/**/required/**/index.html",
+				"**/menu/**/required/**/index.html"		
+			],
+			"diffGlobs": [
+				"{{dest}}/index.html"
+			],
+			"dest": "{{outputDest}}/{{course}}"
+		},
+		{
 			"@name": "bundles-assets-folder",
 			"@displayName": "Synching plugin asset folders...",
 			"@action": "collate",
