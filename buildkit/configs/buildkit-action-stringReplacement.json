@@ -18,7 +18,7 @@
       ],
       "dest": "{{outputDest}}/{{course}}/imsmanifest.xml",
       "contexts": {
-        "config": "{{outputDest}}/{{course}}/course/config.json"
+        "config": "{{outputDest}}/{{course}}/course/config.{{fileextensions.json}}"
       },
       "context": "{{outputDest}}/{{course}}/course/{{config._defaultLanguage}}/course.{{fileextensions.json}}"
     },
@@ -39,7 +39,7 @@
       ],
       "dest": "{{outputDest}}/imsmanifest.xml",
       "contexts": {
-        "config": "{{outputDest}}/course/config.json"
+        "config": "{{outputDest}}/course/config.{{fileextensions.json}}"
       },
       "context": "{{outputDest}}/course/{{config._defaultLanguage}}/course.{{fileextensions.json}}"
     }
