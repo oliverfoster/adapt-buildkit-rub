@@ -50,7 +50,7 @@ var collate = new Action({
 					break;
 				}
 			}
-			if (!found || options.switches.forceall) {
+			if (options.delete !== false && (!found || options.switches.forceall)) {
 				//logger.log("Removing: " + destItem.path.substr(process.cwd().length), 1);
 				if (destItem.dir) {
 					fs.rmdirSync(destItem.path);
@@ -84,7 +84,7 @@ var collate = new Action({
 				if (!ifExists) {
 					//logger.log("Adding: " + outputPath.substr(process.cwd().length),1);
 				} else {
-					fs.unlinkSync(outputPath);
+					if (options.delete !== false) fs.unlinkSync(outputPath);
 				}
 				
 
