@@ -27,7 +27,9 @@ var pub = module.exports = {
     start: function (opts) {
     	this._isStarted = true;
         var serveIndex = require('serve-index');
+        var serveStatic = require('serve-static');
         var options = opts;
+        serveStatic = serveStatic( options.outputDest );
         var index = serveIndex( options.outputDest, {'icons': true});
 
     	var http = require("http");
@@ -82,27 +84,33 @@ var pub = module.exports = {
 		function next(req, res) {
 			var mimeType = pub._mimeTypesByExtension[path.extname(req.stat.filename).split(".")[1]];
 		    if (!mimeType) {
-		        res.writeHead(404, {"Content-Type": "text/plain"});
-		        res.write("404 MimeType not supported\n");
-		        res.end();
-		        return;
+			res.writeHead(404, {"Content-Type": "text/plain"});
+			res.write("404 MimeType not supported\n");
+			res.end();
+			return;
 		    }
-
-		    res.writeHead(200, {"Content-Type": mimeType});
 
 		    if (mimeType === "text/html") {
-		    	if (req.headers.referer !== undefined) {
-		    		var stat = urlStat(req.headers.referer);
-		    		if (stat.isDirectory() && req.stat.filename.indexOf(stat.filename) > -1) {
-		    			return injectScript(req, res);
-		    		} else if (stat.filename === req.stat.filename) {
-		    			return injectScript(req, res);
-		    		}
-		    	} else return injectScript(req, res);
+			var shouldInjectScript = false;
+			if (req.headers.referer !== undefined) {
+				var stat = urlStat(req.headers.referer);
+				if (stat.isDirectory() && req.stat.filename.indexOf(stat.filename) > -1) shouldInjectScript = true;
+				else if (stat.filename === req.stat.filename) shouldInjectScript = true;
+			} else shouldInjectScript = true;
+
+			if (shouldInjectScript) {
+				res.writeHead(200, {"Content-Type": mimeType});
+				return injectScript(req, res);
+			}
 		    }
 
-		    var fileStream = fs.createReadStream(req.stat.filename);
-		    fileStream.pipe(res);
+		    // var fileStream = fs.createReadStream(req.stat.filename);
+		    // fileStream.pipe(res);
+		     return serveStatic(req, res, () => { 
+			res.writeHead(404, {"Content-Type": "text/plain"});
+			res.write("404 MimeType not supported\n");
+			res.end();
+		    });
 		}
 
 		function request(req, res) {
