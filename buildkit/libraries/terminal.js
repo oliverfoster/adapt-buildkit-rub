@@ -10,10 +10,21 @@ var pub = {
 
         var switches = _.extend(pub.processSwitches(prog), forceSwitches);
 
+        try {
+            var package = JSON.parse(fs.readFileSync( path.join(__dirname, "../../package.json")));
+            if (!package) {
+                throw "Adapt package.json not found";
+            }
+        } catch(e) {
+            console.log(e);
+            throw e;
+        }
+
         var terminalOptions =  {
             switches: switches,
             courses: prog.courses || [],
-            command: "default"
+            command: "default",
+            package: package
         };
 
         pub.processLegacyCommands(terminalOptions);

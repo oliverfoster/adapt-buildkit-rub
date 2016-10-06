@@ -272,6 +272,8 @@ var pub =  _.extend(eventEmitter, {
 
 			filterByInclusionsAndExclusions(terminalOptions);
 
+			filterByAdaptVersion(terminalOptions);
+
 			pub._indexedActions = _.indexBy(pub._selectedActions, "@name");
 
 		}
@@ -319,8 +321,23 @@ var pub =  _.extend(eventEmitter, {
 			});
 		}
 
+		function filterByAdaptVersion(terminalOptions) {
+			pub._selectedActions = _.filter(pub._selectedActions, function(item, item1) {
+				if (item['@onlyOnVersions'] !== undefined) {
+					for (var i = 0, l = item['@onlyOnVersions'].length; i < l; i++) {
+						if (semver.satisfies(terminalOptions.package.version, item['@onlyOnVersions'][i] )) return true;
+					}
+					return false;
+				}
+
+				return true;
+
+			});
+		}
+
 		function displayHeader(terminalOptions) {
 			logger.log("Adapt Framework Buildkit",0 );
+			logger.log("Adapt Framework Version "+terminalOptions.package.version,0 );
 			var mode = (terminalOptions.switches.debug ? "Debug": "Production");
 			var color = (terminalOptions.switches.debug ? 1:0);
 			color = (terminalOptions.switches.force ? 1 : color);

@@ -27,6 +27,13 @@
 				"!{{dest}}/libraries/**",
 				"!{{dest}}/libraries",
 				"!{{dest}}/index.html",
+				"!{{dest}}/templates.js",
+				"!{{dest}}/libraries.js",
+				"!{{dest}}/plugins.js",
+				"!{{dest}}/core.js",
+				"!{{dest}}/libraries.js.map",
+				"!{{dest}}/plugins.js.map",
+				"!{{dest}}/core.js.map",
 				"**"
 			],
 			"dest": "{{outputDest}}/{{course}}"

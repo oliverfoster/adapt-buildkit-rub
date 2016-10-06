@@ -7,6 +7,9 @@
 			"@onlyOnSwitches": [
                 "build"
             ],
+            "@onlyOnVersions": [
+            	"<2.0.12"
+            ],
             "@when": "postStart",
 			"root": "src/core/js/",
 			"src": "libraries",
@@ -17,6 +20,24 @@
 				"modernizr.js",
 				"consoles.js",
 				"json2.js"
+			],
+			"dest": "{{outputDest}}/{{course}}"
+		},
+		{
+			"@name": "foundation-libraries",
+			"@displayName": "Synching external libraries...",
+			"@action": "copy",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@onlyOnVersions": [
+            	">=2.0.12"
+            ],
+            "@when": "postStart",
+			"root": "src/core/js/",
+			"src": "libraries",
+			"globs": [
+				"*"
 			],
 			"dest": "{{outputDest}}/{{course}}"
 		},
@@ -42,9 +63,31 @@
 			"@onlyOnSwitches": [
                 "build"
             ],
+            "@onlyOnVersions": [
+            	"<2.0.12"
+            ],
             "@when": "postStart",
             "force": true,
-			"root": "buildkit/resources/",
+			"root": "buildkit/resources/2.0.11",
+			"src": "",
+			"globs": [
+				"**/**"
+			],
+			"dest": "{{outputDest}}/{{course}}"
+		},
+		{
+			"@name": "loader",
+			"@displayName": "Synching buildkit resources...",
+			"@action": "copy",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@onlyOnVersions": [
+            	">=2.0.12"
+            ],
+            "@when": "postStart",
+            "force": true,
+			"root": "buildkit/resources/2.0.12",
 			"src": "",
 			"globs": [
 				"**/**"

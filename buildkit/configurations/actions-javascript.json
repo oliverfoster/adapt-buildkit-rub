@@ -7,6 +7,9 @@
 			"@onlyOnSwitches": [
                 "build"
             ],
+            "@onlyOnVersions": [
+            	"<2.0.12"
+            ],
             "@buildOnce": true,
             "@when": "postStart",
 			"src": "src",
@@ -21,6 +24,9 @@
 			"@action": "javascript",
 			"@onlyOnSwitches": [
                 "build"
+            ],
+            "@onlyOnVersions": [
+            	"<2.0.12"
             ],
             "@when": "postStart",
 			"@buildOnce": true,
@@ -73,7 +79,7 @@
 				"imageReady": [ "jquery" ],
 				"velocity": [ "jquery" ]
 			},
-			"dest": "{{outputDest}}/{{course}}/adapt/js/libraries.js"
+			"dest": "{{outputDest}}/{{course}}/libraries.js"
 		},
 		{
 			"@name": "core-javascript",
@@ -81,6 +87,9 @@
 			"@action": "javascript",
 			"@onlyOnSwitches": [
                 "build"
+            ],
+            "@onlyOnVersions": [
+            	"<2.0.12"
             ],
             "@when": "postStart",
 			"@buildOnce": true,
@@ -129,7 +138,74 @@
 				"menu": "empty:",
 				"theme": "empty:"
 			},
-			"dest": "{{outputDest}}/{{course}}/adapt/js/core.js"
+			"dest": "{{outputDest}}/{{course}}/core.js"
+		},
+		{
+			"@name": "core-javascript",
+			"@displayName": "Building framework javascript...",
+			"@action": "javascript",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@onlyOnVersions": [
+            	">=2.0.12"
+            ],
+            "@when": "postStart",
+			"@buildOnce": true,
+			"src": "src/core/js",
+			"globs": [ "*.js" ],
+			"libraryName": "core",
+			"name": "core/js/app",
+			"baseUrl": "src",
+			"alwaysUsePath": true,
+			"optimize": "uglify2",
+    		"generateSourceMaps": true,
+    		"preserveLicenseComments": false,
+		    "useSourceUrl": false,
+			"sourceMapRelocate": "../../../src/",
+			"empties": {
+				"": {
+					"src/core/js/libraries/": "*.js"
+				}
+			},
+			"includes": {
+				"*" : {
+					"src/core/js/": [
+						"**/src/core/js/*.js",
+						"!app.js",
+						"!libraries/",
+						"!scriptLoader.js"
+					],
+					"src/core/js/models/": "**/src/core/js/models/*.js",
+					"src/core/js/views/": "**/src/core/js/views/*.js"
+				}
+			},
+			"map": {
+				"*": {
+					"a11y": "jquery.a11y",
+					"coreJS": "core/js",
+					"coreModels": "core/js/models",
+					"coreViews": "core/js/views",
+					"coreHelpers": "core/js/helpers"
+				}
+			},
+			"paths": {
+				"jquery": "empty:",
+		        "underscore": "empty:",
+		        "backbone": "empty:",
+		        "modernizr": "empty:",
+		        "handlebars": "empty:",
+		        "velocity": "empty:",
+		        "imageReady": "empty:",
+		        "inview": "empty:",
+		        "a11y": "empty:",
+		        "scrollTo": "empty:",
+		        "libraries": "empty:",
+		        "bowser": "empty:",
+		        "core/js/libraries/bowser": "empty:",
+		        "coreJS/libraries/bowser": "empty:"
+			},
+			"dest": "{{outputDest}}/{{course}}/core.js"
 		},
 		{
 			"@name": "bundles-bundle",
@@ -138,7 +214,7 @@
 			"@onlyOnSwitches": [
                 "build"
             ],
-            "@when": "postStart",
+            "@when": "start",
 			"src": "src",
 			"globs": [
 				"**/src/extensions",
@@ -150,7 +226,7 @@
 				"**/src/menu/**",
 				"**/src/theme/**"
 			],
-			"dest": "src/bundles.js"
+			"dest": "src/plugins.js"
 		},
 		{
 			"@name": "bundles-javascript",
@@ -159,7 +235,7 @@
 			"@onlyOnSwitches": [
                 "build"
             ],
-            "@when": "postStart",
+            "@when": "start",
 			"src": "src",
 			"globs": [ 
 				"**/src/extensions/**/*.js",
@@ -167,8 +243,8 @@
 				"**/src/menu/**/*.js",
 				"**/src/theme/**/*.js"
 			],
-			"libraryName": "bundles",
-			"name": "bundles",
+			"libraryName": "plugins",
+			"name": "plugins",
 			"baseUrl": "src",
 			"optimize": "uglify2",
 			"alwaysUsePath": true,
@@ -197,9 +273,9 @@
 			"paths": {
 				"coreHelpers": "empty:",
 				"core/js/libraries/bowser": "empty:",
-				"bundles": "bundles"
+				"plugins": "plugins"
 			},
-			"dest": "{{outputDest}}/{{course}}/adapt/js/bundles.js"
+			"dest": "{{outputDest}}/{{course}}/plugins.js"
 		},
 		{
 			"@name": "javascript-uglify",

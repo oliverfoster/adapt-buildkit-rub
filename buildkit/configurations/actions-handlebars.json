@@ -14,7 +14,7 @@
 				"src/menu",
 				"src/theme"
 			],
-			"dest": "{{outputDest}}/{{course}}/adapt/js/templates.js",
+			"dest": "{{outputDest}}/{{course}}/templates.js",
 			"paritalGlobs": [ "**/partials/**" ],
 			"globs":  [ 
 				"**/templates/**/*.hbs", 
