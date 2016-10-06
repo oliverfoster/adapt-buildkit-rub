@@ -9,7 +9,7 @@
       ],
       "@when": "build",
       "src": "src",
-      "dest": "{{outputDest}}/{{course}}/adapt/js/templates.js",
+      "dest": "{{outputDest}}/{{course}}/templates.js",
       "paritalGlobs": [
         "**/partials/**"
       ],

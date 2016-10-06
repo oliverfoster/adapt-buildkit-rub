@@ -7,6 +7,9 @@
       "@onlyOnSwitches": [
         "build"
       ],
+      "@onlyOnVersions": [
+        "<2.0.12"
+      ],
       "@when": "prep",
       "@buildOnce": true,
       "name": "libraries",
@@ -18,6 +21,9 @@
       "@action": "javascript",
       "@onlyOnSwitches": [
         "build"
+      ],
+      "@onlyOnVersions": [
+        "<2.0.12"
       ],
       "@when": "build",
       "@buildOnce": true,
@@ -85,7 +91,7 @@
         }
       },
       "sourceMapRelocate": "../../../src/",
-      "dest": "{{outputDest}}/{{course}}/adapt/js/libraries.js"
+      "dest": "{{outputDest}}/{{course}}/libraries.js"
     },
     {
       "@name": "core-javascript",
@@ -93,6 +99,9 @@
       "@action": "javascript",
       "@onlyOnSwitches": [
         "build"
+      ],
+      "@onlyOnVersions": [
+        "<2.0.12"
       ],
       "@when": "build",
       "@buildOnce": true,
@@ -154,7 +163,87 @@
         }
       },
       "sourceMapRelocate": "../../../src",
-      "dest": "{{outputDest}}/{{course}}/adapt/js/core.js"
+      "dest": "{{outputDest}}/{{course}}/core.js"
+    },
+    {
+      "@name": "core-javascript",
+      "@displayName": "Building framework javascript...",
+      "@action": "javascript",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@onlyOnVersions": [
+        ">=2.0.12"
+      ],
+      "@when": "build",
+      "@buildOnce": true,
+      "changes": {
+        "src": "src",
+        "globs": [
+          "src/core/js/*.js",
+          "src/core/js/**/*.js"
+        ]
+      },
+      "requirejs": {
+        "name": "app",
+        "baseUrl": "src",
+        "optimize": "uglify2",
+        "generateSourceMaps": true,
+        "preserveLicenseComments": false,
+        "useSourceUrl": false,
+        "map": {
+          "*": {
+            "a11y": "jquery.a11y",
+            "coreJS": "core/js",
+            "coreViews": "core/js/views",
+            "coreModels": "core/js/models",
+            "coreCollections": "core/js/collections",
+            "coreHelpers": "core/js/helpers"
+          }
+        },
+        "paths": {
+          "app": "core/js/app",
+          "coreHelpers": "core/js/helpers",
+          "jquery": "empty:",
+          "underscore": "empty:",
+          "backbone": "empty:",
+          "modernizr": "empty:",
+          "handlebars": "empty:",
+          "velocity": "empty:",
+          "imageReady": "empty:",
+          "inview": "empty:",
+          "a11y": "empty:",
+          "scrollTo": "empty:",
+          "libraries": "empty:",
+          "bowser": "empty:",
+          "core/js/libraries/bowser": "empty:",
+          "coreJS/libraries/bowser": "empty:"
+        }
+      },
+      "empties": {
+        "*": {
+          "core/js/libraries/": "src/core/js/libraries/*.js"
+        }
+      },
+      "includes": {
+        "coreJS": {
+          "core/js/": [
+            "src/core/js/*.js",
+            "!src/core/js/app.js",
+            "!src/core/js/helpers.js",
+            "!src/core/js/libraries/",
+            "!src/core/js/scriptLoader.js"
+          ]
+        },
+        "coreModels": {
+          "core/js/models/": "src/core/js/models/*.js"
+        },
+        "coreViews": {
+          "core/js/views/": "src/core/js/views/*.js"
+        }
+      },
+      "sourceMapRelocate": "../../../src",
+      "dest": "{{outputDest}}/{{course}}/core.js"
     },
     {
       "@name": "plugins-javascript-blank",
@@ -175,13 +264,13 @@
       "@onlyOnSwitches": [
         "build"
       ],
-      "@when": "build",
+      "@when": "prep",
       "bundleName": "plugins",
       "src": "src",
       "globs": [
         "src/*/*/bower.json"
       ],
-      "dest": "{{outputDest}}/{{course}}/adapt/js/plugins.js"
+      "dest": "{{outputDest}}/{{course}}/plugins.js"
     },
     {
       "@name": "plugins-javascript",
@@ -190,7 +279,7 @@
       "@onlyOnSwitches": [
         "build"
       ],
-      "@when": "build",
+      "@when": "prep",
       "changes": {
         "src": "src",
         "globs": [
@@ -239,7 +328,7 @@
         "plugins"
       ],
       "sourceMapRelocate": "../../../src/",
-      "dest": "{{outputDest}}/{{course}}/adapt/js/plugins.js"
+      "dest": "{{outputDest}}/{{course}}/plugins.js"
     },
     {
       "@name": "javascript-uglify",

@@ -16,10 +16,21 @@ class Plugin {
 	    var prog = this.runProgram();
 	    var switches = this.getSwitches(prog);
 
+	    try {
+            var packageJSON = JSON.parse(fs.readFileSync( path.join(__dirname, "../../../../package.json")));
+            if (!packageJSON) {
+                throw "Adapt package.json not found";
+            }
+        } catch(e) {
+            console.log(e);
+            throw e;
+        }
+
 	    var terminalOptions =  {
 	        switches: switches,
 	        courses: prog.courses || [],
-	        command: "default"
+	        command: "default",
+            packageJSON: packageJSON
 	    };
 
 	    this.processLegacyCommands(terminalOptions);
@@ -138,6 +149,7 @@ class Plugin {
 	
 	displayHeader() {
 		logger.log("Adapt Framework Buildkit - "+application.commonName);
+		logger.log("Adapt Framework Version - "+this.config.terminal.packageJSON.version);
 		var mode = (this.config.terminal.switches.debug ? "Debug": "Production");
 
 		var isNotice = (this.config.terminal.switches.debug ? true: false);

@@ -42,6 +42,7 @@ class Actions {
 	selectActions() {
 		this.filterByDirectoryLayout();
 		this.filterByInclusionsAndExclusions();
+		this.filterByAdaptVersion();
 	}
 
 	filterByDirectoryLayout() {
@@ -81,6 +82,20 @@ class Actions {
 					return false;
 				}
 			};
+
+			return true;
+
+		});
+	}
+
+	filterByAdaptVersion() {
+		this.selectedActions = _.filter(this.selectedActions, (item, item1) => {
+			if (item['@onlyOnVersions'] !== undefined) {
+				for (var i = 0, l = item['@onlyOnVersions'].length; i < l; i++) {
+					if (semver.satisfies(this.config.terminal.packageJSON.version, item['@onlyOnVersions'][i] )) return true;
+				}
+				return false;
+			}
 
 			return true;
 
