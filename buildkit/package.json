@@ -2,7 +2,7 @@
   "name": "buildkit-rub",
   "commonName": "rub-develop",
   "name": "adapt-buildkit-rub",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "custom": false,
   "description": "Command line Native BuildKit (alternative to gulp and grunt)",
   "scripts": {},
@@ -10,7 +10,7 @@
   "license": "GPL-3.0",
   "repository": "https://github.com/cgkineo/adapt-buildkit-rub",
   "dependencies": {
-    "buildkit-globber": "^0.1.5",
+    "buildkit-globber": "^0.1.10",
     "buildkit-plugins": "^0.1.4",
     "chalk": "^1.1.1",
     "commander": "^2.8.1",

@@ -35,6 +35,28 @@
       "dest": "{{outputDest}}/{{course}}"
     },
     {
+      "@name": "plugins-libraries-folders",
+      "@displayName": "Synching plugin libraries folders...",
+      "@action": "collate",
+      "@onlyOnSwitches": [
+        "build"
+      ],
+      "@onlyOnVersions": [
+        ">=2.0.12"
+      ],
+      "@when": "clean",
+      "on": "libraries",
+      "src": "src",
+      "globs": [
+        "!**/libraries.js",
+        "src/*/*/libraries/**"
+      ],
+      "diffGlobs": [
+        "**"
+      ],
+      "dest": "{{outputDest}}/{{course}}/libraries/"
+    },
+    {
       "@name": "plugins-assets-folder",
       "@displayName": "Synching plugin asset folders...",
       "@action": "collate",

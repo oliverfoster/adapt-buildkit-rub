@@ -14,6 +14,7 @@ class Plugin {
 
 		options.src = Location.contextReplace(options.src, options);
 		options.dest = Location.contextReplace(options.dest, options);
+		options.delete = options.delete;
 
 		var diffGlobs = Location.contextReplace(options.diffGlobs, options);
 		var globs = Location.contextReplace(options.globs, options);
