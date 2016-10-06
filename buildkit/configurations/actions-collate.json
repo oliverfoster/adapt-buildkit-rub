@@ -39,6 +39,33 @@
 			"dest": "{{outputDest}}/{{course}}"
 		},
 		{
+			"@name": "bundles-libraries-folders",
+			"@displayName": "Synching plugin libraries folders...",
+			"@action": "collate",
+			"@onlyOnSwitches": [
+                "build"
+            ],
+            "@onlyOnVersions": [
+                ">=2.0.12"
+            ],
+            "@when": "preFinish",
+			"on": "libraries",
+			"root": "src",
+			"src": "",
+			"globs": [
+				"!**/libraries.js",
+				"**/core/**/libraries/**",
+				"**/extensions/**/libraries/**",
+				"**/components/**/libraries/**",
+				"**/theme/**/libraries/**",
+				"**/menu/**/libraries/**"		
+			],
+			"diffGlobs": [
+				"**"
+			],
+			"dest": "{{outputDest}}/{{course}}/libraries/"
+		},
+		{
 			"@name": "bundles-required-index",
 			"@displayName": "Synching plugin required index.html...",
 			"@action": "collate",

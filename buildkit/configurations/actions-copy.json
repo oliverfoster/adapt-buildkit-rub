@@ -24,24 +24,6 @@
 			"dest": "{{outputDest}}/{{course}}"
 		},
 		{
-			"@name": "foundation-libraries",
-			"@displayName": "Synching external libraries...",
-			"@action": "copy",
-			"@onlyOnSwitches": [
-                "build"
-            ],
-            "@onlyOnVersions": [
-            	">=2.0.12"
-            ],
-            "@when": "postStart",
-			"root": "src/core/js/",
-			"src": "libraries",
-			"globs": [
-				"*"
-			],
-			"dest": "{{outputDest}}/{{course}}"
-		},
-		{
 			"@name": "foundation-scriptLoader",
 			"@displayName": "Synching script loader...",
 			"@action": "copy",
