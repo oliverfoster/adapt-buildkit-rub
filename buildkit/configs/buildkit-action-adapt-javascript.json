@@ -203,6 +203,7 @@
         },
         "paths": {
           "app": "core/js/app",
+          "plugins": "empty:",
           "coreHelpers": "core/js/helpers",
           "jquery": "empty:",
           "underscore": "empty:",
