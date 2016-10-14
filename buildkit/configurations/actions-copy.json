@@ -69,7 +69,7 @@
             ],
             "@when": "postStart",
             "force": true,
-			"root": "buildkit/resources/2.0.13",
+			"root": "buildkit/resources/2.0.12",
 			"src": "",
 			"globs": [
 				"**/**"
