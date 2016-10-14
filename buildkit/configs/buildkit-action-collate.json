@@ -42,7 +42,7 @@
         "build"
       ],
       "@onlyOnVersions": [
-        ">=2.0.12"
+        ">=2.0.13"
       ],
       "@when": "clean",
       "on": "libraries",

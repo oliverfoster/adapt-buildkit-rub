@@ -8,7 +8,7 @@
         "build"
       ],
       "@onlyOnVersions": [
-        "<2.0.12"
+        "<2.0.13"
       ],
       "@when": "build",
       "src": "src/core/js/libraries",
@@ -44,7 +44,7 @@
         "build"
       ],
       "@onlyOnVersions": [
-        "<2.0.12"
+        "<2.0.13"
       ],
       "@when": "build",
       "force": true,
@@ -62,7 +62,7 @@
         "build"
       ],
       "@onlyOnVersions": [
-        ">=2.0.12"
+        ">=2.0.13"
       ],
       "@when": "build",
       "force": true,
