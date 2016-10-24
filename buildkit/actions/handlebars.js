@@ -33,7 +33,7 @@ var handlebars = new Action({
 			return hbs;
 		}
 		//< FIX FOR HANDLEBARS CLIENT/COMPILER VERSION INCOMPATIBILITY
-		GLOBAL['hbsCompiler'] = checkHandlebarsVersion();
+		global['hbsCompiler'] = checkHandlebarsVersion();
 
     },
 
