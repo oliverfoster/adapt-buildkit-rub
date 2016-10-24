@@ -4,7 +4,7 @@ module.exports = new Plugin({
 	_logsCleared: {},
 
 	initialize: function() {
-		this.deps(GLOBAL, {
+		this.deps(global, {
 			'_': "underscore",
 			"logger": "../libraries/logger.js",
 			"fs": "fs"

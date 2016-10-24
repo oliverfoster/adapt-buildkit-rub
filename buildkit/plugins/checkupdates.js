@@ -3,7 +3,7 @@ var Plugin = require("../libraries/Plugin.js");
 module.exports = new Plugin({
 
 	initialize: function() {
-		this.deps(GLOBAL, {
+		this.deps(global, {
 			'_': "underscore",
 			"logger": "../libraries/logger.js",
 			"url": "url",

@@ -5,7 +5,7 @@ var javascriptbundle = new Action({
 
 	initialize: function() {
 
-        this.deps(GLOBAL, {
+        this.deps(global, {
             "fsext": "../libraries/fsext.js",
             "logger": "../libraries/logger.js",
             "fs": "fs",

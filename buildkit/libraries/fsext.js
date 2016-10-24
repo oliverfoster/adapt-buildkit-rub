@@ -23,10 +23,10 @@ var pub = {
 		
 		filepath = new String(filepath);
 
-		stat.basename = path.basename(filepath);
-		stat.extname = path.extname(filepath);
-		stat.filename = path.basename(filepath, stat.extname);
-		stat.dirname = path.dirname(filepath);
+		stat.basename = path.basename(filepath+"");
+		stat.extname = path.extname(filepath+"");
+		stat.filename = path.basename(filepath+"", stat.extname);
+		stat.dirname = path.dirname(filepath+"");
 		stat.path = osbp;
 
 		if (stat && !stat.isDirectory()) {
