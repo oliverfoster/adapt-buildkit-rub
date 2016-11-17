@@ -144,6 +144,11 @@ var javascript = new Action({
         default:
             options.generateSourceMaps = false;
             options.optimize = !options.switches.quick ? "uglify2" : "none";
+            options.uglify2 = {
+                compress: {
+                    support_ie8: true
+                }
+            };
             break;
         } 
 
