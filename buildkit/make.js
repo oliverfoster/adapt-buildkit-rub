@@ -1,6 +1,28 @@
 var fs = require("fs");
 var path = require("path");
 
+if (process.argv[2] == "-i") {
+	//CS: ./rub -i
+	var spawn = require('child_process').spawn;
+	var proc = spawn("adapt-buildkit", ['install', 'rub']);
+	proc.stdout.setEncoding('utf8');
+	proc.stderr.setEncoding('utf8');
+
+	function writeOut(data) { 
+		process.stdout.write(data);
+	}
+	function finish() {
+		process.exit();
+	}
+
+	proc.stdout.on('data', writeOut);
+	proc.stderr.on('data', writeOut);
+	proc.on('exit', finish);
+	proc.on('error', finish);
+	proc.on('close', finish);
+	return;
+}
+
 if (!fs.existsSync(path.join(path.dirname(__dirname), "buildkit/node_modules" ))) {
 	console.log("Please run 'adapt-buildkit install rub'.\n")
 	console.log("Note: You may need to install adapt-buildkits.")
