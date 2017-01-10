@@ -64,7 +64,7 @@ var techspec = new Action({
 
             totalSize += file.size;
 
-            file.flaggedProps = [];
+            if (!file.flaggedProps) file.flaggedProps = [];
 
             if ( options.techspec.fileSize && file.size > textSizeToBytes(options.techspec.fileSize)) {
                 file.flaggedProps.push("max filesize: " + bytesSizeToString(file.size, "MB"));
