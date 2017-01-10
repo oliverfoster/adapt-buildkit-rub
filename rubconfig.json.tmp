@@ -42,7 +42,8 @@
                 "audio_channel_layout": "mono",
                 "video_bitrate": "1.5mb/s",
                 "video_fps": 25,
-                "video_codec": "h264"
+                "video_codec": "h264",
+                "codec_id":"mp42mp41"
             },
             "mp3": {
                 "size": "10MB",

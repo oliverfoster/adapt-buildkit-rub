@@ -115,6 +115,9 @@ var techspec = new Action({
                         }
                     }
                 }
+                if (settings.codec_id && settings.codec_id != file.codec_id) {
+                    file.flaggedProps.push("video codec id: " + file.codec_id);
+                }
                 if (settings.audio_codec) {
                     if (settings.audio_codec instanceof Array) {
                         if (settings.audio_codec.indexOf(file.audio_codec) == -1) {
@@ -222,6 +225,7 @@ var techspec = new Action({
                                 file.video_fps = eval(video.avg_frame_rate);
                             }
                             file.video_codec = video.codec_name;
+                            file.codec_id = probeData.metadata.compatible_brands;
                         } 
 
                         if (audio) {
