@@ -40,6 +40,8 @@ adapt-buildkit install rub
     --trackinginsert  inserts tracking ids (assumes: not -b)
     --trackingdelete  delete tracking ids (assumes: not -b)
     --trackingreset   resets tracking ids (assumes: not -b)
+    --checkmp4        checks codec id of mp4 files (assumes --codecId mp42mp41)
+    --codecId [value] set checkmp4 codec id
     -w, --watch       watch for changes (assumes: -b)
     -d, --debug       no minification, produce sourcemaps (assumes: -b)
     -f, --force       force rebuild (assumes: -b)
