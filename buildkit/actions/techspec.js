@@ -64,6 +64,8 @@ var techspec = new Action({
 
             totalSize += file.size;
 
+            file.flaggedProps = [];
+
             if ( options.techspec.fileSize && file.size > textSizeToBytes(options.techspec.fileSize)) {
                 file.flaggedProps.push("max filesize: " + bytesSizeToString(file.size, "MB"));
             } 
@@ -76,8 +78,6 @@ var techspec = new Action({
             
             if (options.techspec.extensions && options.techspec.extensions[extension]) {
                 var settings = options.techspec.extensions[extension];
-                
-                file.flaggedProps = [];
                 
                 if ( file.size > textSizeToBytes(settings.size)) {
                     file.flaggedProps.push("filesize: " + bytesSizeToString(file.size, "KB"));
