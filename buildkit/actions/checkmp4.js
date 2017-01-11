@@ -109,15 +109,22 @@ var checkmp4 = new Action({
                 var track = file.path;
                 probe(track, function(err, probeData) {
 
-                    /*logger.log(file.path, 1);
-                    for (var i in probeData.metadata) {
-                        logger.log(i+"="+probeData.metadata[i], 1);
-                    }*/
+                    var shortenedPath = (file.path+"").substr(options.src.length+1).replace(/\\/g, "/");
+                    var v = pluckStream(probeData, "video");
+                    var br = probeData.format.bit_rate != "N/A" ? Math.round(probeData.format.bit_rate/1000) : "";
+                    var fps = v.r_frame_rate.indexOf("/") ? eval(v.r_frame_rate) : (v.avg_frame_rate.indexOf("/") ? eval(v.avg_frame_rate) : "");
+                    var codec_name = v.codec_name || "";
+                    var codec_id = probeData.metadata.compatible_brands || "";
+                    var params = [v.width+"x"+v.height];
 
-                    var video = pluckStream(probeData, "video");
+                    if (br) params.push(br+"kbps");
+                    if (fps) params.push(fps+"fps");
+                    if (codec_name) params.push(codec_name);
+                    if (codec_id) params.push(codec_id);
 
-                    if (video) {
+                    if (v) {
                         file.codec_id = probeData.metadata.compatible_brands;
+                        logger.log("["+params.join(",")+"] "+shortenedPath,1);
                     }
 
                     checkCallback(file, options);
