@@ -52,8 +52,12 @@ var checkmp4 = new Action({
         var totalChecked = 0;
         var suspects = [];
         for (var i = 0, l = list.length; i < l; i++) {
-            checkFile( list[i], options);
-            
+            checkFile( list[i], options);   
+        }
+
+        if (list.length == 0) {
+            logger.log("checkmp4: no mp4s found", 1);
+            done(options);
         }
 
         function checkCallback(file, options) {
@@ -84,6 +88,8 @@ var checkmp4 = new Action({
                             logger.log("checkmp4: Failed [" + suspects[i].flaggedProps.join(", ") + "] " + shortenedPath, 2);
                         }
                     }
+                } else {
+                    logger.log("checkmp4: all mp4s OK", 1);
                 }
 
                 done(options);
