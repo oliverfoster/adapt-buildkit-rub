@@ -1,36 +1,42 @@
 {
-	"actions": [
-		{
-			"@name": "stringreplacement",
-			"@displayName": "String replacement...",
-			"@action": "stringreplacement",
+    "actions": [
+        {
+            "@name": "stringreplacement",
+            "@displayName": "String replacement...",
+            "@action": "stringreplacement",
             "@onlyOnSwitches": [
                 "build"
             ],
             "@when": "finish",
-			"@types": [ "builds/courses/course", "src/courses/course" ],
-			"src": "src",
-			"globs": [
+            "@types": [ "builds/courses/course", "src/courses/course" ],
+            "src": "src",
+            "globs": [
                 "**/adapt-contrib-spoor/required/imsmanifest.xml"
             ],
             "dest": "{{outputDest}}/{{course}}/imsmanifest.xml",
-            "context": "{{outputDest}}/{{course}}/course/en/course.json"
-		},
-		{
-			"@name": "stringreplacement",
-			"@displayName": "String replacement...",
-			"@action": "stringreplacement",
+            "json": {
+                "config": "{{outputDest}}/{{course}}/course/config.json"
+            },
+            "context": "{{outputDest}}/{{course}}/course/{{json.config._defaultLanguage}}/course.json"
+        },
+        {
+            "@name": "stringreplacement",
+            "@displayName": "String replacement...",
+            "@action": "stringreplacement",
             "@onlyOnSwitches": [
                 "build"
             ],
-			"@types": [ "src/course" ],
+            "@types": [ "src/course" ],
             "@when": "finish",
-			"src": "src",
-			"globs": [
-				"**/adapt-contrib-spoor/required/imsmanifest.xml"
-			],
+            "src": "src",
+            "globs": [
+                "**/adapt-contrib-spoor/required/imsmanifest.xml"
+            ],
             "dest": "{{outputDest}}/imsmanifest.xml",
-            "context": "{{outputDest}}/course/en/course.json"
-		}
-	]
+            "json": {
+                "config": "{{outputDest}}/course/config.json"
+            },
+            "context": "{{outputDest}}/course/{{json.config._defaultLanguage}}/course.json"
+        }
+    ]
 }

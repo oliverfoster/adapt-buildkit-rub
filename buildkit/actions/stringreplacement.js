@@ -15,19 +15,28 @@ var stringreplacement = new Action({
 
     },
 
-	perform: function(options, done, started) {
+    perform: function(options, done, started) {
         started();
         
-		if (options.root === undefined) options.root = "";
+        if (options.root === undefined) options.root = "";
         
-		options.root = fsext.replace(options.root, options);
-		options.root = fsext.expand(options.root);
-		options.dest = fsext.replace(options.dest, options);
-		options.dest = fsext.expand(options.dest);
+        options.root = fsext.replace(options.root, options);
+        options.root = fsext.expand(options.root);
+        options.dest = fsext.replace(options.dest, options);
+        options.dest = fsext.expand(options.dest);
+
+        var json = {};
+        for (var k in options.json) {
+            var filePath = fsext.replace(options.json[k], options);
+            filePath = fsext.expand(filePath);
+            json[k] = JSON.parse(fs.readFileSync(filePath).toString());
+        }
+        options.json = json;
+
         options.context = fsext.replace(options.context, options);
         options.context = fsext.expand(options.context);
 
-		var srcPath = path.join(options.root, options.src);
+        var srcPath = path.join(options.root, options.src);
 
         if (fs.existsSync(srcPath)) {
 
@@ -36,7 +45,7 @@ var stringreplacement = new Action({
                 globs = globs.concat(options.exclusionGlobs);
             }
 
-    		var list = fsext.glob(srcPath, globs);
+            var list = fsext.glob(srcPath, globs);
             if (list.length > 0) {
                 var filePath = list[0]+"";
                 var isFileExists = fs.existsSync(filePath);
@@ -52,7 +61,7 @@ var stringreplacement = new Action({
             }
         }
         done(options);
-	}
+    }
     
 });
 
