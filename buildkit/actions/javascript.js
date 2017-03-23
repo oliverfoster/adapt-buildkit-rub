@@ -102,12 +102,18 @@ var javascript = new Action({
                         } else {
                             options.shim[rootName]['deps'].push(relativePath.replace(/\\/g, "/"));
                         }
-
-                        
                     }
                 }
             }
             
+        }
+
+        if (options.libraryName && options.crossActionBridge && options.crossActionBridge.requires) {
+            var rootName = options.name;
+            options.shim = options.shim || {};
+            options.shim[rootName] = options.shim[rootName] || {};
+            options.shim[rootName]['deps'] = options.shim[rootName]['deps'] || [];
+            options.shim[rootName]['deps'].push.apply(options.shim[rootName]['deps'], _.keys(options.crossActionBridge.requires[options.libraryName]));
         }
 
         if (options.empties) {
@@ -132,7 +138,6 @@ var javascript = new Action({
                     }
                 }
             }
-           
         }
 
 

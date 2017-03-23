@@ -407,11 +407,14 @@ var pub =  _.extend(eventEmitter, {
 
 		function runActions(terminalOptions, actions) {
 
+			var crossActionBridge = {};
 			var configured = [];
 			for (var i = 0, l = actions.length; i < l; i++) {
 
 				var actionConfig = actions[i];
-				var actionOptions = _.extend({}, terminalOptions, actionConfig);
+				var actionOptions = _.extend({}, terminalOptions, actionConfig, {
+					crossActionBridge: crossActionBridge
+				});
 
 				configured.push(actionOptions);
 			}

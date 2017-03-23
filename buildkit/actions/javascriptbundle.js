@@ -88,11 +88,7 @@ var javascriptbundle = new Action({
 			}
 		}
 
-		output+="define(";
-		if (options.requires) {
-			output+=JSON.stringify(_.values(options.requires), null, "\t")+",";
-		}
-		output+="function(){});";
+		output = "";
 
 		if (fs.existsSync(options.dest)) fs.unlinkSync(options.dest);
 		if (fs.existsSync(options.dest+".map")) fs.unlinkSync(options.dest+".map");
@@ -104,6 +100,9 @@ var javascriptbundle = new Action({
 		 }
 
 		fs.writeFileSync(options.dest, output);
+
+		options.crossActionBridge.requires = options.crossActionBridge.requires || {};
+		options.crossActionBridge.requires[options.libraryName] = options.requires;
 
 		done(options);
 	},

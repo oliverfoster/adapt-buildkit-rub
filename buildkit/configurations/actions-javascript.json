@@ -2,6 +2,7 @@
     "actions": [
         {
             "@name": "libraries-bundle",
+            "libraryName": "libraries", 
             "@displayName": "Gathering foundation libraries...",
             "@action": "javascriptbundle",
             "@onlyOnSwitches": [
@@ -10,7 +11,6 @@
             "@onlyOnVersions": [
                 "<2.0.13"
             ],
-            "@buildOnce": true,
             "@when": "postStart",
             "src": "src",
             "globs": [
@@ -29,7 +29,6 @@
                 "<2.0.13"
             ],
             "@when": "postStart",
-            "@buildOnce": true,
             "libraryName": "libraries", 
             "name": "core/js/libraries/libraries",
             "src": "src",
@@ -211,6 +210,7 @@
         },
         {
             "@name": "bundles-bundle",
+            "libraryName": "plugins",
             "@displayName": "Gathering plugin javascript...",
             "@action": "javascriptbundle",
             "@onlyOnSwitches": [
