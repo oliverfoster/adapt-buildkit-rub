@@ -52,6 +52,9 @@
 			"@onlyOnSwitches": [
                 "build"
             ],
+            "@onlyOnVersions": [
+                ">=2.0.0"
+            ],
             "@types": [ "src/course" ],
             "@when": "preFinish",
 			"src": "src",
@@ -73,6 +76,9 @@
 			"@action": "schemadefaults",
 			"@onlyOnSwitches": [
                 "build"
+            ],
+            "@onlyOnVersions": [
+                ">=2.0.0"
             ],
             "@types": [ "builds/courses/course", "src/courses/course" ],
             "@when": "preFinish",
