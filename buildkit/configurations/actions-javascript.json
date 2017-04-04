@@ -228,7 +228,7 @@
                 "**/src/menu/**",
                 "**/src/theme/**"
             ],
-            "dest": "{{outputDest}}/{{course}}/plugins.js"
+            "dest": "src/plugins.js"
         },
         {
             "@name": "bundles-javascript",

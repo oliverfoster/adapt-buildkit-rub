@@ -27,25 +27,6 @@ var javascriptbundle = new Action({
 			globs = globs.concat(options.exclusionGlobs);
 		}
 
-		if (fs.existsSync(options.dest) && options.switches.force !== true) {
-	        var files = fsext.glob(options.src, globs);
-	        var destStat = fs.statSync(options.dest);
-	        var changed = false;
-	        for (var i = 0, l = files.length; i < l; i++) {
-	            if (files[i].mtime > destStat.mtime || files[i].ctime > destStat.mtime) {
-	                changed = true;
-	                break;
-	            }
-	        }
-	        if (!changed) {
-	        	return done(options);
-	        }
-	    }
-
-	    if (options['@buildOnce'] && this._outputCache[options['@name']]) {
-            return done(options);
-        }
-
 	    started();
 
 		options.requires = {};
@@ -94,10 +75,6 @@ var javascriptbundle = new Action({
 		if (fs.existsSync(options.dest+".map")) fs.unlinkSync(options.dest+".map");
 
 		fsext.mkdir(path.dirname(options.dest));
-
-		 if (options['@buildOnce']) {
-		 	this._outputCache[options['@name']] = true;
-		 }
 
 		fs.writeFileSync(options.dest, output);
 
