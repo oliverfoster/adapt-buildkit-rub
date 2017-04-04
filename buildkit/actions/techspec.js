@@ -65,11 +65,13 @@ var techspec = new Action({
             totalSize += file.size;
 
             if ( options.techspec.fileSize && file.size > textSizeToBytes(options.techspec.fileSize)) {
+                file.flaggedProps = file.flaggedProps || [];
                 file.flaggedProps.push("max filesize: " + bytesSizeToString(file.size, "MB"));
             } 
 
             if (options.techspec.restrictedExtensions) {
                 if (options.techspec.restrictedExtensions.indexOf(extension) > -1) {
+                    file.flaggedProps = file.flaggedProps || [];
                     file.flaggedProps.push("extension:" + extension);           
                 }
             }
@@ -77,7 +79,7 @@ var techspec = new Action({
             if (options.techspec.extensions && options.techspec.extensions[extension]) {
                 var settings = options.techspec.extensions[extension];
                 
-                file.flaggedProps = [];
+                file.flaggedProps = file.flaggedProps || [];
                 
                 if ( file.size > textSizeToBytes(settings.size)) {
                     file.flaggedProps.push("filesize: " + bytesSizeToString(file.size, "KB"));
