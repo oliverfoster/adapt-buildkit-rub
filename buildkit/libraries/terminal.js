@@ -63,6 +63,8 @@ var pub = {
             .option('--trackinginsert', "inserts tracking ids (assumes: not -b)")
             .option('--trackingdelete', "delete tracking ids (assumes: not -b)")
             .option('--trackingreset', "resets tracking ids (assumes: not -b)")
+            .option('--checkmp4', "checks codec id of mp4 files (assumes --codecId mp42mp41)")
+            .option('--codecId [value]', "set checkmp4 codec id")
             .option('-w, --watch', "watch for changes (assumes: -b)")
             .option('-d, --debug', "no minification, produce sourcemaps (assumes: -b)")
             .option('-f, --force', "force rebuild (assumes: -b)")

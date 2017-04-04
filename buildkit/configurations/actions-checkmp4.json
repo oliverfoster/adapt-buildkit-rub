@@ -1,0 +1,34 @@
+{
+	"actions": [
+		{
+			"@name": "checkmp4",
+			"@displayName": "Checking codec id of mp4 files",
+			"@action": "checkmp4",
+            "@onlyOnSwitches": [
+                "checkmp4"
+            ],
+            "@when": "start",
+			"@types": [ "builds/courses/course", "src/courses/course" ],
+			"src": "{{outputDest}}/{{course}}",
+			"globs": [
+				"**/*.mp4"
+			],
+            "logPath": "rub-check.log"
+		},
+		{
+			"@name": "checkmp4",
+			"@displayName": "Checking codec id of mp4 files",
+			"@action": "checkmp4",
+            "@onlyOnSwitches": [
+                "checkmp4"
+            ],
+			"@types": [ "src/course" ],
+            "@when": "start",
+			"src": "{{outputDest}}",
+			"globs": [
+                "**/*.mp4"
+			],
+            "logPath": "rub-check.log"
+		}
+	]
+}

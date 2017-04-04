@@ -28,6 +28,20 @@
 		},
 		{
 			"on": {
+				"checkmp4": true
+			},
+			"alwaysSet": {
+				"build": false,
+				"trackinginsert": false
+			},
+			"unspecifiedSet": {
+				"build":false,
+				"trackinginsert": false,
+				"codecId": "mp42mp41"
+			}
+		},
+		{
+			"on": {
 				"forceall": true
 			},
 			"alwaysSet": {
