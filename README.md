@@ -41,7 +41,7 @@ adapt-buildkit install rub-develop
 
 
 ```
-#####--wait 
+##### --wait 
 Has few use-cases. When double-clicking on rub.bat from windows, this feature is useful in that the command prompt will not exit immediately.
 
 ##### --tracking*
