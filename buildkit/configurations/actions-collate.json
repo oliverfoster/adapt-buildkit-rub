@@ -12,6 +12,7 @@
             "root": "src",
             "src": "",
             "globs": [
+                "**/core/required/**",
                 "**/extensions/**/required/**",
                 "**/components/**/required/**",
                 "**/theme/**/required/**",
@@ -122,6 +123,7 @@
             "root": "src",
             "src": "",
             "globs": [
+                "**/core/fonts/**",
                 "**/extensions/**/fonts/**",
                 "**/components/**/fonts/**",
                 "**/menu/**/fonts/**",
@@ -144,6 +146,7 @@
             "root": "src",
             "src": "",
             "globs": [
+                "**/core/assets/**",
                 "**/theme/**/assets/**" 
             ],
             "diffGlobs": [
