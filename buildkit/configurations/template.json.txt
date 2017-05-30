@@ -1,10 +1,10 @@
 {
-	"actions": [
-		{
-			"@name": "nameOfActionForWatches",
-			"@displayName": "Display Description",
-			"@action": "nameOfActionJavascriptFile",
-			"@onlyOnSwitches": [
+    "actions": [
+        {
+            "@name": "nameOfActionForWatches",
+            "@displayName": "Display Description",
+            "@action": "nameOfActionJavascriptFile",
+            "@onlyOnSwitches": [
                 "build",
                 "wait",
                 "trackinginsert",
@@ -38,10 +38,10 @@
             ],
             "@buildOnce": false,
             "@when": "finish|preFinish|postStart|start",
-			"@types": [ "builds/courses/course", "src/courses/course", "src/course" ]
-			/*
-				put your action configuration here
-			*/
-		}
-	]
+            "@types": [ "builds/courses/course", "src/courses/course", "src/course" ]
+            /*
+                put your action configuration here
+            */
+        }
+    ]
 }

@@ -1,33 +1,33 @@
 {
-	"actions": [
-		{
-			"@name": "bundles-handlebars",
-			"@displayName": "Building plugin templates...",
-			"@action": "handlebars",
-			"@onlyOnSwitches": [
+    "actions": [
+        {
+            "@name": "bundles-handlebars",
+            "@displayName": "Building plugin templates...",
+            "@action": "handlebars",
+            "@onlyOnSwitches": [
                 "build"
             ],
             "@when": "postStart",
-			"src": [ 
-				"src/core",
-				"src/components",
-				"src/extensions",
-				"src/menu",
-				"src/theme"
-			],
-			"dest": "{{outputDest}}/{{course}}/templates.js",
-			"paritalGlobs": [ "**/partials/**" ],
-			"globs":  [ 
-				"**/templates/**/*.hbs", 
-				"**/templates/**/*.html", 
-				"**/templates/**/*.handlebars", 
-				"**/templates/**/*.htm" 
-			],
-			"defines": "templates",
-			"requires": {
-				"Handlebars": "handlebars"
-			},
-			"context": "Handlebars.templates"
-		}
-	]
+            "src": [ 
+                "src/core",
+                "src/components",
+                "src/extensions",
+                "src/menu",
+                "src/theme"
+            ],
+            "dest": "{{outputDest}}/{{course}}/templates.js",
+            "paritalGlobs": [ "**/partials/**" ],
+            "globs":  [ 
+                "**/templates/**/*.hbs", 
+                "**/templates/**/*.html", 
+                "**/templates/**/*.handlebars", 
+                "**/templates/**/*.htm" 
+            ],
+            "defines": "templates",
+            "requires": {
+                "Handlebars": "handlebars"
+            },
+            "context": "Handlebars.templates"
+        }
+    ]
 }

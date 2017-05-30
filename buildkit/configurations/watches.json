@@ -1,527 +1,527 @@
 {
-	"watches": [
-		{
-			"@name": "bundles-templates-components",
-			"path": "src/components",
-			"globs": [
-				"**/templates/**/*.hbs", 
-				"**/templates/**/*.html", 
-				"**/templates/**/*.handlebars", 
-				"**/templates/**/*.htm"
-			],
-			"actions": [
-				"bundles-handlebars",
-				"bundles-fonts-folder",
-				"bundles-required-folder",
-				"bundles-assets-folder",
-				"stringreplacement",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-templates-extensions",
-			"path": "src/extensions",
-			"globs": [
-				"**/templates/**/*.hbs", 
-				"**/templates/**/*.html", 
-				"**/templates/**/*.handlebars", 
-				"**/templates/**/*.htm"
-			],
-			"actions": [
-				"bundles-handlebars",
-				"bundles-fonts-folder",
-				"bundles-required-folder",
-				"bundles-assets-folder",
-				"stringreplacement",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-templates-theme",
-			"path": "src/theme",
-			"globs": [
-				"**/templates/**/*.hbs", 
-				"**/templates/**/*.html", 
-				"**/templates/**/*.handlebars", 
-				"**/templates/**/*.htm"
-			],
-			"actions": [
-				"bundles-handlebars",
-				"bundles-fonts-folder",
-				"bundles-required-folder",
-				"bundles-assets-folder",
-				"stringreplacement",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-templates-menu",
-			"path": "src/menu",
-			"globs": [
-				"**/templates/**/*.hbs", 
-				"**/templates/**/*.html", 
-				"**/templates/**/*.handlebars", 
-				"**/templates/**/*.htm"
-			],
-			"actions": [
-				"bundles-handlebars",
-				"bundles-fonts-folder",
-				"bundles-required-folder",
-				"bundles-assets-folder",
-				"stringreplacement",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-javascript-components",
-			"path": "src/components",
-			"globs": [
-				"**/js/**/*.js"
-			],
-			"actions": [
-				"bundles-bundle",
-				"bundles-javascript",
-				"bundles-fonts-folder",
-				"bundles-required-folder",
-				"bundles-assets-folder",
-				"stringreplacement",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-javascript-extensions",
-			"path": "src/extensions",
-			"globs": [
-				"**/js/**/*.js"
-			],
-			"actions": [
-				"bundles-bundle",
-				"bundles-javascript",
-				"bundles-fonts-folder",
-				"bundles-required-folder",
-				"bundles-assets-folder",
-				"stringreplacement",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-javascript-theme",
-			"path": "src/theme",
-			"globs": [
-				"**/js/**/*.js"
-			],
-			"actions": [
-				"bundles-bundle",
-				"bundles-javascript",
-				"bundles-fonts-folder",
-				"bundles-required-folder",
-				"bundles-assets-folder",
-				"stringreplacement",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-javascript-menu",
-			"path": "src/menu",
-			"globs": [
-				"**/js/**/*.js"
-			],
-			"actions": [
-				"bundles-bundle",
-				"bundles-javascript",
-				"bundles-fonts-folder",
-				"bundles-required-folder",
-				"bundles-assets-folder",
-				"stringreplacement",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "libraries-javascript",
-			"path": "src/core",
-			"globs": [
-				"**/js/libraries/**/*.js",
-				"!**/js/libraries/**/libraries.js"
-			],
-			"actions": [
-				"libraries-bundle",
-				"libraries-javascript"
-			]
-		},
-		{
-			"@name": "core-javascript",
-			"path": "src/core",
-			"globs": [
-				"**/js/*.js",
-				"**/js/models/*.js",
-				"**/js/views/*.js",
-				"!**/js/scriptLoader.js"
-			],
-			"actions": [
-				"core-javascript"
-			]
-		},
-		{
-			"@name": "bundles-less-core",
-			"path": "src/core",
-			"globs": [
-				"**/less/**/*.less"
-			],
-			"actions": [
-				"bundles-less",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "bundles-less-components",
-			"path": "src/components",
-			"globs": [
-				"**/less/**/*.less"
-			],
-			"actions": [
-				"bundles-less",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "bundles-less-extensions",
-			"path": "src/extensions",
-			"globs": [
-				"**/less/**/*.less"
-			],
-			"actions": [
-				"bundles-less",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "bundles-less-menu",
-			"path": "src/menu",
-			"globs": [
-				"**/less/**/*.less"
-			],
-			"actions": [
-				"bundles-less",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "bundles-less-theme",
-			"path": "src/theme",
-			"globs": [
-				"**/less/**/*.less"
-			],
-			"actions": [
-				"bundles-less",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "foundation-libraries",
-			"path": "src/core/js/libraries",
-			"globs": [
-				"**/*.js",
-				"!**/libraries.js"
-			],
-			"actions": [
-				"foundation-libraries"
-			]
-		},
-		{
-			"@name": "foundation-scriptLoader",
-			"path": "src/core/js/scriptLoader.js",
-			"actions": [
-				"foundation-scriptLoader"
-			]
-		},
-		{
-			"@name": "foundation-index",
-			"path": "src/index.html",
-			"actions": [
-				"foundation-index.html"
-			]
-		},
-		{
-			"@name": "bundles-fonts-folder-extensions",
-			"path": "src/extensions",
-			"globs": [
-				"**/fonts/**"
-			],
-			"actions": [
-				"bundles-fonts-folder",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-fonts-folder-components",
-			"path": "src/components",
-			"globs": [
-				"**/fonts/**"
-			],
-			"actions": [
-				"bundles-fonts-folder",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-fonts-folder-theme",
-			"path": "src/theme",
-			"globs": [
-				"**/fonts/**"
-			],
-			"actions": [
-				"bundles-fonts-folder",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-fonts-folder-menu",
-			"path": "src/menu",
-			"globs": [
-				"**/fonts/**"
-			],
-			"actions": [
-				"bundles-fonts-folder",
-				"assetrequired",
-				"techspec"
-			]
-		},
-		{
-			"@name": "bundles-required-extensions",
-			"path": "src/extensions",
-			"globs": [
-				"**/required/**"
-			],
-			"actions": [
-				"bundles-required-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "bundles-required-components",
-			"path": "src/components",
-			"globs": [
-				"**/required/**"
-			],
-			"actions": [
-				"bundles-required-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "bundles-required-menu",
-			"path": "src/menu",
-			"globs": [
-				"**/required/**"
-			],
-			"actions": [
-				"bundles-required-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "bundles-required-theme",
-			"path": "src/theme",
-			"globs": [
-				"**/required/**"
-			],
-			"actions": [
-				"bundles-required-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "bundles-assets-folder-extensions",
-			"path": "src/extensions",
-			"globs": [
-				"**/assets/**"
-			],
-			"actions": [
-				"bundles-assets-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "bundles-assets-folder-components",
-			"path": "src/components",
-			"globs": [
-				"**/assets/**"
-			],
-			"actions": [
-				"bundles-assets-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "bundles-assets-folder-menu",
-			"path": "src/menu",
-			"globs": [
-				"**/assets/**"
-			],
-			"actions": [
-				"bundles-assets-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "theme-assets-folder",
-			"path": "src/theme",
-			"globs": [
-				"**/assets/**"
-			],
-			"actions": [
-				"theme-assets-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "theme-json",
-			"path": "src/theme",
-			"globs": [
-				"**/theme.json"
-			],
-			"actions": [
-				"json-lint",
-				"json-check",
-				"themejson",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-folder",
-			"@types": [ "src/course" ],
-			"path": "src/course",
-			"expand": true,
-			"globs": [
-				"**/*",
-				"**",
-				"!*.json"
-			],
-			"actions": [
-				"course-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-folder",
-			"@types": [ "src/courses/course" ],
-			"path": "src/courses",
-			"expand": true,
-			"globs": [
-				"**/{{course}}/**/*",
-				"**/**/{{course}}/**",
-				"!*.json"
-			],
-			"actions": [
-				"course-folder",
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-folder",
-			"@types": [ "builds/courses/course" ],
-			"@onlyOnSwitches": [
+    "watches": [
+        {
+            "@name": "bundles-templates-components",
+            "path": "src/components",
+            "globs": [
+                "**/templates/**/*.hbs", 
+                "**/templates/**/*.html", 
+                "**/templates/**/*.handlebars", 
+                "**/templates/**/*.htm"
+            ],
+            "actions": [
+                "bundles-handlebars",
+                "bundles-fonts-folder",
+                "bundles-required-folder",
+                "bundles-assets-folder",
+                "stringreplacement",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-templates-extensions",
+            "path": "src/extensions",
+            "globs": [
+                "**/templates/**/*.hbs", 
+                "**/templates/**/*.html", 
+                "**/templates/**/*.handlebars", 
+                "**/templates/**/*.htm"
+            ],
+            "actions": [
+                "bundles-handlebars",
+                "bundles-fonts-folder",
+                "bundles-required-folder",
+                "bundles-assets-folder",
+                "stringreplacement",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-templates-theme",
+            "path": "src/theme",
+            "globs": [
+                "**/templates/**/*.hbs", 
+                "**/templates/**/*.html", 
+                "**/templates/**/*.handlebars", 
+                "**/templates/**/*.htm"
+            ],
+            "actions": [
+                "bundles-handlebars",
+                "bundles-fonts-folder",
+                "bundles-required-folder",
+                "bundles-assets-folder",
+                "stringreplacement",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-templates-menu",
+            "path": "src/menu",
+            "globs": [
+                "**/templates/**/*.hbs", 
+                "**/templates/**/*.html", 
+                "**/templates/**/*.handlebars", 
+                "**/templates/**/*.htm"
+            ],
+            "actions": [
+                "bundles-handlebars",
+                "bundles-fonts-folder",
+                "bundles-required-folder",
+                "bundles-assets-folder",
+                "stringreplacement",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-javascript-components",
+            "path": "src/components",
+            "globs": [
+                "**/js/**/*.js"
+            ],
+            "actions": [
+                "bundles-bundle",
+                "bundles-javascript",
+                "bundles-fonts-folder",
+                "bundles-required-folder",
+                "bundles-assets-folder",
+                "stringreplacement",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-javascript-extensions",
+            "path": "src/extensions",
+            "globs": [
+                "**/js/**/*.js"
+            ],
+            "actions": [
+                "bundles-bundle",
+                "bundles-javascript",
+                "bundles-fonts-folder",
+                "bundles-required-folder",
+                "bundles-assets-folder",
+                "stringreplacement",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-javascript-theme",
+            "path": "src/theme",
+            "globs": [
+                "**/js/**/*.js"
+            ],
+            "actions": [
+                "bundles-bundle",
+                "bundles-javascript",
+                "bundles-fonts-folder",
+                "bundles-required-folder",
+                "bundles-assets-folder",
+                "stringreplacement",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-javascript-menu",
+            "path": "src/menu",
+            "globs": [
+                "**/js/**/*.js"
+            ],
+            "actions": [
+                "bundles-bundle",
+                "bundles-javascript",
+                "bundles-fonts-folder",
+                "bundles-required-folder",
+                "bundles-assets-folder",
+                "stringreplacement",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "libraries-javascript",
+            "path": "src/core",
+            "globs": [
+                "**/js/libraries/**/*.js",
+                "!**/js/libraries/**/libraries.js"
+            ],
+            "actions": [
+                "libraries-bundle",
+                "libraries-javascript"
+            ]
+        },
+        {
+            "@name": "core-javascript",
+            "path": "src/core",
+            "globs": [
+                "**/js/*.js",
+                "**/js/models/*.js",
+                "**/js/views/*.js",
+                "!**/js/scriptLoader.js"
+            ],
+            "actions": [
+                "core-javascript"
+            ]
+        },
+        {
+            "@name": "bundles-less-core",
+            "path": "src/core",
+            "globs": [
+                "**/less/**/*.less"
+            ],
+            "actions": [
+                "bundles-less",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "bundles-less-components",
+            "path": "src/components",
+            "globs": [
+                "**/less/**/*.less"
+            ],
+            "actions": [
+                "bundles-less",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "bundles-less-extensions",
+            "path": "src/extensions",
+            "globs": [
+                "**/less/**/*.less"
+            ],
+            "actions": [
+                "bundles-less",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "bundles-less-menu",
+            "path": "src/menu",
+            "globs": [
+                "**/less/**/*.less"
+            ],
+            "actions": [
+                "bundles-less",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "bundles-less-theme",
+            "path": "src/theme",
+            "globs": [
+                "**/less/**/*.less"
+            ],
+            "actions": [
+                "bundles-less",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "foundation-libraries",
+            "path": "src/core/js/libraries",
+            "globs": [
+                "**/*.js",
+                "!**/libraries.js"
+            ],
+            "actions": [
+                "foundation-libraries"
+            ]
+        },
+        {
+            "@name": "foundation-scriptLoader",
+            "path": "src/core/js/scriptLoader.js",
+            "actions": [
+                "foundation-scriptLoader"
+            ]
+        },
+        {
+            "@name": "foundation-index",
+            "path": "src/index.html",
+            "actions": [
+                "foundation-index.html"
+            ]
+        },
+        {
+            "@name": "bundles-fonts-folder-extensions",
+            "path": "src/extensions",
+            "globs": [
+                "**/fonts/**"
+            ],
+            "actions": [
+                "bundles-fonts-folder",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-fonts-folder-components",
+            "path": "src/components",
+            "globs": [
+                "**/fonts/**"
+            ],
+            "actions": [
+                "bundles-fonts-folder",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-fonts-folder-theme",
+            "path": "src/theme",
+            "globs": [
+                "**/fonts/**"
+            ],
+            "actions": [
+                "bundles-fonts-folder",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-fonts-folder-menu",
+            "path": "src/menu",
+            "globs": [
+                "**/fonts/**"
+            ],
+            "actions": [
+                "bundles-fonts-folder",
+                "assetrequired",
+                "techspec"
+            ]
+        },
+        {
+            "@name": "bundles-required-extensions",
+            "path": "src/extensions",
+            "globs": [
+                "**/required/**"
+            ],
+            "actions": [
+                "bundles-required-folder",
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "bundles-required-components",
+            "path": "src/components",
+            "globs": [
+                "**/required/**"
+            ],
+            "actions": [
+                "bundles-required-folder",
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "bundles-required-menu",
+            "path": "src/menu",
+            "globs": [
+                "**/required/**"
+            ],
+            "actions": [
+                "bundles-required-folder",
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "bundles-required-theme",
+            "path": "src/theme",
+            "globs": [
+                "**/required/**"
+            ],
+            "actions": [
+                "bundles-required-folder",
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "bundles-assets-folder-extensions",
+            "path": "src/extensions",
+            "globs": [
+                "**/assets/**"
+            ],
+            "actions": [
+                "bundles-assets-folder",
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "bundles-assets-folder-components",
+            "path": "src/components",
+            "globs": [
+                "**/assets/**"
+            ],
+            "actions": [
+                "bundles-assets-folder",
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "bundles-assets-folder-menu",
+            "path": "src/menu",
+            "globs": [
+                "**/assets/**"
+            ],
+            "actions": [
+                "bundles-assets-folder",
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "theme-assets-folder",
+            "path": "src/theme",
+            "globs": [
+                "**/assets/**"
+            ],
+            "actions": [
+                "theme-assets-folder",
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "theme-json",
+            "path": "src/theme",
+            "globs": [
+                "**/theme.json"
+            ],
+            "actions": [
+                "json-lint",
+                "json-check",
+                "themejson",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "course-folder",
+            "@types": [ "src/course" ],
+            "path": "src/course",
+            "expand": true,
+            "globs": [
+                "**/*",
+                "**",
+                "!*.json"
+            ],
+            "actions": [
+                "course-folder",
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "course-folder",
+            "@types": [ "src/courses/course" ],
+            "path": "src/courses",
+            "expand": true,
+            "globs": [
+                "**/{{course}}/**/*",
+                "**/**/{{course}}/**",
+                "!*.json"
+            ],
+            "actions": [
+                "course-folder",
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "course-folder",
+            "@types": [ "builds/courses/course" ],
+            "@onlyOnSwitches": [
                 "debug"
             ],
             "@excludeOnSwitches": [
                 "quick"
             ],
-			"path": "builds/{{course}}",
-			"expand": true,
-			"globs": [
-				"**/course/**/*",
-				"**/course/**",
-				"!*.json"
-			],
-			"actions": [
-				"assetrequired",
-				"techspec",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-json",
-			"@types": [ "src/course" ],
-			"path": "src/course",
-			"expand": false,
-			"globs": [
-				"**/*.json"
-			],
-			"actions": [
-				"course-folder",
-				"json-lint",
-				"json-check",
-				"assetrequired",
-				"techspec",
-				"themejson",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-json",
-			"@types": [ "src/courses/course" ],
-			"path": "src/courses/{{course}}",
-			"expand": true,
-			"globs": [
-				"**/*.json"
-			],
-			"actions": [
-				"course-folder",
-				"json-lint",
-				"json-check",
-				"assetrequired",
-				"techspec",
-				"themejson",
-				"stringreplacement"
-			]
-		},
-		{
-			"@name": "course-json",
-			"@types": [ "builds/courses/course" ],
-			"path": "builds/{{course}}",
-			"expand": true,
-			"globs": [
-				"**/course/**/*.json"
-			],
-			"actions": [
-				"json-lint",
-				"json-check",
-				"assetrequired",
-				"techspec",
-				"themejson",
-				"stringreplacement"
-			]
-		}
-	]
+            "path": "builds/{{course}}",
+            "expand": true,
+            "globs": [
+                "**/course/**/*",
+                "**/course/**",
+                "!*.json"
+            ],
+            "actions": [
+                "assetrequired",
+                "techspec",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "course-json",
+            "@types": [ "src/course" ],
+            "path": "src/course",
+            "expand": false,
+            "globs": [
+                "**/*.json"
+            ],
+            "actions": [
+                "course-folder",
+                "json-lint",
+                "json-check",
+                "assetrequired",
+                "techspec",
+                "themejson",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "course-json",
+            "@types": [ "src/courses/course" ],
+            "path": "src/courses/{{course}}",
+            "expand": true,
+            "globs": [
+                "**/*.json"
+            ],
+            "actions": [
+                "course-folder",
+                "json-lint",
+                "json-check",
+                "assetrequired",
+                "techspec",
+                "themejson",
+                "stringreplacement"
+            ]
+        },
+        {
+            "@name": "course-json",
+            "@types": [ "builds/courses/course" ],
+            "path": "builds/{{course}}",
+            "expand": true,
+            "globs": [
+                "**/course/**/*.json"
+            ],
+            "actions": [
+                "json-lint",
+                "json-check",
+                "assetrequired",
+                "techspec",
+                "themejson",
+                "stringreplacement"
+            ]
+        }
+    ]
 }

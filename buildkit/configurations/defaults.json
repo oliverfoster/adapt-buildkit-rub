@@ -1,24 +1,24 @@
 {
-	"defaults": {
-		"multipleDestPath":  "./builds",
-		"singleDestPath": "./build",
-		"srcCoursesPath": "./src/courses",
-		"globalExclusionGlobs": [
-			"**",
-			"!**/.git",
-			"!**/LICENSE",
-			"!**/.travis.yml",
-			"!**/.gitignore",
-			"!**/.gitattributes",
-			"!**/.bower.json",
-			"!**/.bowerrc",
-			"!**/bower.json",
-			"!**/karma.conf.js",
-			"!**/package.json",
-			"!**/properties.schema",
-			"!**/README.md"
-		],
-		"taskLimit": 10,
-		"versionURL": "https://raw.githubusercontent.com/oliverfoster/adapt-buildkit-rub/master/buildkit/package.json"
-	}
+    "defaults": {
+        "multipleDestPath":  "./builds",
+        "singleDestPath": "./build",
+        "srcCoursesPath": "./src/courses",
+        "globalExclusionGlobs": [
+            "**",
+            "!**/.git",
+            "!**/LICENSE",
+            "!**/.travis.yml",
+            "!**/.gitignore",
+            "!**/.gitattributes",
+            "!**/.bower.json",
+            "!**/.bowerrc",
+            "!**/bower.json",
+            "!**/karma.conf.js",
+            "!**/package.json",
+            "!**/properties.schema",
+            "!**/README.md"
+        ],
+        "taskLimit": 10,
+        "versionURL": "https://raw.githubusercontent.com/oliverfoster/adapt-buildkit-rub/master/buildkit/package.json"
+    }
 }
