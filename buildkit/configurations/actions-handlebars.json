@@ -9,6 +9,7 @@
             ],
             "@when": "postStart",
 			"src": [ 
+				"src/core",
 				"src/components",
 				"src/extensions",
 				"src/menu",
