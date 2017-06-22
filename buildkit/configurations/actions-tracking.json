@@ -9,14 +9,7 @@
             ],
             "@when": "start",
             "@types": [ "src/course" ],
-            "blocksPath": {
-                "src": "src/course",
-                "glob": "**/blocks.json"
-            },
-            "coursePath": {
-                "src": "src/course",
-                "glob": "**/course.json"
-            }
+            "src": "{{outputDest}}/{{course}}/course/**"
         },
         {
             "@name": "trackinginsert",
@@ -27,14 +20,7 @@
             ],
             "@when": "start",
             "@types": [ "src/courses/course" ],
-            "blocksPath": {
-                "src": "src/courses/{{course}}",
-                "glob": "**/blocks.json"
-            },
-            "coursePath": {
-                "src": "src/courses/{{course}}",
-                "glob": "**/course.json"
-            }
+            "src": "{{outputDest}}/{{course}}/course/**"
         },
         {
             "@name": "trackinginsert",
@@ -45,14 +31,7 @@
             ],
             "@when": "start",
             "@types": [ "builds/courses/course" ],
-            "blocksPath": {
-                "src": "{{outputDest}}/{{course}}/course",
-                "glob": "**/blocks.json"
-            },
-            "coursePath": {
-                "src": "{{outputDest}}/{{course}}/course",
-                "glob": "**/course.json"
-            }
+            "src": "{{outputDest}}/{{course}}/course/**"
         },
         {
             "@name": "trackingdelete",
@@ -63,14 +42,7 @@
             ],
             "@when": "start",
             "@types": [ "src/course" ],
-            "blocksPath": {
-                "src": "{{outputDest}}/{{course}}/course",
-                "glob": "**/blocks.json"
-            },
-            "coursePath": {
-                "src": "{{outputDest}}/{{course}}/course",
-                "glob": "**/course.json"
-            }
+            "src": "{{outputDest}}/{{course}}/course/**"
         },
         {
             "@name": "trackingdelete",
@@ -81,14 +53,7 @@
             ],
             "@when": "start",
             "@types": [ "src/courses/course" ],
-            "blocksPath": {
-                "src": "src/courses/{{course}}",
-                "glob": "**/blocks.json"
-            },
-            "coursePath": {
-                "src": "src/courses/{{course}}",
-                "glob": "**/course.json"
-            }
+            "src": "{{outputDest}}/{{course}}/course/**"
         },
         {
             "@name": "trackingdelete",
@@ -99,14 +64,7 @@
             ],
             "@when": "start",
             "@types": [ "builds/courses/course" ],
-            "blocksPath": {
-                "src": "{{outputDest}}/{{course}}/course",
-                "glob": "**/blocks.json"
-            },
-            "coursePath": {
-                "src": "{{outputDest}}/{{course}}/course",
-                "glob": "**/course.json"
-            }
+            "src": "{{outputDest}}/{{course}}/course/**"
         },
         {
             "@name": "trackingreset",
@@ -117,14 +75,7 @@
             ],
             "@when": "start",
             "@types": [ "src/course" ],
-            "blocksPath": {
-                "src": "src/course",
-                "glob": "**/blocks.json"
-            },
-            "coursePath": {
-                "src": "src/course",
-                "glob": "**/course.json"
-            }
+            "src": "{{outputDest}}/{{course}}/course/**"
         },
         {
             "@name": "trackingreset",
@@ -135,14 +86,7 @@
             ],
             "@when": "start",
             "@types": [ "src/courses/course" ],
-            "blocksPath": {
-                "src": "src/courses/{{course}}",
-                "glob": "**/blocks.json"
-            },
-            "coursePath": {
-                "src": "{{outputDest}}/{{course}}/course",
-                "glob": "**/course.json"
-            }
+            "src": "{{outputDest}}/{{course}}/course/**"
         },
         {
             "@name": "trackingreset",
@@ -153,14 +97,7 @@
             ],
             "@when": "start",
             "@types": [ "builds/courses/course" ],
-            "blocksPath": {
-                "src": "{{outputDest}}/{{course}}/course",
-                "glob": "**/blocks.json"
-            },
-            "coursePath": {
-                "src": "{{outputDest}}/{{course}}/course",
-                "glob": "**/course.json"
-            }
+            "src": "{{outputDest}}/{{course}}/course/**"
         }
     ]
 }

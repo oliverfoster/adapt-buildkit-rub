@@ -17,22 +17,47 @@ var tracking = new Action({
 	perform: function(options, done, started) {
         started();
 
-		options.coursePath.src = fsext.replace(options.coursePath.src, options);
-		options.blocksPath.src = fsext.replace(options.blocksPath.src, options);
+        if (options.coursePath) {
+            options.coursePath.src = fsext.replace(options.coursePath.src, options);
+            options.blocksPath.src = fsext.replace(options.blocksPath.src, options);
 
-		options.coursePath = fsext.glob(options.coursePath.src, options.coursePath.glob)
-        options.coursePath = options.coursePath[0].path;
+            options.coursePath = fsext.glob(options.coursePath.src, options.coursePath.glob);
+            options.coursePath = options.coursePath[0].path;
+            
+            options.blocksPath = fsext.glob(options.blocksPath.src, options.blocksPath.glob);
+            options.blocksPath = options.blocksPath[0].path;
 
-		options.blocksPath = fsext.glob(options.blocksPath.src, options.blocksPath.glob);
-        options.blocksPath = options.blocksPath[0].path;
+            if (options.switches.trackinginsert) {
+                insertTrackingIds(options);
+            } else if (options.switches.trackingdelete) {
+                removeTrackingIds(options);
+            } else if (options.switches.trackingreset) {
+                resetTrackingIds(options);
+            }
 
-		if (options.switches.trackinginsert) {
-			insertTrackingIds(options);
-		} else if (options.switches.trackingdelete) {
-			removeTrackingIds(options);
-		} else if (options.switches.trackingreset) {
-			resetTrackingIds(options);
-		}
+        } else {
+            options.src = fsext.replace(options.src, options);
+
+            //expand language folders
+            var globIndex = options.src.indexOf("*");
+            var base = options.src.slice(0, globIndex);
+            var glob = options.src.slice(globIndex);
+            var results = fsext.list(base).dirs;
+            results = fsext.filter(results, glob);
+
+            for (var i = 0, l = results.length; i < l; i++) {
+                var expandedPath = results[i].path;
+                var opts = _.deepExtend({}, options, {coursePath:expandedPath+'/course.json', blocksPath:expandedPath+'/blocks.json'});
+
+                if (opts.switches.trackinginsert) {
+                    insertTrackingIds(opts);
+                } else if (opts.switches.trackingdelete) {
+                    removeTrackingIds(opts);
+                } else if (opts.switches.trackingreset) {
+                    resetTrackingIds(opts);
+                }
+            }
+        }
 
         done(options);
 
