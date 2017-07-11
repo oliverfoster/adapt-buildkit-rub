@@ -62,9 +62,29 @@ var less = new Action({
 		if (fs.existsSync(options.dest)) fs.unlinkSync(options.dest);
 	    if (fs.existsSync(options.dest+".map")) fs.unlinkSync(options.dest+".map");
 
-
-
 		var includeFile = "";
+
+		if (options.config) {
+
+			options.config = fsext.replace(options.config, options);
+			
+			var screenSize = {
+				"small": 520,
+				"medium": 760,
+				"large": 900
+			};
+			try {
+				var configjson = JSON.parse(fs.readFileSync(options.config).toString());
+				screenSize = configjson.screenSize || screenSize;
+			} catch (e) {}
+
+			console.log("screen size:", screenSize);
+
+			includeFile += "\n@adapt-device-small:"+screenSize.small+";";
+			includeFile += "\n@adapt-device-medium:"+screenSize.medium+";";
+			includeFile += "\n@adapt-device-large:"+screenSize.large+";\n";
+
+		}
 
 		for (var s = 0, sl = options.src.length; s < sl; s++) {
 			var files = fsext.glob(options.src[s], globs, { dirs: false });
