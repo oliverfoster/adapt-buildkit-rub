@@ -24,6 +24,7 @@
                 "src/theme"
                 
             ],
+            "config": "{{outputDest}}/{{course}}/course/config.json",
             "dest": "{{outputDest}}/{{course}}/adapt/css/adapt.css",
             "globs":  [ "**/less/**/*.less" ]
         }
