@@ -123,7 +123,9 @@ var javascript = new Action({
                     var files = fsext.glob( atPath, options.empties[prefix][atPath] );
                     for (var f = 0, fl = files.length; f < fl; f++) {
                         if (!options.alwaysUsePath || prefix !== "*") {
-                            options.paths[(prefix != "*" && prefix != "" ? prefix+"/" : "")+files[f].filename] = options.paths[(prefix != "*" ? prefix+"/" : "")+files[f].filename] || "empty:";;
+                            var name = (prefix != "*" && prefix != "" ? prefix+"/" : "")+files[f].filename;
+                            if (name.slice(-4) === ".min") name = name.slice(0,-4);
+                            options.paths[name] = options.paths[name] || "empty:";
                         } else {
                             var relativePath = files[f].path.substr( cwd.length );
                             if (relativePath.substr(0,1)) relativePath = relativePath.substr(1);
