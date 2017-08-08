@@ -14,7 +14,12 @@ var handlebars = new Action({
 
         //FIX FOR HANDLEBARS CLIENT/COMPILER VERSION INCOMPATIBILITY > 
 		function checkHandlebarsVersion() {
-			var data = fs.readFileSync("src/core/js/libraries/handlebars.js").toString();
+			var data;
+			if (fs.existsSync("src/core/js/libraries/handlebars.js")) {
+				data = fs.readFileSync("src/core/js/libraries/handlebars.js").toString();
+			} else {
+				data = fs.readFileSync("src/core/js/libraries/handlebars.min.js").toString();
+			}
 
 			var hbs;
 			if (data.match(/handlebars 1.0.0/gi)) {
