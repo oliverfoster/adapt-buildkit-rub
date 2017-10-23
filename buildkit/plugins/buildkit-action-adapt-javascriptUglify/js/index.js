@@ -49,7 +49,8 @@ class Plugin {
 				cascade       : false,  // try to cascade `right` into `left` in sequences
 				side_effects  : false,  // drop side-effect-free statements
 				warnings      : true,  // warn about potentially dangerous optimizations/code
-				global_defs   : {}     // global definitions
+				global_defs   : {},     // global definitions
+				screw_ie8     : false
 			});
 			ast = ast.transform(compressor);
 			file = ast.print_to_string();
