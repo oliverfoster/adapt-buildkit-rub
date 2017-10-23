@@ -162,7 +162,17 @@ class Plugin {
         default:
             options.requirejs.generateSourceMaps = false;
             options.requirejs.optimize = !options.switches.quick ? "uglify2" : "none";
-            options.requirejs.uglify2 = { ie8: true };
+            options.requirejs.uglify2 = { 
+                output: {
+                    screw_ie8: false
+                },
+                compress: {
+                    screw_ie8: false
+                },
+                mangle: {
+                    screw_ie8: false
+                }
+            };
             break;
         } 
 
