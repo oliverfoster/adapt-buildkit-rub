@@ -2,19 +2,9 @@
 (Rapid-Unified-Builder)  
 Native Buildkit (alternative to gulp and grunt)
 
-## WARNING URGENT ACTION REQUIRED
+## !!DEPRECATED!!
 
-The next version of rub is going to use a raft of new language extensions, moving rub into ES6.  
-You will need to install [nodejs version 4.3+](https://nodejs.org/en/).  
-You will probably need to restart your computer.  
-~~And you may also need to reinstall ``adapt-cli``, ``adapt-buildkits`` and ``grunt-cli`` (using ``npm install -g ``)~~  
-
-* rub version 0.0.58 will warn you to upgrade to node 4.3+  
-* rub version 0.1.10+ will require node 4.3+ (version 0.1.10 can be installed using ``adapt-buildkit install rub-develop``) 
-
-If you wish not to upgrade, please add the attribute ``"custom": true`` to your ``buildkit/package.json``.  
-Rub version 0.0.58 will no longer be supported once version 0.1.10 is pushed (this will probably be in a week or two from 26-02-2016)  
-This decision has been makde inline with the Adapt Framework community requiring ``adapt-cli`` and the Authoring Tool to have at least node 4.3+  
+Please use https://github.com/cgkineo/rub-cli instead
 
 ## Installation / Update / Repair
 
