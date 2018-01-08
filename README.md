@@ -2,6 +2,10 @@
 (Rapid-Unified-Builder)  
 Native Buildkit (alternative to grunt)
 
+## !!DEPRECATED!!
+
+Please use https://github.com/cgkineo/rub-cli instead
+
 ## Installation / Update / Repair
 
 !!NODE V4.3+ ONLY!!
