@@ -299,7 +299,7 @@
                 "**/libraries/***/*.js",
                 "**/libraries/*.js",
                 "*.js",
-                "!.min.js"
+                "!*.min.js"
             ]
         },
         {
@@ -321,7 +321,7 @@
                 "**/libraries/***/*.js",
                 "**/libraries/*.js",
                 "*.js",
-                "!.min.js"
+                "!*.min.js"
             ]
         }
     ]
