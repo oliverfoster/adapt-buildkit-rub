@@ -298,7 +298,30 @@
                 "**/adapt/js/*.js",
                 "**/libraries/***/*.js",
                 "**/libraries/*.js",
-                "*.js"
+                "*.js",
+                "!.min.js"
+            ]
+        },
+        {
+            "@name": "javascript-uglify",
+            "@displayName": "Minifying javascript...",
+            "@action": "javascriptuglify",
+            "@excludeOnSwitches": [
+                "debug",
+                "quick"
+            ],
+            "@onlyOnSwitches": [
+                "build"
+            ],
+            "@types": [ "builds/courses/course", "src/courses/course" ],
+            "@when": "finish",
+            "root": "{{outputDest}}/{{course}}",
+            "globs": [
+                "**/adapt/js/*.js",
+                "**/libraries/***/*.js",
+                "**/libraries/*.js",
+                "*.js",
+                "!.min.js"
             ]
         }
     ]
